@@ -1,5 +1,6 @@
 package com.example.srv_twry.studentcompanion;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -67,8 +68,9 @@ public class HomeActivity extends AppCompatActivity
     // Method to create features arrayList
     private ArrayList<Feature> fillWithData() {
         ArrayList<Feature> featureArrayList = new ArrayList<>();
-        featureArrayList.add(new Feature("Coding Calendar",R.mipmap.ic_code));
-        featureArrayList.add(new Feature("Flash Cards",R.mipmap.ic_flash_cards));
+
+        featureArrayList.add(new Feature(getResources().getString(R.string.coding_calendar),R.mipmap.ic_code));
+        featureArrayList.add(new Feature(getResources().getString(R.string.flash_cards),R.mipmap.ic_flash_cards));
         return featureArrayList;
     }
 
@@ -111,7 +113,7 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_coding_calendar) {
-
+            startCodingCalendar();
         } else if (id == R.id.nav_flash_cards) {
 
         }else if (id == R.id.nav_share){
@@ -126,7 +128,14 @@ public class HomeActivity extends AppCompatActivity
     //Open the necessary activity responding to the clicks
     @Override
     public void onFeatureClicked(int position) {
-        Toast toast = Toast.makeText(HomeActivity.this, "Item clicked "+ featureArrayList.get(position).getTitle(),Toast.LENGTH_SHORT);
-        toast.show();
+        if (featureArrayList.get(position).getTitle().equals(getResources().getString(R.string.coding_calendar))){
+            startCodingCalendar();
+        }
+    }
+
+    // Start the coding calendar list activity
+    private void startCodingCalendar() {
+        Intent intent = new Intent(HomeActivity.this,CodingCalendarListActivity.class);
+        startActivity(intent);
     }
 }
