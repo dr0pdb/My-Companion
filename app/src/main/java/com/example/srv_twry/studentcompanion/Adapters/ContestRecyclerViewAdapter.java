@@ -76,19 +76,19 @@ public class ContestRecyclerViewAdapter extends RecyclerView.Adapter<ContestRecy
             URL urlPlatform;
             try{
                 urlPlatform = new URL(url);
-                //get the first part of the host.
+                //get the platform of the contest.
                 String platformString = urlPlatform.getHost();
                 Log.v("ContestRecyclerViewAdap",platformString);
 
-                if (platformString.equals("topcoder")){
+                if (platformString.equals("www.topcoder.com")){
                     contestPlatform.setImageResource(R.mipmap.topcoder_logo);
-                }else if (platformString.equals("codechef")){
+                }else if (platformString.equals("www.codechef.com")){
                     contestPlatform.setImageResource(R.mipmap.codechef_logo);
-                }else if(platformString.equals("hackerrank")){
+                }else if(platformString.equals("www.hackerrank.com")){
                     contestPlatform.setImageResource(R.mipmap.hackerrank_logo);
-                }else if(platformString.equals("hackerearth")){
+                }else if(platformString.equals("www.hackerearth.com")){
                     contestPlatform.setImageResource(R.mipmap.hackerearth_logo);
-                }else if(platformString.equals("codeforces")){
+                }else if(platformString.equals("codeforces.com")){
                     contestPlatform.setImageResource(R.mipmap.codeforces_logo);
                 }else{
                     contestPlatform.setImageResource(R.mipmap.ic_code);

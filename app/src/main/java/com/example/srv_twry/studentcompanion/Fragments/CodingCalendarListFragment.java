@@ -82,9 +82,9 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
         Date startTime = getDateFromString("2017-07-23T16:00:00.000Z");
         Date endTime = getDateFromString("2017-07-23T18:30:00.000Z");
         contestArrayList.add(new Contest("Codechef - July Lunchtime 2017","","https://www.codechef.com/LTIME50" ,startTime,endTime));
-        contestArrayList.add(new Contest("Codechef - July Lunchtime 2017","","https://www.codechef.com/LTIME50" ,startTime,endTime));
-        contestArrayList.add(new Contest("Codechef - July Lunchtime 2017","","https://www.codechef.com/LTIME50" ,startTime,endTime));
-        contestArrayList.add(new Contest("Codechef - July Lunchtime 2017","","https://www.codechef.com/LTIME50" ,startTime,endTime));
+        contestArrayList.add(new Contest("Codechef - July Lunchtime 2017","","https://www.topcoder.com/LTIME50" ,startTime,endTime));
+        contestArrayList.add(new Contest("Codechef - July Lunchtime 2017","","https://codeforces.com/LTIME50" ,startTime,endTime));
+        contestArrayList.add(new Contest("Codechef - July Lunchtime 2017","","https://www.hackerrank.com/LTIME50" ,startTime,endTime));
         return contestArrayList;
     }
 
