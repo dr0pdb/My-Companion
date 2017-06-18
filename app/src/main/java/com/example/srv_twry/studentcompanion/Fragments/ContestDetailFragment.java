@@ -1,6 +1,6 @@
 package com.example.srv_twry.studentcompanion.Fragments;
 
-import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -8,6 +8,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,8 @@ import com.example.srv_twry.studentcompanion.CodingCalendarContestDetailActivity
 import com.example.srv_twry.studentcompanion.POJOs.Contest;
 import com.example.srv_twry.studentcompanion.R;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -26,9 +31,6 @@ import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ContestDetailFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
  * Use the {@link ContestDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
@@ -39,7 +41,6 @@ public class ContestDetailFragment extends Fragment {
     private static final String IS_REMINDED = "isReminded";
 
     private Contest mContest;
-    private OnFragmentInteractionListener mListener;
     private Boolean isSetForReminder;
 
     public ContestDetailFragment() {
@@ -85,6 +86,8 @@ public class ContestDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_contest_detail, container, false);
         if (savedInstanceState != null){
             isSetForReminder = savedInstanceState.getBoolean(IS_REMINDED);
+        }else{
+            isSetForReminder= false;
         }
 
         // Initialize and set the data.
@@ -158,45 +161,71 @@ public class ContestDetailFragment extends Fragment {
         }
         contestDetailTitleView.setText(mContest.getTitle());
         getCoverImage(mContest.getUrl());
-
-
+        getStartTimeText(mContest.getStartTime());
+        String duration = "Approximately "+getContestDuration(mContest.getStartTime(),mContest.getEndTime())+" hours";
+        contestDetailDurationText.setText(duration);
+        if (mContest.getDescription().equals("")){
+            contestDetailDescriptionText.setText("Coding Contest for Programming enthusiasts");
+        }else{
+            contestDetailDescriptionText.setText(mContest.getDescription());
+        }
+        contestDetailRegistrationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(mContest.getUrl()));
+                startActivity(intent);
+            }
+        });
     }
+
+    // Helper method to set the start time and date of the contest in intended order
+    private void getStartTimeText(Date startTime) {
+        SpannableString originalFormatTime = new SpannableString(startTime.toString());
+        String finalStartTime;
+
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(originalFormatTime,0,3);
+        spannableStringBuilder.setSpan(new RelativeSizeSpan(3f),0,3,0);
+        spannableStringBuilder.append("\n");
+        spannableStringBuilder.append(originalFormatTime,4,10);
+        spannableStringBuilder.setSpan(new RelativeSizeSpan(1.5f),4,10,0);
+        spannableStringBuilder.append("\n");
+        spannableStringBuilder.append(originalFormatTime,11,16);
+        finalStartTime = spannableStringBuilder.toString();
+
+        contestDetailStartTimeText.setText(finalStartTime);
+    }
+
     //Helper method to get the Cover image of the Contest
     private void getCoverImage(String url) {
-    }
+        URL urlPlatform;
+        try{
+            urlPlatform = new URL(url);
+            String platformString = urlPlatform.getHost();
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            switch (platformString){
+                case "www.topcoder.com":
+                    coverImage.setImageResource(R.mipmap.topcoder_cover);
+                    break;
+                case "www.codechef.com":
+                    coverImage.setImageResource(R.mipmap.codechef_cover);
+                    break;
+                case "www.hackerrank.com":
+                    coverImage.setImageResource(R.mipmap.hackerrank_cover);
+                    break;
+                case "www.hackerearth.com":
+                    coverImage.setImageResource(R.mipmap.hackerearth_cover);
+                    break;
+                case "codeforces.com":
+                    coverImage.setImageResource(R.mipmap.codeforces_cover);
+                    break;
+                default:
+                    coverImage.setImageResource(R.mipmap.ic_code);
+            }
+        }catch (MalformedURLException e){
+            e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     */
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
     }
 
     private long getContestDuration(Date start, Date end){

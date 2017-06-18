@@ -1,27 +1,23 @@
 package com.example.srv_twry.studentcompanion.Fragments;
 
 import android.content.Context;
-import android.net.Uri;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.srv_twry.studentcompanion.Adapters.ContestRecyclerViewAdapter;
+import com.example.srv_twry.studentcompanion.Network.FetchContestsVolley;
 import com.example.srv_twry.studentcompanion.POJOs.Contest;
 import com.example.srv_twry.studentcompanion.R;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +30,7 @@ import butterknife.ButterKnife;
  * Use the {@link CodingCalendarListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CodingCalendarListFragment extends Fragment implements ContestRecyclerViewAdapter.ContestRecyclerViewOnClickListener {
+public class CodingCalendarListFragment extends Fragment implements ContestRecyclerViewAdapter.ContestRecyclerViewOnClickListener, FetchContestsVolley.onLoadingFinishedListener {
 
     private OnFragmentInteractionListener mListener;
     private ArrayList<Contest> contestArrayList = new ArrayList<>();
@@ -69,23 +65,20 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
         View view = inflater.inflate(R.layout.fragment_coding_calendar_list, container, false);
         ButterKnife.bind(this,view);
 
-        contestArrayList = fillWithFakeData();
+        //If the device is online then start the network operation otherwise show an error.
+        if (isOnline()){
+            FetchContestsVolley fetchContestsVolley = new FetchContestsVolley(getContext(),this);
+            fetchContestsVolley.fetchContest();
+        }else{
+            Toast toast = Toast.makeText(getContext(),"No Internet Connection",Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
         ContestRecyclerViewAdapter contestRecyclerViewAdapter = new ContestRecyclerViewAdapter(contestArrayList,this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity().getBaseContext(),getResources().getInteger(R.integer.number_columns_grid_view_features));
         contestRecyclerView.setAdapter(contestRecyclerViewAdapter);
         contestRecyclerView.setLayoutManager(gridLayoutManager);
         return view;
-    }
-
-    private ArrayList<Contest> fillWithFakeData() {
-        ArrayList<Contest> contestArrayList = new ArrayList<>();
-        Date startTime = getDateFromString("2017-07-23T16:00:00.000Z");
-        Date endTime = getDateFromString("2017-07-23T18:30:00.000Z");
-        contestArrayList.add(new Contest("Codechef - July Lunchtime 2017","","https://www.codechef.com/LTIME50" ,startTime,endTime));
-        contestArrayList.add(new Contest("Codechef - July Lunchtime 2017","","https://www.topcoder.com/LTIME50" ,startTime,endTime));
-        contestArrayList.add(new Contest("Codechef - July Lunchtime 2017","","https://codeforces.com/LTIME50" ,startTime,endTime));
-        contestArrayList.add(new Contest("Codechef - July Lunchtime 2017","","https://www.hackerrank.com/LTIME50" ,startTime,endTime));
-        return contestArrayList;
     }
 
     // To pass the activity with the Contest clicked.
@@ -117,6 +110,14 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
         passContestToActivity(clickedContest);
     }
 
+    @Override
+    public void onLoadingFinished(ArrayList<Contest> contestArrayListReceived) {
+        contestArrayList = contestArrayListReceived;
+        ContestRecyclerViewAdapter contestRecyclerViewAdapter = new ContestRecyclerViewAdapter(contestArrayList,this);
+        contestRecyclerView.setAdapter(contestRecyclerViewAdapter);
+        contestRecyclerView.invalidate();
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -126,23 +127,11 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
     public interface OnFragmentInteractionListener {
         void onListFragmentInteraction(Contest clickedContest);
     }
-
-
-    //A helper method to convert the time in String to Java Date Class
-    public Date getDateFromString(String string){
-
-        Date result;
-        try {
-            TimeZone tz = TimeZone.getTimeZone("Asia/Calcutta");
-            Calendar cal = Calendar.getInstance(tz);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            sdf.setCalendar(cal);
-            cal.setTime(sdf.parse(string));
-            result = cal.getTime();
-        }catch (ParseException e){
-            e.printStackTrace();
-            return null;
-        }
-        return result;
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnected();
     }
+
 }

@@ -24,7 +24,7 @@
                 android:id="@+id/contest_cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
+                android:scaleType="center"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"
                 tools:ignore="ContentDescription" />
@@ -34,7 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin"
+                android:layout_marginTop="16dp"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
@@ -103,7 +104,7 @@
                 android:layout_marginLeft="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_contest_detail_duration"
+                app:layout_constraintTop_toBottomOf="@+id/tv_contest_details_start_time"
                 app:layout_constraintHorizontal_bias="0.0"
                 android:textSize="14sp"/>
 
