@@ -1,8 +1,10 @@
 package com.example.srv_twry.studentcompanion;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.srv_twry.studentcompanion.Fragments.CodingCalendarListFragment;
@@ -12,6 +14,8 @@ import com.example.srv_twry.studentcompanion.POJOs.Contest;
 * This activity contains the coding contest lists for phones and The two pane layout for the tablets.
 * */
 public class CodingCalendarListActivity extends AppCompatActivity implements CodingCalendarListFragment.OnFragmentInteractionListener{
+
+    public static final String INTENT_EXTRA_TAG = "Contest";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +36,10 @@ public class CodingCalendarListActivity extends AppCompatActivity implements Cod
     // In case of phones it will start the ContestDetailActivity while in case of tablets it will contact ContestDetailFragment for details.
     @Override
     public void onListFragmentInteraction(Contest clickedContest) {
-        Toast toast = Toast.makeText(CodingCalendarListActivity.this,"contest clicked "+clickedContest.getTitle(),Toast.LENGTH_LONG);
-        toast.show();
+        //For phones
+        Intent intent = new Intent(CodingCalendarListActivity.this,CodingCalendarContestDetailActivity.class);
+        intent.putExtra(INTENT_EXTRA_TAG,clickedContest);
+        startActivity(intent);
     }
 
 

@@ -12,20 +12,27 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CodingCalendarListActivity"
+        <activity
+            android:name=".CodingCalendarListActivity"
+            android:label=""
             android:parentActivityName=".HomeActivity"
-            android:label="">
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
+        </activity>
+        <activity android:name=".CodingCalendarContestDetailActivity"
+            android:label=""
+            android:parentActivityName=".CodingCalendarListActivity">
+
         </activity>
     </application>
 
