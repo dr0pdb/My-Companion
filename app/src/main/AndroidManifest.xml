@@ -44,6 +44,15 @@
             android:name=".Database.DatabaseContentProvider"
             android:authorities="com.example.srv_twry.studentcompanion"
             android:exported="false" />
+
+        <service android:name=".Services.CodingCalendarAuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/coding_calendar_authenticator" />
+        </service>
     </application>
 
 </manifest>
