@@ -1,23 +1,33 @@
 package com.example.srv_twry.studentcompanion.Fragments;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.srv_twry.studentcompanion.Adapters.ContestRecyclerViewAdapter;
+import com.example.srv_twry.studentcompanion.Database.DatabaseContract;
 import com.example.srv_twry.studentcompanion.Network.FetchContestsVolley;
 import com.example.srv_twry.studentcompanion.POJOs.Contest;
 import com.example.srv_twry.studentcompanion.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,13 +40,15 @@ import butterknife.ButterKnife;
  * Use the {@link CodingCalendarListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CodingCalendarListFragment extends Fragment implements ContestRecyclerViewAdapter.ContestRecyclerViewOnClickListener, FetchContestsVolley.onLoadingFinishedListener {
+public class CodingCalendarListFragment extends Fragment implements ContestRecyclerViewAdapter.ContestRecyclerViewOnClickListener, FetchContestsVolley.onLoadingFinishedListener, LoaderManager.LoaderCallbacks<Cursor> {
 
+    private static final String TAG = CodingCalendarListFragment.class.getSimpleName();
     private OnFragmentInteractionListener mListener;
     private ArrayList<Contest> contestArrayList = new ArrayList<>();
     @BindView(R.id.rv_contest_list)
-     RecyclerView contestRecyclerView;
+    RecyclerView contestRecyclerView;
 
+    private static final int CONTEST_LOADER_ID = 100;
 
     public CodingCalendarListFragment() {
         // Required empty public constructor
@@ -55,7 +67,6 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -65,20 +76,30 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
         View view = inflater.inflate(R.layout.fragment_coding_calendar_list, container, false);
         ButterKnife.bind(this,view);
 
-        //If the device is online then start the network operation otherwise show an error.
-        if (isOnline()){
-            FetchContestsVolley fetchContestsVolley = new FetchContestsVolley(getContext(),this);
-            fetchContestsVolley.fetchContest();
-        }else{
-            Toast toast = Toast.makeText(getContext(),"No Internet Connection",Toast.LENGTH_SHORT);
-            toast.show();
-        }
+        // To get the contests either from server or database.
+        startLoadingData();
 
         ContestRecyclerViewAdapter contestRecyclerViewAdapter = new ContestRecyclerViewAdapter(contestArrayList,this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity().getBaseContext(),getResources().getInteger(R.integer.number_columns_grid_view_features));
         contestRecyclerView.setAdapter(contestRecyclerViewAdapter);
         contestRecyclerView.setLayoutManager(gridLayoutManager);
         return view;
+    }
+
+
+    private void startLoadingData() {
+        //If the device is online then get the updated data from the server otherwise use the cached data from the database.
+        if (isOnline()){
+            FetchContestsVolley fetchContestsVolley = new FetchContestsVolley(getContext(),this);
+            fetchContestsVolley.fetchContest();
+        }else{
+            getDataFromDatabase();
+        }
+    }
+
+    // The method which uses loaders to get the Data from the database to the recycler view.
+    private void getDataFromDatabase() {
+        getActivity().getSupportLoaderManager().initLoader(CONTEST_LOADER_ID,null,this);
     }
 
     // To pass the activity with the Contest clicked.
@@ -106,16 +127,20 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        startLoadingData();
+    }
+
+    @Override
     public void onContestListItemClicked(Contest clickedContest) {
         passContestToActivity(clickedContest);
     }
 
     @Override
-    public void onLoadingFinished(ArrayList<Contest> contestArrayListReceived) {
-        contestArrayList = contestArrayListReceived;
-        ContestRecyclerViewAdapter contestRecyclerViewAdapter = new ContestRecyclerViewAdapter(contestArrayList,this);
-        contestRecyclerView.setAdapter(contestRecyclerViewAdapter);
-        contestRecyclerView.invalidate();
+    public void onLoadingFinished() {
+        // Start the loader to fetch the updated data.
+        getDataFromDatabase();
     }
 
     /**
@@ -132,6 +157,103 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
                 (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnected();
+    }
+
+    /*
+    * Loader methods
+    * */
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new AsyncTaskLoader<Cursor>(getContext()) {
+
+            Cursor mCursor;
+
+            @Override
+            protected void onStartLoading() {
+                if (mCursor !=null){
+                    deliverResult(mCursor);
+                }else{
+                    forceLoad();
+                }
+            }
+
+            public void deliverResult(Cursor c) {
+                mCursor=c;
+                super.deliverResult(mCursor);
+            }
+
+            @Override
+            public Cursor loadInBackground() {
+                try{
+                    return getActivity().getContentResolver().query(DatabaseContract.ContestEntry.CONTENT_URI_CONTESTS,null,null,null,null);
+                } catch (Exception e) {
+                    Log.e(TAG, "Failed to asynchronously load data.");
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        };
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if(data !=null){
+            contestArrayList = convertCursorToArrayList(data);
+            ContestRecyclerViewAdapter contestRecyclerViewAdapter = new ContestRecyclerViewAdapter(contestArrayList,this);
+            contestRecyclerView.setAdapter(contestRecyclerViewAdapter);
+            contestRecyclerView.invalidate();
+        }
+    }
+    // To convert the cursor to an array list
+    private ArrayList<Contest> convertCursorToArrayList(Cursor data) {
+        ArrayList<Contest> returnArrayList = new ArrayList<>();
+
+        int titleColumnIndex = data.getColumnIndex(DatabaseContract.ContestEntry.CONTEST_COLUMN_TITLE);
+        int descriptionColumnIndex = data.getColumnIndex(DatabaseContract.ContestEntry.CONTEST_COLUMN_DESCRIPTION);
+        int urlColumnIndex = data.getColumnIndex(DatabaseContract.ContestEntry.CONTEST_COLUMN_URL);
+        int startTimeColumnIndex = data.getColumnIndex(DatabaseContract.ContestEntry.CONTEST_COLUMN_START_TIME);
+        int endTimeColumnIndex = data.getColumnIndex(DatabaseContract.ContestEntry.CONTEST_COLUMN_END_TIME);
+
+        for(int i=0; i< data.getCount();i++){
+            data.moveToPosition(i);
+            String title = data.getString(titleColumnIndex);
+            String description= data.getString(descriptionColumnIndex);
+            String url = data.getString(urlColumnIndex);
+            String start = data.getString(startTimeColumnIndex);
+            String end = data.getString(endTimeColumnIndex);
+
+            Date startTime = getDateFromString(start);
+            Date endTime = getDateFromString(end);
+
+            returnArrayList.add(new Contest(title,description,url,startTime,endTime));
+        }
+
+        return returnArrayList;
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        //set the blank data to the recyclerview.
+        contestArrayList = new ArrayList<>();
+    }
+
+    //A helper method to convert the time in String to Java Date Class
+    public Date getDateFromString(String string){
+
+        Date result;
+        try {
+            TimeZone tz = TimeZone.getTimeZone("Asia/Calcutta");
+            Calendar cal = Calendar.getInstance(tz);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            sdf.setCalendar(cal);
+            cal.setTime(sdf.parse(string));
+            result = cal.getTime();
+        }catch (ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+        return result;
     }
 
 }

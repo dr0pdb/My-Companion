@@ -1,6 +1,8 @@
 package com.example.srv_twry.studentcompanion.Network;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.net.Uri;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -9,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.srv_twry.studentcompanion.Database.DatabaseContract;
 import com.example.srv_twry.studentcompanion.POJOs.Contest;
 
 import org.json.JSONArray;
@@ -24,7 +27,7 @@ import java.util.TimeZone;
 
 /**
  * Created by srv_twry on 19/6/17.
- * The class which uses the volley library to fetch Contests from the Hackerrank's API and return the arrayList of Contests.
+ * The class which uses the volley library to fetch Contests from the Hackerrank's API
  */
 
 public class FetchContestsVolley {
@@ -46,7 +49,7 @@ public class FetchContestsVolley {
             @Override
             public void onResponse(JSONObject response) {
                 fetchArrayList(response);
-                onLoadingFinishedListener.onLoadingFinished(contestArrayList);
+                onLoadingFinishedListener.onLoadingFinished();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -69,35 +72,22 @@ public class FetchContestsVolley {
                 String end = obj.getString("end");
                 String url = obj.getString("url");
 
-                Date startTime = getDateFromString(start);
-                Date endTime = getDateFromString(end);
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_TITLE,title);
+                contentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_DESCRIPTION,description);
+                contentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_URL,url);
+                contentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_START_TIME,start);
+                contentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_END_TIME,end);
 
-                contestArrayList.add(new Contest(title,description,url,startTime,endTime));
+                //Adding the data to the database.
+                context.getContentResolver().insert(DatabaseContract.ContestEntry.CONTENT_URI_CONTESTS,contentValues);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    //A helper method to convert the time in String to Java Date Class
-    public Date getDateFromString(String string){
-
-        Date result;
-        try {
-            TimeZone tz = TimeZone.getTimeZone("Asia/Calcutta");
-            Calendar cal = Calendar.getInstance(tz);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            sdf.setCalendar(cal);
-            cal.setTime(sdf.parse(string));
-            result = cal.getTime();
-        }catch (ParseException e){
-            e.printStackTrace();
-            return null;
-        }
-        return result;
-    }
-
     public interface onLoadingFinishedListener{
-        void onLoadingFinished(ArrayList<Contest> contestArrayList);
+        void onLoadingFinished();
     }
 }

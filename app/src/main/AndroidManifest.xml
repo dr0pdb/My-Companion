@@ -39,6 +39,11 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+
+        <provider
+            android:name=".Database.DatabaseContentProvider"
+            android:authorities="com.example.srv_twry.studentcompanion"
+            android:exported="false" />
     </application>
 
 </manifest>
