@@ -34,7 +34,6 @@ public class FetchContestsVolley {
     private static RequestQueue requestQueue;
     private static final String HACKERRANK_API_URL = "https://www.hackerrank.com/calendar/feed.json";
     private Context context;
-    private ArrayList<Contest> contestArrayList;
     private onLoadingFinishedListener onLoadingFinishedListener;
 
     public FetchContestsVolley(Context context,onLoadingFinishedListener onLoadingFinishedListener){
@@ -44,11 +43,10 @@ public class FetchContestsVolley {
     }
 
     public  void fetchContest(){
-        contestArrayList = new ArrayList<>();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, HACKERRANK_API_URL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                fetchArrayList(response);
+                addToDatabase(response);
                 onLoadingFinishedListener.onLoadingFinished();
             }
         }, new Response.ErrorListener() {
@@ -60,8 +58,8 @@ public class FetchContestsVolley {
         requestQueue.add(jsonObjectRequest);
     }
 
-    // Parse the JSON Response to ArrayList
-    private void fetchArrayList(JSONObject response) {
+    // Parse the JSON Response and add to database
+    private void addToDatabase(JSONObject response) {
         try{
             JSONArray models = response.getJSONArray("models");
             for(int i=0; i<models.length(); i++){
