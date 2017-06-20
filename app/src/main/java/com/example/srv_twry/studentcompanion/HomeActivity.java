@@ -2,6 +2,8 @@ package com.example.srv_twry.studentcompanion;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.ActivityManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,8 +23,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.srv_twry.studentcompanion.Adapters.CodingCalendarSyncAdapter;
 import com.example.srv_twry.studentcompanion.Adapters.FeaturesRecyclerViewAdapter;
 import com.example.srv_twry.studentcompanion.POJOs.Feature;
+import com.example.srv_twry.studentcompanion.Services.CodingCalendarAuthenticatorService;
+import com.example.srv_twry.studentcompanion.Services.CodingCalendarSyncService;
 
 import java.util.ArrayList;
 
@@ -35,6 +40,14 @@ public class HomeActivity extends AppCompatActivity
     public static final String ACCOUNT_TYPE = "example.com";
     // The account name
     public static final String ACCOUNT = "dummyaccount";
+
+    // Sync interval constants
+    public static final long SECONDS_PER_MINUTE = 60L;
+    public static final long SYNC_INTERVAL_IN_MINUTES = 1L;
+    public static final long SYNC_INTERVAL =
+            SYNC_INTERVAL_IN_MINUTES *
+                    SECONDS_PER_MINUTE;
+
     // Instance fields
     Account mAccount;
 
@@ -76,8 +89,18 @@ public class HomeActivity extends AppCompatActivity
         featuresRecyclerView.setAdapter(featuresRecyclerViewAdapter);
         featuresRecyclerView.setLayoutManager(featuresGridLayoutManager);
 
+        //TODO: Fix this sync issue.
+
         //Initialising the sync adapter account for the Coding calendar activity
         mAccount = CreateSyncAccount(HomeActivity.this);
+
+        //setting the periodic sync on the database.
+        //ContentResolver.addPeriodicSync(mAccount,AUTHORITY,Bundle.EMPTY,SYNC_INTERVAL);
+        //ContentResolver.setSyncAutomatically(mAccount,AUTHORITY,true);
+
+        //Requesting immediate sync.
+        ContentResolver.requestSync(mAccount,AUTHORITY,Bundle.EMPTY);
+
     }
 
     // Creating the sync account for the Coding calendar activity
@@ -97,13 +120,15 @@ public class HomeActivity extends AppCompatActivity
          */
         if (accountManager.addAccountExplicitly(newAccount, null, null)) {
             Log.v(TAG,"Created the account");
+
         } else {
             /*
              * The account exists or some other error occurred. Log this, report it,
              * or handle it internally.
              */
-            Log.e(TAG,"Cannot create the account");
+            Log.e(TAG,"Cannot create the account as it may exist already!");
         }
+
         return newAccount;
     }
 

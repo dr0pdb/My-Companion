@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.example.srv_twry.studentcompanion.Adapters.CodingCalendarSyncAdapter;
 
@@ -24,6 +25,7 @@ public class CodingCalendarSyncService extends Service {
         synchronized (sSyncAdapterLock) {
             if (mCodingCalendarSyncAdapter == null) {
                 mCodingCalendarSyncAdapter = new CodingCalendarSyncAdapter(getApplicationContext(), true);
+                Log.v("CodingCalendarSyncAdap","Started sync adapter.");
             }
         }
     }

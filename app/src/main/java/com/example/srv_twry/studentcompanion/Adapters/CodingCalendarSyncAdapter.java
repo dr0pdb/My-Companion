@@ -35,8 +35,9 @@ public class CodingCalendarSyncAdapter extends AbstractThreadedSyncAdapter imple
 
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
-        FetchContestsVolley fetchContestsVolley = new FetchContestsVolley(mContext,this);
-        fetchContestsVolley.fetchContest();
+        //FetchContestsVolley fetchContestsVolley = new FetchContestsVolley(mContext,this);
+        //fetchContestsVolley.fetchContest();
+        Log.v(TAG,"Syncing started");
     }
 
     /*The interface method in the FetchContestsVolley class which sets the recycler view with the new data

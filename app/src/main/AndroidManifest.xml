@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.srv_twry.studentcompanion">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -45,11 +46,16 @@
 
         <provider
             android:name=".Database.DatabaseContentProvider"
-            android:authorities="com.example.srv_twry.studentcompanion"
+            android:authorities="@string/authority"
             android:exported="false"
-            android:syncable="true"/>
+            android:syncable="true"
+            tools:ignore="InnerclassSeparator" />
 
-        <service android:name=".Services.CodingCalendarAuthenticatorService">
+        <service android:name=".Services.CodingCalendarAuthenticatorService"
+            android:exported="false"
+            android:process=":auth"
+            android:enabled="true"
+            tools:ignore="InnerclassSeparator">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator"/>
             </intent-filter>
@@ -60,8 +66,10 @@
 
         <service
             android:name="com.example.srv_twry.studentcompanion.Services.CodingCalendarSyncService"
-            android:exported="false"
-            android:process=":sync">
+            android:exported="true"
+            android:process=":sync"
+            android:enabled="true"
+            tools:ignore="InnerclassSeparator">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter"/>
             </intent-filter>
