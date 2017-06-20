@@ -34,23 +34,6 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, FeaturesRecyclerViewAdapter.FeaturesOnClickListener{
 
-    // The authority for the sync adapter's content provider
-    public static final String AUTHORITY = "com.example.srv_twry.studentcompanion";
-    // An account type, in the form of a domain name
-    public static final String ACCOUNT_TYPE = "example.com";
-    // The account name
-    public static final String ACCOUNT = "dummyaccount";
-
-    // Sync interval constants
-    public static final long SECONDS_PER_MINUTE = 60L;
-    public static final long SYNC_INTERVAL_IN_MINUTES = 1L;
-    public static final long SYNC_INTERVAL =
-            SYNC_INTERVAL_IN_MINUTES *
-                    SECONDS_PER_MINUTE;
-
-    // Instance fields
-    Account mAccount;
-
     private static final String TAG = HomeActivity.class.getSimpleName();
 
     ArrayList<Feature> featureArrayList;
@@ -89,47 +72,6 @@ public class HomeActivity extends AppCompatActivity
         featuresRecyclerView.setAdapter(featuresRecyclerViewAdapter);
         featuresRecyclerView.setLayoutManager(featuresGridLayoutManager);
 
-        //TODO: Fix this sync issue.
-
-        //Initialising the sync adapter account for the Coding calendar activity
-        mAccount = CreateSyncAccount(HomeActivity.this);
-
-        //setting the periodic sync on the database.
-        //ContentResolver.addPeriodicSync(mAccount,AUTHORITY,Bundle.EMPTY,SYNC_INTERVAL);
-        //ContentResolver.setSyncAutomatically(mAccount,AUTHORITY,true);
-
-        //Requesting immediate sync.
-        ContentResolver.requestSync(mAccount,AUTHORITY,Bundle.EMPTY);
-
-    }
-
-    // Creating the sync account for the Coding calendar activity
-    private Account CreateSyncAccount(Context context) {
-
-        // Create the account type and default account
-        Account newAccount = new Account(
-                ACCOUNT, ACCOUNT_TYPE);
-        // Get an instance of the Android account manager
-        AccountManager accountManager =
-                (AccountManager) context.getSystemService(
-                        ACCOUNT_SERVICE);
-
-        /*
-         * Add the account and account type, no password or user data
-         * If successful, return the Account object, otherwise report an error.
-         */
-        if (accountManager.addAccountExplicitly(newAccount, null, null)) {
-            Log.v(TAG,"Created the account");
-
-        } else {
-            /*
-             * The account exists or some other error occurred. Log this, report it,
-             * or handle it internally.
-             */
-            Log.e(TAG,"Cannot create the account as it may exist already!");
-        }
-
-        return newAccount;
     }
 
     // TODO: Solve the icons issue.
