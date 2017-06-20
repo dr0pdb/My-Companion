@@ -48,12 +48,12 @@
         <provider
             android:name=".Database.DatabaseContentProvider"
             android:authorities="@string/authority"
-            android:exported="false"
+            android:exported="true"
             android:syncable="true"
             tools:ignore="InnerclassSeparator" />
 
         <service android:name=".Services.CodingCalendarAuthenticatorService"
-            android:exported="false"
+            android:exported="true"
             android:process=":auth"
             android:enabled="true"
             tools:ignore="InnerclassSeparator">

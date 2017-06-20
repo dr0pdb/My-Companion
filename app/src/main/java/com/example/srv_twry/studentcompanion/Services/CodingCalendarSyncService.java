@@ -25,7 +25,7 @@ public class CodingCalendarSyncService extends Service {
         synchronized (sSyncAdapterLock) {
             if (mCodingCalendarSyncAdapter == null) {
                 mCodingCalendarSyncAdapter = new CodingCalendarSyncAdapter(getApplicationContext(), true);
-                Log.v("CodingCalendarSyncAdap","Started sync adapter.");
+                Log.v("CodingCalendarSyncAdap","Started sync service.");
             }
         }
     }

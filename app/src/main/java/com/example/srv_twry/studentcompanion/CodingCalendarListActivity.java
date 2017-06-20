@@ -34,7 +34,7 @@ public class CodingCalendarListActivity extends AppCompatActivity implements Cod
 
     // Sync interval constants
     public static final long SECONDS_PER_MINUTE = 60L;
-    public static final long SYNC_INTERVAL_IN_MINUTES = 1L;
+    public static final long SYNC_INTERVAL_IN_MINUTES = 60L;
     public static final long SYNC_INTERVAL =
             SYNC_INTERVAL_IN_MINUTES *
                     SECONDS_PER_MINUTE;
@@ -52,38 +52,16 @@ public class CodingCalendarListActivity extends AppCompatActivity implements Cod
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.frame_layout_coding_calendar_list,codingCalendarListFragment).commit();
 
-        //TODO: Fix this sync issue.
-
-        //Initialising the sync adapter account for the Coding calendar activity
+        //Setting the syncAccount
         mAccount = CreateSyncAccount(CodingCalendarListActivity.this);
 
-        Intent intent = new Intent(CodingCalendarListActivity.this,CodingCalendarAuthenticatorService.class);
-        startService(intent);
+        ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
 
-        Intent intent1 = new Intent(CodingCalendarListActivity.this,CodingCalendarSyncService.class);
-        startService(intent1);
+        //Setting the periodic sync per hour.
+        ContentResolver.addPeriodicSync(mAccount,AUTHORITY,Bundle.EMPTY,SYNC_INTERVAL);
 
-        //setting the periodic sync on the database.
-        //ContentResolver.addPeriodicSync(mAccount,AUTHORITY,Bundle.EMPTY,SYNC_INTERVAL);
-        //ContentResolver.setSyncAutomatically(mAccount,AUTHORITY,true);
-
-        //Requesting immediate sync.
-        ContentResolver.requestSync(mAccount,AUTHORITY,Bundle.EMPTY);
-
-        Log.v(TAG,isMyServiceRunning(CodingCalendarAuthenticatorService.class)+"");
-        Log.v(TAG,isMyServiceRunning(CodingCalendarSyncService.class)+"");
         // TODO: For a later case, check for phone or tablet. If tablet then add the details Fragment.
 
-    }
-
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     // In case of phones it will start the ContestDetailActivity while in case of tablets it will contact ContestDetailFragment for details.
@@ -113,6 +91,8 @@ public class CodingCalendarListActivity extends AppCompatActivity implements Cod
         if (accountManager.addAccountExplicitly(newAccount, null, null)) {
             Log.v(TAG,"Created the account");
 
+            // Requesting the first sync after creating the account.
+            ContentResolver.requestSync(newAccount,AUTHORITY,Bundle.EMPTY);
         } else {
             /*
              * The account exists or some other error occurred. Log this, report it,

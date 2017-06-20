@@ -24,6 +24,7 @@ public class CodingCalendarSyncAdapter extends AbstractThreadedSyncAdapter imple
     public CodingCalendarSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
         mContext=context;
+        Log.v(TAG,"Initialised Coding calendar Sync adapter");
     }
 
     public CodingCalendarSyncAdapter(
@@ -35,9 +36,10 @@ public class CodingCalendarSyncAdapter extends AbstractThreadedSyncAdapter imple
 
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
-        //FetchContestsVolley fetchContestsVolley = new FetchContestsVolley(mContext,this);
-        //fetchContestsVolley.fetchContest();
-        Log.v(TAG,"Syncing started");
+        FetchContestsVolley fetchContestsVolley = new FetchContestsVolley(mContext,this);
+        fetchContestsVolley.fetchContest();
+        // To see this log message kindly change the logcat view to no filters.
+        Log.v(TAG,"SYNCING STARTED BUDDY, TAKE A CLOSER LOOK . THIS MSG IS BIG TO MAKE SURE I CAN NOTICE IT AMONG THE LARGE LOGS.");
     }
 
     /*The interface method in the FetchContestsVolley class which sets the recycler view with the new data
