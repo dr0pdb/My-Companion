@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
 
     <application
         android:allowBackup="true"
@@ -43,7 +46,8 @@
         <provider
             android:name=".Database.DatabaseContentProvider"
             android:authorities="com.example.srv_twry.studentcompanion"
-            android:exported="false" />
+            android:exported="false"
+            android:syncable="true"/>
 
         <service android:name=".Services.CodingCalendarAuthenticatorService">
             <intent-filter>
@@ -52,6 +56,17 @@
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/coding_calendar_authenticator" />
+        </service>
+
+        <service
+            android:name="com.example.srv_twry.studentcompanion.Services.CodingCalendarSyncService"
+            android:exported="false"
+            android:process=":sync">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data android:name="android.content.SyncAdapter"
+                android:resource="@xml/coding_calendar_sync_adapter" />
         </service>
     </application>
 

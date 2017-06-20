@@ -1,11 +1,15 @@
 package com.example.srv_twry.studentcompanion;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,6 +29,16 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, FeaturesRecyclerViewAdapter.FeaturesOnClickListener{
 
+    // The authority for the sync adapter's content provider
+    public static final String AUTHORITY = "com.example.srv_twry.studentcompanion";
+    // An account type, in the form of a domain name
+    public static final String ACCOUNT_TYPE = "example.com";
+    // The account name
+    public static final String ACCOUNT = "dummyaccount";
+    // Instance fields
+    Account mAccount;
+
+    private static final String TAG = HomeActivity.class.getSimpleName();
 
     ArrayList<Feature> featureArrayList;
 
@@ -62,6 +76,35 @@ public class HomeActivity extends AppCompatActivity
         featuresRecyclerView.setAdapter(featuresRecyclerViewAdapter);
         featuresRecyclerView.setLayoutManager(featuresGridLayoutManager);
 
+        //Initialising the sync adapter account for the Coding calendar activity
+        mAccount = CreateSyncAccount(HomeActivity.this);
+    }
+
+    // Creating the sync account for the Coding calendar activity
+    private Account CreateSyncAccount(Context context) {
+
+        // Create the account type and default account
+        Account newAccount = new Account(
+                ACCOUNT, ACCOUNT_TYPE);
+        // Get an instance of the Android account manager
+        AccountManager accountManager =
+                (AccountManager) context.getSystemService(
+                        ACCOUNT_SERVICE);
+
+        /*
+         * Add the account and account type, no password or user data
+         * If successful, return the Account object, otherwise report an error.
+         */
+        if (accountManager.addAccountExplicitly(newAccount, null, null)) {
+            Log.v(TAG,"Created the account");
+        } else {
+            /*
+             * The account exists or some other error occurred. Log this, report it,
+             * or handle it internally.
+             */
+            Log.e(TAG,"Cannot create the account");
+        }
+        return newAccount;
     }
 
     // TODO: Solve the icons issue.
