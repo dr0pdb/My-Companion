@@ -77,6 +77,10 @@
             <meta-data android:name="android.content.SyncAdapter"
                 android:resource="@xml/coding_calendar_sync_adapter" />
         </service>
+
+        <receiver android:name=".BroadcastReceivers.ShowSubscribedContestNotificationReceiver"
+            tools:ignore="InnerclassSeparator">
+        </receiver>
     </application>
 
 </manifest>

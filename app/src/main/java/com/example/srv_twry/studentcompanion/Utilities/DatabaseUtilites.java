@@ -12,6 +12,7 @@ import java.util.Date;
 
 /**
  * Created by srv_twry on 21/6/17.
+ * The class that contains some helper methods to work with the database.
  */
 
 public class DatabaseUtilites {

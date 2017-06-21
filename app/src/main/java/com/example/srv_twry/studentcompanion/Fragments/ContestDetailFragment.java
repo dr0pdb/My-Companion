@@ -161,6 +161,7 @@ public class ContestDetailFragment extends Fragment {
     // A helper method to set the reminder for the contest
     private void setContestReminder() {
         //TODO: Set the reminder using alarm manager
+        SubscribedContestUtilities.setReminderUsingAlarmManager(getContext(),mContest.getTitle(),mContest.getUrl(),mContest.getStartTime().getTime());
 
         //Adding the contest into the subscribed table in order to re-start alarm in case of reboot.
         subscribedDatabaseId= SubscribedContestUtilities.saveContestIntoSubscribedDatabase(getContext(),mContest);
