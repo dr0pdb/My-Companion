@@ -29,7 +29,6 @@ public class SubscribedContestUtilities {
             Toast toast = Toast.makeText(context,"Reminder set successfully",Toast.LENGTH_SHORT);
             toast.show();
         }
-
         return Integer.parseInt(uri.getPathSegments().get(1));
     }
 

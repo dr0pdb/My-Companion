@@ -98,8 +98,6 @@ public class ContestDetailFragment extends Fragment {
 
         if (savedInstanceState != null){
             isSetForReminder = savedInstanceState.getBoolean(IS_REMINDED);
-        }else{
-            isSetForReminder= false;
         }
 
         // Initialize and set the data.
