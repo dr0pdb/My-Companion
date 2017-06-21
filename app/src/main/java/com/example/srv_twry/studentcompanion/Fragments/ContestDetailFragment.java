@@ -1,6 +1,8 @@
 package com.example.srv_twry.studentcompanion.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -17,10 +19,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.srv_twry.studentcompanion.CodingCalendarContestDetailActivity;
 import com.example.srv_twry.studentcompanion.POJOs.Contest;
 import com.example.srv_twry.studentcompanion.R;
+import com.example.srv_twry.studentcompanion.Utilities.DatabaseUtilites;
+import com.example.srv_twry.studentcompanion.Utilities.SubscribedContestUtilities;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -42,6 +47,8 @@ public class ContestDetailFragment extends Fragment {
 
     private Contest mContest;
     private Boolean isSetForReminder;
+    private int subscribedDatabaseId;
+    private SharedPreferences sharedPreferences;
 
     public ContestDetailFragment() {
         // Required empty public constructor
@@ -84,6 +91,11 @@ public class ContestDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contest_detail, container, false);
+
+        sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        isSetForReminder = sharedPreferences.getBoolean(mContest.getTitle(),false);
+        subscribedDatabaseId = sharedPreferences.getInt(mContest.getTitle()+" subsDbId",-1);
+
         if (savedInstanceState != null){
             isSetForReminder = savedInstanceState.getBoolean(IS_REMINDED);
         }else{
@@ -118,6 +130,7 @@ public class ContestDetailFragment extends Fragment {
             }
         });
 
+        //depending on the subscription decide the setReminder fab background
         if (isSetForReminder){
             setReminderFloatingActionButton.setImageResource(R.drawable.ic_remove_reminder);
         }else{
@@ -129,12 +142,15 @@ public class ContestDetailFragment extends Fragment {
             public void onClick(View v) {
                 if (isSetForReminder) {
                     removeContestReminder();
-                    isSetForReminder = false;
-                    setReminderFloatingActionButton.setImageResource(R.drawable.ic_set_reminder);
                 } else {
                     setContestReminder();
-                    isSetForReminder = true;
-                    setReminderFloatingActionButton.setImageResource(R.drawable.ic_remove_reminder);
+                    if (subscribedDatabaseId >0){
+                        isSetForReminder = true;
+                        setReminderFloatingActionButton.setImageResource(R.drawable.ic_remove_reminder);
+                    }else{
+                        Toast toast = Toast.makeText(getContext(),"Cannot add reminder",Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
                 }
             }
         });
@@ -146,12 +162,26 @@ public class ContestDetailFragment extends Fragment {
 
     // A helper method to set the reminder for the contest
     private void setContestReminder() {
-        //TODO: Set the reminder
+        //TODO: Set the reminder using alarm manager
+
+        //Adding the contest into the subscribed table in order to re-start alarm in case of reboot.
+        subscribedDatabaseId= SubscribedContestUtilities.saveContestIntoSubscribedDatabase(getContext(),mContest);
     }
 
     // A helper method to remove the reminder set for the contest
     private void removeContestReminder() {
-        // TODO: Remove the reminder
+        // TODO: cancel the reminder using alarm manager
+
+        //Remove the contest from the Database
+        int returnedInt = SubscribedContestUtilities.removeContestFromSubscribedDatabase(getContext(),subscribedDatabaseId);
+        if (returnedInt >0){
+            isSetForReminder = false;
+            subscribedDatabaseId = -1;
+            setReminderFloatingActionButton.setImageResource(R.drawable.ic_set_reminder);
+        }else{
+            Toast toast = Toast.makeText(getContext(),"Cannot remove reminder",Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     // A helper method to set the data into the views.
@@ -160,8 +190,8 @@ public class ContestDetailFragment extends Fragment {
             return;
         }
         contestDetailTitleView.setText(mContest.getTitle());
-        getCoverImage(mContest.getUrl());
-        getStartTimeText(mContest.getStartTime());
+        coverImage.setImageResource(DatabaseUtilites.getCoverImage(mContest.getUrl()));
+        contestDetailStartTimeText.setText(DatabaseUtilites.getStartTimeText(mContest.getStartTime()));
         String duration = "Approximately "+getContestDuration(mContest.getStartTime(),mContest.getEndTime())+" hours";
         contestDetailDurationText.setText(duration);
         if (mContest.getDescription().equals("")){
@@ -180,54 +210,6 @@ public class ContestDetailFragment extends Fragment {
         });
     }
 
-    // Helper method to set the start time and date of the contest in intended order
-    private void getStartTimeText(Date startTime) {
-        SpannableString originalFormatTime = new SpannableString(startTime.toString());
-        String finalStartTime;
-
-        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(originalFormatTime,0,3);
-        spannableStringBuilder.setSpan(new RelativeSizeSpan(3f),0,3,0);
-        spannableStringBuilder.append("\n");
-        spannableStringBuilder.append(originalFormatTime,4,10);
-        spannableStringBuilder.setSpan(new RelativeSizeSpan(1.5f),4,10,0);
-        spannableStringBuilder.append("\n");
-        spannableStringBuilder.append(originalFormatTime,11,16);
-        finalStartTime = spannableStringBuilder.toString();
-
-        contestDetailStartTimeText.setText(finalStartTime);
-    }
-
-    //Helper method to get the Cover image of the Contest
-    private void getCoverImage(String url) {
-        URL urlPlatform;
-        try{
-            urlPlatform = new URL(url);
-            String platformString = urlPlatform.getHost();
-
-            switch (platformString){
-                case "www.topcoder.com":
-                    coverImage.setImageResource(R.mipmap.topcoder_cover);
-                    break;
-                case "www.codechef.com":
-                    coverImage.setImageResource(R.mipmap.codechef_cover);
-                    break;
-                case "www.hackerrank.com":
-                    coverImage.setImageResource(R.mipmap.hackerrank_cover);
-                    break;
-                case "www.hackerearth.com":
-                    coverImage.setImageResource(R.mipmap.hackerearth_cover);
-                    break;
-                case "codeforces.com":
-                    coverImage.setImageResource(R.mipmap.codeforces_cover);
-                    break;
-                default:
-                    coverImage.setImageResource(R.mipmap.ic_code);
-            }
-        }catch (MalformedURLException e){
-            e.printStackTrace();
-        }
-    }
-
     private long getContestDuration(Date start, Date end){
         long startTime = start.getTime();
         long endTime = end.getTime();
@@ -241,5 +223,16 @@ public class ContestDetailFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(IS_REMINDED,isSetForReminder);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        //saving the data for persistence use.
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(mContest.getTitle(),isSetForReminder);
+        editor.putInt(mContest.getTitle()+" subsDbId",subscribedDatabaseId);
+        editor.apply();
     }
 }

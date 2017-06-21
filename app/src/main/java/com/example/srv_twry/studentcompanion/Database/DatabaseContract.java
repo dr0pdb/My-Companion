@@ -16,6 +16,8 @@ public class DatabaseContract {
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
     public static final String PATH_CONTESTS = "contests";
+    public static final String PATH_SUBSCRIBED_CONTESTS = "subscribedContests";
+
 
     public static final class ContestEntry implements BaseColumns{
 
@@ -30,5 +32,19 @@ public class DatabaseContract {
         public static final String CONTEST_COLUMN_URL = "contestUrl";
         public static final String CONTEST_COLUMN_START_TIME = "startTime";
         public static final String CONTEST_COLUMN_END_TIME = "endTime";
+    }
+
+    public static final class SubscribedContestEntry implements BaseColumns{
+
+        public static final Uri CONTENT_URI_SUBSCRIBED_CONTESTS = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SUBSCRIBED_CONTESTS).build();
+
+        //Table name
+        public static final String TABLE_NAME_SUBSCRIBED_CONTESTS = "subscribedContestsTable";
+
+        //Table columns
+        public static final String SUBSCRIBED_CONTEST_TITLE = "subscribedContestTitle";
+        public static final String SUBSCRIBED_CONTEST_URL = "subscribedContestUrl";
+        public static final String SUBSCRIBED_CONTEST_START_TIME = "subscribedStartTime";
+
     }
 }

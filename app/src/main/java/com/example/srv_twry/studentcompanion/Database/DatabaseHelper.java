@@ -28,12 +28,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 DatabaseContract.ContestEntry.CONTEST_COLUMN_START_TIME + " TEXT NOT NULL, " +
                 DatabaseContract.ContestEntry.CONTEST_COLUMN_END_TIME + " TEXT NOT NULL);";
 
+        final String CREATE_SUBSCRIBED_CONTEST_TABLE = "CREATE TABLE " + DatabaseContract.SubscribedContestEntry.TABLE_NAME_SUBSCRIBED_CONTESTS + " (" +
+                DatabaseContract.SubscribedContestEntry._ID + " INTEGER PRIMARY KEY, " +
+                DatabaseContract.SubscribedContestEntry.SUBSCRIBED_CONTEST_TITLE + " TEXT NOT NULL, " +
+                DatabaseContract.SubscribedContestEntry.SUBSCRIBED_CONTEST_URL + " TEXT NOT NULL, " +
+                DatabaseContract.SubscribedContestEntry.SUBSCRIBED_CONTEST_START_TIME + " INTEGER);";
+
         db.execSQL(CREATE_CONTEST_TABLE);
+        db.execSQL(CREATE_SUBSCRIBED_CONTEST_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.ContestEntry.TABLE_NAME_CONTESTS);
+        db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.SubscribedContestEntry.TABLE_NAME_SUBSCRIBED_CONTESTS);
         onCreate(db);
     }
 }
