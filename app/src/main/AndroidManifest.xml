@@ -41,7 +41,6 @@
         <activity android:name=".CodingCalendarContestDetailActivity"
             android:label=""
             android:parentActivityName=".CodingCalendarListActivity"
-            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>

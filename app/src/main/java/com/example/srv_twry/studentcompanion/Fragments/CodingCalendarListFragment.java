@@ -87,9 +87,10 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
         if (savedInstanceState != null){
             recyclerViewState = savedInstanceState.getParcelable(RECYCLERVIEW_POSITION);
         }
-
+        Log.v(TAG,"onCreateView");
         // To get the contests either from server or database.
         startLoadingData();
+
 
         ContestRecyclerViewAdapter contestRecyclerViewAdapter = new ContestRecyclerViewAdapter(contestArrayList,this);
         gridLayoutManager = new GridLayoutManager(getActivity().getBaseContext(),getResources().getInteger(R.integer.number_columns_grid_view_features));
@@ -98,12 +99,14 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
         return view;
     }
 
-
     private void startLoadingData() {
+
         //If the device is online then get the updated data from the server otherwise use the cached data from the database.
         if (isOnline()){
+            Log.v(TAG,"NETWORK AVAILABLE ");
             FetchContestsVolley fetchContestsVolley = new FetchContestsVolley(getContext(),this);
             fetchContestsVolley.fetchContest();
+            Log.v(TAG,"onCreateView after");
         }else{
             getDataFromDatabase();
         }
@@ -143,7 +146,7 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
     @Override
     public void onResume() {
         super.onResume();
-        startLoadingData();
+        //startLoadingData();
     }
 
     //This is used to save the position of the recycler view after rotation.
@@ -161,6 +164,7 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
 
     @Override
     public void onContestListItemClicked(Contest clickedContest) {
+        //This so that if the user comes back to the list fragment he comes to the right position.
         recyclerViewState = contestRecyclerView.getLayoutManager().onSaveInstanceState();
         passContestToActivity(clickedContest);
     }

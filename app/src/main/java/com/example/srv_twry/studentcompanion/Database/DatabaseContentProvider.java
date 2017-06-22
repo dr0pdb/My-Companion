@@ -116,6 +116,11 @@ public class DatabaseContentProvider extends ContentProvider {
         int match = uriMatcher.match(uri);
 
         switch (match){
+            case CONTESTS:
+                contestsDeleted = db.delete(DatabaseContract.ContestEntry.TABLE_NAME_CONTESTS,null,null);
+                Log.v("ContentProvider","All the previous contests deleted i.e. "+ contestsDeleted + " contests");
+                break;
+
             case SUBSCRIBED_CONTESTS_INDIVIDUAL:
                 String stringIds = uri.getPathSegments().get(1);
                 contestsDeleted = db.delete(DatabaseContract.SubscribedContestEntry.TABLE_NAME_SUBSCRIBED_CONTESTS,"_id=?", new String[]{stringIds});

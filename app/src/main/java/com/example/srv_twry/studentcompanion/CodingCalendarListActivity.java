@@ -55,11 +55,9 @@ public class CodingCalendarListActivity extends AppCompatActivity implements Cod
             fragmentManager.beginTransaction().add(R.id.frame_layout_coding_calendar_list,codingCalendarListFragment).commit();
             Log.v("CalendarListActivity","CREATING THE FRAGMENT");
         }
+
         //Setting the syncAccount
         mAccount = CreateSyncAccount(CodingCalendarListActivity.this);
-
-        ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
-
         //Setting the periodic sync per hour.
         ContentResolver.addPeriodicSync(mAccount,AUTHORITY,Bundle.EMPTY,SYNC_INTERVAL);
 

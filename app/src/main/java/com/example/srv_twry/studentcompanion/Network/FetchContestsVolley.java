@@ -61,13 +61,17 @@ public class FetchContestsVolley {
     // Parse the JSON Response and add to database
     private void addToDatabase(JSONObject response) {
         try{
+            //deleting the previous table of contests
+            Uri uri = DatabaseContract.ContestEntry.CONTENT_URI_CONTESTS;
+            context.getContentResolver().delete(uri,null,null);
+
             //Adding a fake contest for testing notifications.
             //Change the start time of the contest according to your need here.
             ContentValues fakecontentValues = new ContentValues();
             fakecontentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_TITLE,"Fake contest");
             fakecontentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_DESCRIPTION,"Fake contest");
             fakecontentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_URL,"https://www.hackerrank.com/contests/projecteuler/");
-            fakecontentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_START_TIME,"2017-06-22T07:33:00.000Z");
+            fakecontentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_START_TIME,"2017-06-22T10:30:00.000Z");
             fakecontentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_END_TIME,"2024-07-30T18:30:00.000Z");
             context.getContentResolver().insert(DatabaseContract.ContestEntry.CONTENT_URI_CONTESTS,fakecontentValues);
             //delete the code above this line after testing or comment it.
