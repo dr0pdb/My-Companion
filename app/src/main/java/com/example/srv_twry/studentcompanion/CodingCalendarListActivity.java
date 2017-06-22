@@ -48,10 +48,13 @@ public class CodingCalendarListActivity extends AppCompatActivity implements Cod
         setContentView(R.layout.activity_coding_calendar_list);
         setTitle(getResources().getString(R.string.coding_calendar));
 
-        CodingCalendarListFragment codingCalendarListFragment = CodingCalendarListFragment.newInstance();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.frame_layout_coding_calendar_list,codingCalendarListFragment).commit();
-
+        //Only create a fragment when their isn't one.
+        if (savedInstanceState == null){
+            CodingCalendarListFragment codingCalendarListFragment = CodingCalendarListFragment.newInstance();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().add(R.id.frame_layout_coding_calendar_list,codingCalendarListFragment).commit();
+            Log.v("CalendarListActivity","CREATING THE FRAGMENT");
+        }
         //Setting the syncAccount
         mAccount = CreateSyncAccount(CodingCalendarListActivity.this);
 

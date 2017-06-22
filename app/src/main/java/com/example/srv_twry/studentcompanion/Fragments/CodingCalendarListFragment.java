@@ -1,15 +1,19 @@
 package com.example.srv_twry.studentcompanion.Fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,10 +47,14 @@ import butterknife.ButterKnife;
 public class CodingCalendarListFragment extends Fragment implements ContestRecyclerViewAdapter.ContestRecyclerViewOnClickListener, FetchContestsVolley.onLoadingFinishedListener, LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String TAG = CodingCalendarListFragment.class.getSimpleName();
+    private static final String RECYCLERVIEW_POSITION = "recyclerView position";
+    Parcelable recyclerViewState;
+
     private OnFragmentInteractionListener mListener;
     private ArrayList<Contest> contestArrayList = new ArrayList<>();
     @BindView(R.id.rv_contest_list)
     RecyclerView contestRecyclerView;
+    GridLayoutManager gridLayoutManager;
 
     private static final int CONTEST_LOADER_ID = 100;
 
@@ -76,11 +84,15 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
         View view = inflater.inflate(R.layout.fragment_coding_calendar_list, container, false);
         ButterKnife.bind(this,view);
 
+        if (savedInstanceState != null){
+            recyclerViewState = savedInstanceState.getParcelable(RECYCLERVIEW_POSITION);
+        }
+
         // To get the contests either from server or database.
         startLoadingData();
 
         ContestRecyclerViewAdapter contestRecyclerViewAdapter = new ContestRecyclerViewAdapter(contestArrayList,this);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity().getBaseContext(),getResources().getInteger(R.integer.number_columns_grid_view_features));
+        gridLayoutManager = new GridLayoutManager(getActivity().getBaseContext(),getResources().getInteger(R.integer.number_columns_grid_view_features));
         contestRecyclerView.setAdapter(contestRecyclerViewAdapter);
         contestRecyclerView.setLayoutManager(gridLayoutManager);
         return view;
@@ -99,7 +111,9 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
 
     // The method which uses loaders to get the Data from the database to the recycler view.
     private void getDataFromDatabase() {
-        getActivity().getSupportLoaderManager().initLoader(CONTEST_LOADER_ID,null,this);
+        if (getActivity() != null){
+            getActivity().getSupportLoaderManager().initLoader(CONTEST_LOADER_ID,null,this);
+        }
     }
 
     // To pass the activity with the Contest clicked.
@@ -132,8 +146,22 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
         startLoadingData();
     }
 
+    //This is used to save the position of the recycler view after rotation.
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(RECYCLERVIEW_POSITION,contestRecyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        recyclerViewState = contestRecyclerView.getLayoutManager().onSaveInstanceState();
+    }
+
     @Override
     public void onContestListItemClicked(Contest clickedContest) {
+        recyclerViewState = contestRecyclerView.getLayoutManager().onSaveInstanceState();
         passContestToActivity(clickedContest);
     }
 
@@ -203,8 +231,16 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
             ContestRecyclerViewAdapter contestRecyclerViewAdapter = new ContestRecyclerViewAdapter(contestArrayList,this);
             contestRecyclerView.setAdapter(contestRecyclerViewAdapter);
             contestRecyclerView.invalidate();
+
+            //scrolling the recyclerview to the last visited position.
+            if (recyclerViewState != null){
+                gridLayoutManager.onRestoreInstanceState(recyclerViewState);
+            }else{
+                Log.v(TAG,"recyclerViewState is null :( ");
+            }
         }
     }
+
     // To convert the cursor to an array list
     private ArrayList<Contest> convertCursorToArrayList(Cursor data) {
         ArrayList<Contest> returnArrayList = new ArrayList<>();
@@ -228,7 +264,6 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
 
             returnArrayList.add(new Contest(title,description,url,startTime,endTime));
         }
-
         return returnArrayList;
     }
 
