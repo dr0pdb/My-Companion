@@ -3,6 +3,9 @@ package com.example.srv_twry.studentcompanion.BroadcastReceivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+
+import com.example.srv_twry.studentcompanion.Services.SetReminderAfterRebootService;
 
 /**
  * Created by srv_twry on 22/6/17.
@@ -16,7 +19,10 @@ public class DeviceRebootBroadcastReceiver extends BroadcastReceiver{
     public void onReceive(Context context, Intent intent) {
 
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
-            // TODO: start the service here.
+            //start the service here.
+            Intent startServiceIntent = new Intent(context, SetReminderAfterRebootService.class);
+            context.startService(startServiceIntent);
+            Log.v("Reboot receiver","STARTED SERVICE TO RESCHEDULE THE ALARMS");
         }
 
     }

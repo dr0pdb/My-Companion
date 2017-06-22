@@ -76,6 +76,7 @@ public class SubscribedContestUtilities {
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context.getApplicationContext(), 234324243, intent, 0);
+        alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
     }
 }

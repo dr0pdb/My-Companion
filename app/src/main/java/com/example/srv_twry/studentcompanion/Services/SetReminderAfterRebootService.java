@@ -28,7 +28,6 @@ public class SetReminderAfterRebootService extends IntentService {
     //Since it is already called in a background thread by the system so need for loaders.
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-
         // Setting the alarms for the coding calendar
         Cursor subscribedContestCursor = mContext.getContentResolver().query(DatabaseContract.SubscribedContestEntry.CONTENT_URI_SUBSCRIBED_CONTESTS,null,null,null,null);
         setAlarmsForContests(subscribedContestCursor);
@@ -54,7 +53,6 @@ public class SetReminderAfterRebootService extends IntentService {
                 SubscribedContestUtilities.setReminderUsingAlarmManager(mContext,title,url,startTime);
 
             }else{
-                //TODO:delete the contest from the database as the  contest has already started.
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
                 int databaseId = sharedPreferences.getInt(title+" subsDbId",-1);
 
