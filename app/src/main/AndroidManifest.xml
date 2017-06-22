@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -81,6 +82,17 @@
         <receiver android:name=".BroadcastReceivers.ShowSubscribedContestNotificationReceiver"
             tools:ignore="InnerclassSeparator">
         </receiver>
+
+        <receiver android:name=".BroadcastReceivers.DeviceRebootBroadcastReceiver"
+            tools:ignore="InnerclassSeparator"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

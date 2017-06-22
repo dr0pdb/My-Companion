@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -92,7 +93,7 @@ public class ContestDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contest_detail, container, false);
 
-        sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         isSetForReminder = sharedPreferences.getBoolean(mContest.getTitle(),false);
         subscribedDatabaseId = sharedPreferences.getInt(mContest.getTitle()+" subsDbId",-1);
 
@@ -141,12 +142,17 @@ public class ContestDetailFragment extends Fragment {
                 if (isSetForReminder) {
                     removeContestReminder();
                 } else {
-                    setContestReminder();
-                    if (subscribedDatabaseId >0){
-                        isSetForReminder = true;
-                        setReminderFloatingActionButton.setImageResource(R.drawable.ic_remove_reminder);
+                    if (mContest.getStartTime().getTime() > System.currentTimeMillis()){
+                        setContestReminder();
+                        if (subscribedDatabaseId >0){
+                            isSetForReminder = true;
+                            setReminderFloatingActionButton.setImageResource(R.drawable.ic_remove_reminder);
+                        }else{
+                            Toast toast = Toast.makeText(getContext(),"Cannot add reminder",Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
                     }else{
-                        Toast toast = Toast.makeText(getContext(),"Cannot add reminder",Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(getContext(),"Contest is already running",Toast.LENGTH_SHORT);
                         toast.show();
                     }
                 }
@@ -160,7 +166,7 @@ public class ContestDetailFragment extends Fragment {
 
     // A helper method to set the reminder for the contest
     private void setContestReminder() {
-        //TODO: Set the reminder using alarm manager
+        //Set the reminder using alarm manager
         SubscribedContestUtilities.setReminderUsingAlarmManager(getContext(),mContest.getTitle(),mContest.getUrl(),mContest.getStartTime().getTime());
 
         //Adding the contest into the subscribed table in order to re-start alarm in case of reboot.
@@ -169,7 +175,8 @@ public class ContestDetailFragment extends Fragment {
 
     // A helper method to remove the reminder set for the contest
     private void removeContestReminder() {
-        // TODO: cancel the reminder using alarm manager
+        // cancel the reminder using alarm manager
+        SubscribedContestUtilities.removeReminderUsingAlarmManager(getContext(),mContest.getTitle(),mContest.getUrl());
 
         //Remove the contest from the Database
         int returnedInt = SubscribedContestUtilities.removeContestFromSubscribedDatabase(getContext(),subscribedDatabaseId);
@@ -228,7 +235,7 @@ public class ContestDetailFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        //saving the data for persistence use.
+        //saving the data for persistent use.
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(mContest.getTitle(),isSetForReminder);
         editor.putInt(mContest.getTitle()+" subsDbId",subscribedDatabaseId);

@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -24,7 +25,7 @@ public class SubscribedContestUtilities {
 
     public static final String CONTEST_TITLE = "contestTitle";
     public static final String CONTEST_URL = "contestUrl";
-    public static final String CONTEST_START_TIME = "contestStartTime";
+    public static AlarmManager alarmManager;
 
     public static int saveContestIntoSubscribedDatabase(Context context, Contest mContest) {
 
@@ -55,14 +56,26 @@ public class SubscribedContestUtilities {
         intent.putExtra(CONTEST_TITLE,title);
         intent.putExtra(CONTEST_URL,url);
 
-        long currentTime = System.currentTimeMillis();
-        if (time<currentTime){
-            return;
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context.getApplicationContext(), 234324243, intent, 0);
+        alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+
+        //for versions above kitkat , one can use setExact for better precision.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+        }else{
+            alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
         }
+
+    }
+
+    public static void removeReminderUsingAlarmManager(Context context, String title, String url) {
+        Intent intent = new Intent(context, ShowSubscribedContestNotificationReceiver.class);
+        intent.putExtra(CONTEST_TITLE,title);
+        intent.putExtra(CONTEST_URL,url);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context.getApplicationContext(), 234324243, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+        alarmManager.cancel(pendingIntent);
     }
 }

@@ -62,7 +62,8 @@ public class FetchContestsVolley {
     private void addToDatabase(JSONObject response) {
         try{
             JSONArray models = response.getJSONArray("models");
-            for(int i=0; i<models.length(); i++){
+            //The hackerrank API sorts contests in reverse order so reversing the array
+            for(int i=models.length()-1; i>=0; i--){
                 JSONObject obj = models.getJSONObject(i);
                 String title = obj.getString("title");
                 String description = obj.getString("description");
