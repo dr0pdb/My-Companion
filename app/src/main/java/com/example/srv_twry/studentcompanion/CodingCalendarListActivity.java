@@ -7,20 +7,28 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.srv_twry.studentcompanion.Fragments.CodingCalendarListFragment;
+import com.example.srv_twry.studentcompanion.Fragments.ContestDetailFragment;
 import com.example.srv_twry.studentcompanion.POJOs.Contest;
 import com.example.srv_twry.studentcompanion.Services.CodingCalendarAuthenticatorService;
 import com.example.srv_twry.studentcompanion.Services.CodingCalendarSyncService;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /*
 * This activity contains the coding contest lists for phones and The two pane layout for the tablets.
 * */
-public class CodingCalendarListActivity extends AppCompatActivity implements CodingCalendarListFragment.OnFragmentInteractionListener{
+public class CodingCalendarListActivity extends AppCompatActivity implements CodingCalendarListFragment.OnFragmentInteractionListener {
 
     private static final String TAG = CodingCalendarListActivity.class.getSimpleName();
     public static final String INTENT_EXTRA_TAG = "Contest";
@@ -41,6 +49,8 @@ public class CodingCalendarListActivity extends AppCompatActivity implements Cod
 
     // Instance fields
     Account mAccount;
+    @Nullable @BindView(R.id.tv_click_contest_message)
+    TextView clickContestMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,19 +58,20 @@ public class CodingCalendarListActivity extends AppCompatActivity implements Cod
         setContentView(R.layout.activity_coding_calendar_list);
         setTitle(getResources().getString(R.string.coding_calendar));
 
+        ButterKnife.bind(this);
+
         //Only create a fragment when their isn't one.
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
             CodingCalendarListFragment codingCalendarListFragment = CodingCalendarListFragment.newInstance();
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().add(R.id.frame_layout_coding_calendar_list,codingCalendarListFragment).commit();
+            fragmentManager.beginTransaction().add(R.id.frame_layout_coding_calendar_list, codingCalendarListFragment).commit();
         }
 
         //Setting the syncAccount
         mAccount = CreateSyncAccount(CodingCalendarListActivity.this);
         //Setting the periodic sync per hour.
-        ContentResolver.addPeriodicSync(mAccount,AUTHORITY,Bundle.EMPTY,SYNC_INTERVAL);
+        ContentResolver.addPeriodicSync(mAccount, AUTHORITY, Bundle.EMPTY, SYNC_INTERVAL);
 
-        // TODO: For a later case, check for phone or tablet. If tablet then add the details Fragment.
 
     }
 
@@ -68,9 +79,18 @@ public class CodingCalendarListActivity extends AppCompatActivity implements Cod
     @Override
     public void onListFragmentInteraction(Contest clickedContest) {
         //For phones
-        Intent intent = new Intent(CodingCalendarListActivity.this,CodingCalendarContestDetailActivity.class);
-        intent.putExtra(INTENT_EXTRA_TAG,clickedContest);
-        startActivity(intent);
+        if (!getResources().getBoolean(R.bool.is_tablet)) {
+            Intent intent = new Intent(CodingCalendarListActivity.this, CodingCalendarContestDetailActivity.class);
+            intent.putExtra(INTENT_EXTRA_TAG, clickedContest);
+            startActivity(intent);
+        } else {
+            //For tablets
+            clickContestMessage.setVisibility(View.GONE);
+            ContestDetailFragment contestDetailFragment = ContestDetailFragment.newInstance(clickedContest);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.frame_layout_contest_detail, contestDetailFragment).commit();
+        }
+
     }
 
     // Creating the sync account for the Coding calendar activity
@@ -89,16 +109,16 @@ public class CodingCalendarListActivity extends AppCompatActivity implements Cod
          * If successful, return the Account object, otherwise report an error.
          */
         if (accountManager.addAccountExplicitly(newAccount, null, null)) {
-            Log.v(TAG,"Created the account");
+            Log.v(TAG, "Created the account");
 
             // Requesting the first sync after creating the account.
-            ContentResolver.requestSync(newAccount,AUTHORITY,Bundle.EMPTY);
+            ContentResolver.requestSync(newAccount, AUTHORITY, Bundle.EMPTY);
         } else {
             /*
              * The account exists or some other error occurred. Log this, report it,
              * or handle it internally.
              */
-            Log.e(TAG,"Cannot create the account as it may exist already!");
+            Log.e(TAG, "Cannot create the account as it may exist already!");
         }
 
         return newAccount;

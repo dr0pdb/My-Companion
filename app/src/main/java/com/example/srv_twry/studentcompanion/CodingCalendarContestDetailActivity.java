@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.example.srv_twry.studentcompanion.Fragments.ContestDetailFragment;
 import com.example.srv_twry.studentcompanion.POJOs.Contest;
@@ -27,6 +28,20 @@ public class CodingCalendarContestDetailActivity extends AppCompatActivity {
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
         setContentView(R.layout.activity_coding_calendar_contest_detail);
+
+        if (Build.VERSION.SDK_INT < 16)//before Jelly Bean Versions
+        {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+        else // Jelly Bean and up
+        {
+            View decorView = getWindow().getDecorView();
+            // Hide the status bar.
+            int ui = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(ui);
+
+        }
 
         mContest = getIntent().getParcelableExtra(INTENT_EXTRA_TAG);
 

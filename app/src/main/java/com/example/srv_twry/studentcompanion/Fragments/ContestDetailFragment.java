@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.srv_twry.studentcompanion.CodingCalendarContestDetailActivity;
+import com.example.srv_twry.studentcompanion.CodingCalendarListActivity;
 import com.example.srv_twry.studentcompanion.POJOs.Contest;
 import com.example.srv_twry.studentcompanion.R;
 import com.example.srv_twry.studentcompanion.Utilities.DatabaseUtilites;
@@ -46,6 +47,7 @@ public class ContestDetailFragment extends Fragment {
     private Boolean isSetForReminder;
     private int subscribedDatabaseId;
     private SharedPreferences sharedPreferences;
+    private boolean isTablet;
 
     public ContestDetailFragment() {
         // Required empty public constructor
@@ -71,9 +73,6 @@ public class ContestDetailFragment extends Fragment {
         return fragment;
     }
 
-    public CodingCalendarContestDetailActivity getActivityCast(){
-        return (CodingCalendarContestDetailActivity) getActivity();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,6 +89,7 @@ public class ContestDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_contest_detail, container, false);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
         isSetForReminder = sharedPreferences.getBoolean(mContest.getTitle(),false);
         subscribedDatabaseId = sharedPreferences.getInt(mContest.getTitle()+" subsDbId",-1);
 
@@ -99,21 +99,36 @@ public class ContestDetailFragment extends Fragment {
 
         // Initialize and set the data.
         ButterKnife.bind(this,view);
-        getActivityCast().setSupportActionBar(toolbar);
-
-        //Responding to back button. NOTE:// ONLY FOR PHONES
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
-        ActionBar actionBar = getActivityCast().getSupportActionBar();
-        if (actionBar!=null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayShowHomeEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        if (getActivity().getResources().getBoolean(R.bool.is_tablet)){
+            isTablet = true;
+            toolbar.setVisibility(View.GONE);
+        }else{
+            isTablet = false;
         }
+
+        if (!isTablet){
+            CodingCalendarContestDetailActivity codingCalendarContestDetailActivity = (CodingCalendarContestDetailActivity) getActivity();
+            codingCalendarContestDetailActivity.setSupportActionBar(toolbar);
+        }
+
+
+        //Only for phones
+        if (!isTablet){
+            CodingCalendarContestDetailActivity codingCalendarContestDetailActivity = (CodingCalendarContestDetailActivity) getActivity();
+            toolbar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().finish();
+                }
+            });
+            ActionBar actionBar = codingCalendarContestDetailActivity.getSupportActionBar();
+            if (actionBar!=null) {
+                actionBar.setHomeButtonEnabled(true);
+                actionBar.setDisplayShowHomeEnabled(true);
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
+        }
+
 
         collapsingToolbarLayout.setTitle("");
 

@@ -11,4 +11,5 @@
     <string name="communicate">Communicate</string>
     <string name="authority">com.example.srv_twry.studentcompanion</string>
     <string name="participate">Participate</string>
+    <string name="contest_click_message">Click on a Contest for details</string>
 </resources>
