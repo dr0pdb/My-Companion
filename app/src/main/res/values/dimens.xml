@@ -7,4 +7,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fab_elevation">6dp</dimen>
     <integer name="number_columns_grid_view_features">2</integer>
+    <integer name="number_columns_grid_view_contest_list">1</integer>
 </resources>

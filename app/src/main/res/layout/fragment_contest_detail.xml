@@ -24,7 +24,7 @@
                 android:id="@+id/contest_cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="center"
+                android:scaleType="centerCrop"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"
                 tools:ignore="ContentDescription" />
@@ -55,7 +55,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:layout_margin="8dp"
                 tools:text="Title"
                 android:textStyle="bold"
                 android:textSize="24sp"
@@ -64,9 +63,11 @@
                 android:layout_marginLeft="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="28dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp" />
+                android:layout_marginEnd="8dp"
+                android:padding="4dp"
+                android:background="#f9fbe7"/>
 
             <TextView
                 android:id="@+id/tv_contest_details_start_time"
@@ -79,20 +80,25 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginEnd="8dp"
+                android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@+id/tv_contest_details_title"
                 android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/tv_contest_detail_duration"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 tools:text="Contest duration"
                 android:layout_marginStart="16dp"
                 android:textSize="16sp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_contest_details_title"
                 app:layout_constraintLeft_toRightOf="@+id/tv_contest_details_start_time"
-                android:layout_marginLeft="16dp" />
+                android:layout_marginLeft="16dp"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="@+id/tv_contest_details_start_time"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintRight_toRightOf="parent" />
 
             <TextView
                 android:id="@+id/tv_contest_detail_description"

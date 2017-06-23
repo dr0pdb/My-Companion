@@ -51,7 +51,7 @@ public class ShowSubscribedContestNotificationReceiver extends BroadcastReceiver
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(10,mBuilder.build());
 
-        //TODO: Delete the contest from the database here.
+        // Delete the contest from the database here.
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         int databaseId = sharedPreferences.getInt(contestTitle+" subsDbId",-1);
 

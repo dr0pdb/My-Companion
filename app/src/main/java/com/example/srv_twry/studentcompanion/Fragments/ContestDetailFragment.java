@@ -197,7 +197,8 @@ public class ContestDetailFragment extends Fragment {
         }
         contestDetailTitleView.setText(mContest.getTitle());
         coverImage.setImageResource(DatabaseUtilites.getCoverImage(mContest.getUrl()));
-        contestDetailStartTimeText.setText(DatabaseUtilites.getStartTimeText(mContest.getStartTime()));
+        SpannableString contestDetailsStartTime = DatabaseUtilites.getStartTimeTextDetailsFragment(mContest.getStartTime());
+        contestDetailStartTimeText.setText(contestDetailsStartTime);
         String duration = "Approximately "+getContestDuration(mContest.getStartTime(),mContest.getEndTime())+" hours";
         contestDetailDurationText.setText(duration);
         if (mContest.getDescription().equals("")){
@@ -216,6 +217,7 @@ public class ContestDetailFragment extends Fragment {
         });
     }
 
+    //TODO: Get the correct duration
     private long getContestDuration(Date start, Date end){
         long startTime = start.getTime();
         long endTime = end.getTime();

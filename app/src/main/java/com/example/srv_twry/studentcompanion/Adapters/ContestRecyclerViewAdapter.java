@@ -1,6 +1,7 @@
 package com.example.srv_twry.studentcompanion.Adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.srv_twry.studentcompanion.POJOs.Contest;
 import com.example.srv_twry.studentcompanion.R;
+import com.example.srv_twry.studentcompanion.Utilities.DatabaseUtilites;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -59,17 +61,26 @@ public class ContestRecyclerViewAdapter extends RecyclerView.Adapter<ContestRecy
         @BindView(R.id.contest_view_holder_platform_image) ImageView contestPlatform;
         @BindView(R.id.tv_contest_platform_name) TextView contestTitle;
         @BindView(R.id.tv_contest_start_time) TextView contestStartTime;
+        boolean isLandscape;
 
         public ViewHolder(View view){
             super(view);
             ButterKnife.bind(this,view);
             view.setOnClickListener(this);
+            isLandscape = view.getResources().getBoolean(R.bool.is_landscape);
         }
 
         public void bind(int position) {
             setImageViewUsingUrl(contestArrayList.get(position).getUrl());
-            contestTitle.setText(contestArrayList.get(position).getTitle());
-            contestStartTime.setText(contestArrayList.get(position).getStartTime().toString());
+            String contestTitleString = contestArrayList.get(position).getTitle();
+            if (contestTitleString.length() >=34 && !isLandscape){
+                String temp = contestTitleString.substring(0,31) + "...";
+                contestTitle.setText(temp);
+            }else{
+                contestTitle.setText(contestTitleString);
+            }
+            SpannableString contestStartTimeString = DatabaseUtilites.getStartTimeTextContestList(contestArrayList.get(position).getStartTime());
+            contestStartTime.setText(contestStartTimeString);
         }
 
         private void setImageViewUsingUrl(String url) {

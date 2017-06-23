@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.srv_twry.studentcompanion.Adapters.ContestRecyclerViewAdapter;
 import com.example.srv_twry.studentcompanion.Database.DatabaseContract;
@@ -52,6 +53,8 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
 
     private OnFragmentInteractionListener mListener;
     private ArrayList<Contest> contestArrayList = new ArrayList<>();
+    @BindView(R.id.pb_loading_contests)
+    ProgressBar loadingContestsProgressBar;
     @BindView(R.id.rv_contest_list)
     RecyclerView contestRecyclerView;
     GridLayoutManager gridLayoutManager;
@@ -87,13 +90,12 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
         if (savedInstanceState != null){
             recyclerViewState = savedInstanceState.getParcelable(RECYCLERVIEW_POSITION);
         }
-        Log.v(TAG,"onCreateView");
         // To get the contests either from server or database.
         startLoadingData();
 
 
         ContestRecyclerViewAdapter contestRecyclerViewAdapter = new ContestRecyclerViewAdapter(contestArrayList,this);
-        gridLayoutManager = new GridLayoutManager(getActivity().getBaseContext(),getResources().getInteger(R.integer.number_columns_grid_view_features));
+        gridLayoutManager = new GridLayoutManager(getActivity().getBaseContext(),getResources().getInteger(R.integer.number_columns_grid_view_contest_list));
         contestRecyclerView.setAdapter(contestRecyclerViewAdapter);
         contestRecyclerView.setLayoutManager(gridLayoutManager);
         return view;
@@ -103,10 +105,8 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
 
         //If the device is online then get the updated data from the server otherwise use the cached data from the database.
         if (isOnline()){
-            Log.v(TAG,"NETWORK AVAILABLE ");
             FetchContestsVolley fetchContestsVolley = new FetchContestsVolley(getContext(),this);
             fetchContestsVolley.fetchContest();
-            Log.v(TAG,"onCreateView after");
         }else{
             getDataFromDatabase();
         }
@@ -235,12 +235,12 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
             ContestRecyclerViewAdapter contestRecyclerViewAdapter = new ContestRecyclerViewAdapter(contestArrayList,this);
             contestRecyclerView.setAdapter(contestRecyclerViewAdapter);
             contestRecyclerView.invalidate();
+            loadingContestsProgressBar.setVisibility(View.GONE);
+            contestRecyclerView.setVisibility(View.VISIBLE);
 
             //scrolling the recyclerview to the last visited position.
             if (recyclerViewState != null){
                 gridLayoutManager.onRestoreInstanceState(recyclerViewState);
-            }else{
-                Log.v(TAG,"recyclerViewState is null :( ");
             }
         }
     }
