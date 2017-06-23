@@ -1,8 +1,8 @@
 package com.example.srv_twry.studentcompanion.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -12,8 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +26,6 @@ import com.example.srv_twry.studentcompanion.R;
 import com.example.srv_twry.studentcompanion.Utilities.DatabaseUtilites;
 import com.example.srv_twry.studentcompanion.Utilities.SubscribedContestUtilities;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -196,6 +192,7 @@ public class ContestDetailFragment extends Fragment {
             return;
         }
         contestDetailTitleView.setText(mContest.getTitle());
+        contestDetailTitleView.setPaintFlags(contestDetailTitleView.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
         coverImage.setImageResource(DatabaseUtilites.getCoverImage(mContest.getUrl()));
         SpannableString contestDetailsStartTime = DatabaseUtilites.getStartTimeTextDetailsFragment(mContest.getStartTime());
         contestDetailStartTimeText.setText(contestDetailsStartTime);

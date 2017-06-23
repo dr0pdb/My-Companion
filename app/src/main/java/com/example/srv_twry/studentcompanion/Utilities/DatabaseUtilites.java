@@ -29,7 +29,7 @@ public class DatabaseUtilites {
         sb.append(startTimeString.substring(0,10));
         sb.append("\n");
         sb.append(startTimeString.substring(11,16));
-        sb.append(" IST");
+        sb.append(" IST");          //TODO: change it for the time of the users timezone
         modifiedString = sb.toString();
 
         SpannableString returningSpannableString = new SpannableString(modifiedString);

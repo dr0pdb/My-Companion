@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Student Companion</string>
+    <string name="app_name">My Companion</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -9,6 +9,6 @@
     <string name="flash_cards">Flash Cards</string>
     <string name="share">Share</string>
     <string name="communicate">Communicate</string>
-    <string name="register">Register</string>
     <string name="authority">com.example.srv_twry.studentcompanion</string>
+    <string name="participate">Participate</string>
 </resources>
