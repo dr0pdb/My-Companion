@@ -29,8 +29,12 @@ public class CodingCalendarContestDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_coding_calendar_contest_detail);
 
         mContest = getIntent().getParcelableExtra(INTENT_EXTRA_TAG);
-        ContestDetailFragment contestDetailFragment = ContestDetailFragment.newInstance(mContest);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.frame_layout_contest_detail,contestDetailFragment).commit();
+
+        if (savedInstanceState ==null){
+            ContestDetailFragment contestDetailFragment = ContestDetailFragment.newInstance(mContest);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().add(R.id.frame_layout_contest_detail,contestDetailFragment).commit();
+        }
+
     }
 }
