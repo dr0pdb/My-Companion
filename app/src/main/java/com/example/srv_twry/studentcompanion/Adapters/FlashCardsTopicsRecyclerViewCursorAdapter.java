@@ -2,13 +2,12 @@ package com.example.srv_twry.studentcompanion.Adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.srv_twry.studentcompanion.Database.DatabaseContract;
@@ -54,8 +53,25 @@ public class FlashCardsTopicsRecyclerViewCursorAdapter extends RecyclerView.Adap
         holder.topicName.setText(name);
 
         //getting the color.
-        //int priorityColor = getPriorityColor(priority);
-        //holder.topicPriorityImage.setBackgroundColor(priorityColor);
+        int priorityColor = getPriorityColor(priority);
+        GradientDrawable priorityCircle = (GradientDrawable) holder.priorityTextView.getBackground();
+        String priorityText;
+        switch (priority){
+            case 1:
+                priorityText = mContext.getResources().getString(R.string.high);
+                break;
+            case 2:
+                priorityText = mContext.getResources().getString(R.string.medium);
+                break;
+            case 3:
+                priorityText = mContext.getResources().getString(R.string.low);
+                break;
+            default:
+                priorityText = mContext.getResources().getString(R.string.high);
+                break;
+        }
+        holder.priorityTextView.setText(priorityText);
+        priorityCircle.setColor(priorityColor);
 
     }
 
@@ -110,7 +126,7 @@ public class FlashCardsTopicsRecyclerViewCursorAdapter extends RecyclerView.Adap
     class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tv_flash_cards_topics_item_name) TextView topicName;
-        @BindView(R.id.iv_flash_cards_topics_item_priority) ImageView topicPriorityImage;
+        @BindView(R.id.priorityTextView) TextView priorityTextView;
 
         /**
          * Constructor for the TaskViewHolders.

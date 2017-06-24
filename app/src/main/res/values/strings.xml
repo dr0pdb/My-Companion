@@ -18,4 +18,6 @@
     <string name="medium">Medium</string>
     <string name="low">Low</string>
     <string name="add">Add</string>
+    <string name="add_flash_card_topics">Add topics</string>
+    <string name="importance">Importance</string>
 </resources>

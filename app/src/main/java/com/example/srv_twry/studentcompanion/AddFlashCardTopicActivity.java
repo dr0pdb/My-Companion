@@ -19,6 +19,7 @@ public class AddFlashCardTopicActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_flash_card_topic);
+        setTitle(getResources().getString(R.string.add_flash_card_topics));
 
         //Handling Up navigation
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -37,6 +38,9 @@ public class AddFlashCardTopicActivity extends AppCompatActivity {
         String input = ((EditText) findViewById(R.id.editTextTaskDescription)).getText().toString();
         if (input.length() == 0) {
             Toast.makeText(getBaseContext(),"Please enter the topic name !",Toast.LENGTH_SHORT).show();
+            return;
+        }else if (input.length() >35){
+            Toast.makeText(getBaseContext(),"Topic shouldn't have more than 35 characters !",Toast.LENGTH_LONG).show();
             return;
         }
 

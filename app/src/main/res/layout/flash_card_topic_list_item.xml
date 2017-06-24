@@ -5,30 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:ignore="UseCompoundDrawables"
-    android:layout_margin="4dp">
+    android:layout_margin="8dp">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="UseCompoundDrawables">
+        tools:ignore="UseCompoundDrawables"
+        android:padding="4dp">
+
+        <TextView
+            android:id="@+id/priorityTextView"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:layout_margin="8dp"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:background="@drawable/flash_card_priority_circle" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:layout_margin="1dp"/>
 
         <TextView
             android:id="@+id/tv_flash_cards_topics_item_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             tools:text="Topic"
-            android:layout_margin="8dp"/>
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:textSize="20sp"/>
 
-        <ImageView
-            android:id="@+id/iv_flash_cards_topics_item_priority"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:ignore="ContentDescription"
-            tools:src="@mipmap/ic_launcher"
-            android:layout_margin="8dp"/>
+
+
+
 
     </LinearLayout>
 

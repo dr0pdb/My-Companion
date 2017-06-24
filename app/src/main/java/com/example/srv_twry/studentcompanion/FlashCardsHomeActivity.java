@@ -9,6 +9,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,6 +28,8 @@ import static com.example.srv_twry.studentcompanion.Database.DatabaseContract.Fl
 * The home activity of the flash cards module. It will contain the list of flash card categories/topics added by the user
 * and ability to add more categories.
 * */
+//TODO: Set up the swipe to delete functionality, alert dialog and the actual deletion methods
+
 public class FlashCardsHomeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String TAG = FlashCardsHomeActivity.class.getSimpleName();
@@ -50,7 +53,7 @@ public class FlashCardsHomeActivity extends AppCompatActivity implements LoaderM
         ButterKnife.bind(this);
 
         //Instantiate the recycler view
-        flashCardsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        flashCardsRecyclerView.setLayoutManager(new GridLayoutManager(this,getResources().getInteger(R.integer.number_colums_grid_view_flash_topic)));
         flashCardsTopicsRecyclerViewCursorAdapter = new FlashCardsTopicsRecyclerViewCursorAdapter(this);
         flashCardsRecyclerView.setAdapter(flashCardsTopicsRecyclerViewCursorAdapter);
 

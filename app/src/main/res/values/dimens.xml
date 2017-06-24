@@ -8,4 +8,5 @@
     <dimen name="fab_elevation">6dp</dimen>
     <integer name="number_columns_grid_view_features">2</integer>
     <integer name="number_columns_grid_view_contest_list">1</integer>
+    <integer name="number_colums_grid_view_flash_topic">1</integer>
 </resources>
