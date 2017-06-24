@@ -16,6 +16,8 @@ import com.example.srv_twry.studentcompanion.R;
 import com.example.srv_twry.studentcompanion.Utilities.DatabaseUtilites;
 import com.example.srv_twry.studentcompanion.Utilities.SubscribedContestUtilities;
 
+import static android.support.v4.app.NotificationCompat.PRIORITY_MAX;
+
 /**
  * Created by srv_twry on 21/6/17.
  * The broadcast receiver that will be triggered when the contest is about to start.
@@ -28,6 +30,8 @@ public class ShowSubscribedContestNotificationReceiver extends BroadcastReceiver
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        Log.v("Show notF receiver","RECEIVED BROADCAST");
 
         //Use Notification builder to show notifications.
         contestTitle = intent.getStringExtra(SubscribedContestUtilities.CONTEST_TITLE);
@@ -44,7 +48,9 @@ public class ShowSubscribedContestNotificationReceiver extends BroadcastReceiver
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(imageResourceForContest)
                         .setContentTitle(contestTitle)
-                        .setContentText("Click to participate");
+                        .setContentText("Click to participate")
+                        .setPriority(PRIORITY_MAX)
+                        .setAutoCancel(true);
 
         mBuilder.setContentIntent(pendingIntent);
 
@@ -54,14 +60,17 @@ public class ShowSubscribedContestNotificationReceiver extends BroadcastReceiver
         // Delete the contest from the database here.
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         int databaseId = sharedPreferences.getInt(contestTitle+" subsDbId",-1);
-
+        Log.v("Show Notifications",""+ databaseId);
         int deleted= SubscribedContestUtilities.removeContestFromSubscribedDatabase(context,databaseId);
         if (deleted >0){
-            boolean isSetForReminder = false;
-            databaseId = -1;
+            //boolean isSetForReminder = false;
+            //databaseId = -1;
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(contestTitle,isSetForReminder);
-            editor.putInt(contestTitle+" subsDbId",databaseId);
+            editor.remove(contestTitle);
+            editor.remove(contestTitle+" subsDbId");
+            Log.v("Show Notifications","DELETED SHARED PREFERENCES");
+            //editor.putBoolean(contestTitle,isSetForReminder);
+            //editor.putInt(contestTitle+" subsDbId",databaseId);
             editor.apply();
         }
     }

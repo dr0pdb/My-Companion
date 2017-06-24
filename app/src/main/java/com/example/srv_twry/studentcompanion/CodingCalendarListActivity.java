@@ -113,12 +113,6 @@ public class CodingCalendarListActivity extends AppCompatActivity implements Cod
 
             // Requesting the first sync after creating the account.
             ContentResolver.requestSync(newAccount, AUTHORITY, Bundle.EMPTY);
-        } else {
-            /*
-             * The account exists or some other error occurred. Log this, report it,
-             * or handle it internally.
-             */
-            Log.e(TAG, "Cannot create the account as it may exist already!");
         }
 
         return newAccount;

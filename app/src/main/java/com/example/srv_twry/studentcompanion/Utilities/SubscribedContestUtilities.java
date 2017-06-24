@@ -37,7 +37,7 @@ public class SubscribedContestUtilities {
         Uri uri = context.getContentResolver().insert(DatabaseContract.SubscribedContestEntry.CONTENT_URI_SUBSCRIBED_CONTESTS,contentValues);
 
         if (uri !=null){
-            Log.v("Subscribe Contest","successfully added");
+            Log.v("Subscribe Contest","successfully added "+ mContest.getTitle());
             Toast toast = Toast.makeText(context,"Reminder set successfully",Toast.LENGTH_SHORT);
             toast.show();
         }
