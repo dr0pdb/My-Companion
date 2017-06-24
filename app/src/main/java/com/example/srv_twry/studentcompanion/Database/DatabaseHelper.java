@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME= "StudentCompanion.db";
-    private static final int VERSION = 1;
+    private static final int VERSION = 2;       //TODO: Make this version 1 before submitting
 
     public DatabaseHelper(Context context){
         super(context, DATABASE_NAME, null, VERSION);
@@ -34,14 +34,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 DatabaseContract.SubscribedContestEntry.SUBSCRIBED_CONTEST_URL + " TEXT NOT NULL, " +
                 DatabaseContract.SubscribedContestEntry.SUBSCRIBED_CONTEST_START_TIME + " INTEGER);";
 
+        final String CREATE_FLASH_CARDS_TOPICS_TABLE = "CREATE TABLE "  + DatabaseContract.FlashCardsTopicsEntry.TABLE_NAME_FLASH_CARDS_TOPICS + " (" +
+                DatabaseContract.FlashCardsTopicsEntry._ID                + " INTEGER PRIMARY KEY, " +
+                DatabaseContract.FlashCardsTopicsEntry.FLASH_CARDS_TOPIC_NAME + " TEXT NOT NULL, " +
+                DatabaseContract.FlashCardsTopicsEntry.FLASH_CARDS_TOPIC_PRIORITY    + " INTEGER NOT NULL);";
+
         db.execSQL(CREATE_CONTEST_TABLE);
         db.execSQL(CREATE_SUBSCRIBED_CONTEST_TABLE);
+        db.execSQL(CREATE_FLASH_CARDS_TOPICS_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.ContestEntry.TABLE_NAME_CONTESTS);
         db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.SubscribedContestEntry.TABLE_NAME_SUBSCRIBED_CONTESTS);
+        db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.FlashCardsTopicsEntry.TABLE_NAME_FLASH_CARDS_TOPICS);
         onCreate(db);
     }
 }

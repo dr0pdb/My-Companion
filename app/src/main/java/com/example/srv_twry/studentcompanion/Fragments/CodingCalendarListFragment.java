@@ -278,6 +278,7 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
     }
 
     //TODO: Get the time zone for the user and set the time accordingly for international use
+    //TODO: Giving incorrect time for the contest, fix it
     //A helper method to convert the time in String to Java Date Class
     public Date getDateFromString(String string){
 

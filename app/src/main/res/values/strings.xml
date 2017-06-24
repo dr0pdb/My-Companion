@@ -12,4 +12,10 @@
     <string name="authority">com.example.srv_twry.studentcompanion</string>
     <string name="participate">Participate</string>
     <string name="contest_click_message">Click on a Contest for details</string>
+    <string name="enter_topic_name">Enter topic name</string>
+    <string name="priority_flash_card_topic">Priority</string>
+    <string name="high">High</string>
+    <string name="medium">Medium</string>
+    <string name="low">Low</string>
+    <string name="add">Add</string>
 </resources>

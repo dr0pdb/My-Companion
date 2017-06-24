@@ -140,7 +140,15 @@ public class HomeActivity extends AppCompatActivity
     public void onFeatureClicked(int position) {
         if (featureArrayList.get(position).getTitle().equals(getResources().getString(R.string.coding_calendar))){
             startCodingCalendar();
+        }else if (featureArrayList.get(position).getTitle().equals(getResources().getString(R.string.flash_cards))){
+            startFlashCards();
         }
+    }
+
+    //Start flashCardsHome
+    private void startFlashCards() {
+        Intent intent = new Intent(HomeActivity.this,FlashCardsHomeActivity.class);
+        startActivity(intent);
     }
 
     // Start the coding calendar list activity
