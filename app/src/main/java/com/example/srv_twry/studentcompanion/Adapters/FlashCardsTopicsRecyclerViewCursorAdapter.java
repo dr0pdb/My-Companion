@@ -25,9 +25,11 @@ public class FlashCardsTopicsRecyclerViewCursorAdapter extends RecyclerView.Adap
 
     private Cursor mCursor;
     private Context mContext;
+    private FlashCardsTopicRecyclerViewOnClickListener flashCardsTopicRecyclerViewOnClickListener;
 
-    public FlashCardsTopicsRecyclerViewCursorAdapter(Context context){
+    public FlashCardsTopicsRecyclerViewCursorAdapter(Context context ,FlashCardsTopicRecyclerViewOnClickListener flashCardsTopicRecyclerViewOnClickListener){
         mContext = context;
+        this.flashCardsTopicRecyclerViewOnClickListener = flashCardsTopicRecyclerViewOnClickListener;
     }
 
     @Override
@@ -122,8 +124,13 @@ public class FlashCardsTopicsRecyclerViewCursorAdapter extends RecyclerView.Adap
         return temp;
     }
 
+    //Interface to implement the onClickListener
+    public interface FlashCardsTopicRecyclerViewOnClickListener{
+        void onFlashCardTopicClicked(String topicName);
+    }
+
     // Inner class for creating ViewHolders
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         @BindView(R.id.tv_flash_cards_topics_item_name) TextView topicName;
         @BindView(R.id.priorityTextView) TextView priorityTextView;
@@ -136,6 +143,16 @@ public class FlashCardsTopicsRecyclerViewCursorAdapter extends RecyclerView.Adap
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            mCursor.moveToPosition(position);
+            int nameIndex = mCursor.getColumnIndex(DatabaseContract.FlashCardsTopicsEntry.FLASH_CARDS_TOPIC_NAME);
+            String topicName = mCursor.getString(nameIndex);
+            flashCardsTopicRecyclerViewOnClickListener.onFlashCardTopicClicked(topicName);
         }
     }
 }

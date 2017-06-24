@@ -30,7 +30,8 @@ import static com.example.srv_twry.studentcompanion.Database.DatabaseContract.Fl
 * */
 //TODO: Set up the swipe to delete functionality, alert dialog and the actual deletion methods
 
-public class FlashCardsHomeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class FlashCardsHomeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> ,
+        FlashCardsTopicsRecyclerViewCursorAdapter.FlashCardsTopicRecyclerViewOnClickListener{
 
     private static final String TAG = FlashCardsHomeActivity.class.getSimpleName();
     private static final int TOPICS_LOADER_ID = 300;
@@ -54,7 +55,7 @@ public class FlashCardsHomeActivity extends AppCompatActivity implements LoaderM
 
         //Instantiate the recycler view
         flashCardsRecyclerView.setLayoutManager(new GridLayoutManager(this,getResources().getInteger(R.integer.number_colums_grid_view_flash_topic)));
-        flashCardsTopicsRecyclerViewCursorAdapter = new FlashCardsTopicsRecyclerViewCursorAdapter(this);
+        flashCardsTopicsRecyclerViewCursorAdapter = new FlashCardsTopicsRecyclerViewCursorAdapter(FlashCardsHomeActivity.this,this);
         flashCardsRecyclerView.setAdapter(flashCardsTopicsRecyclerViewCursorAdapter);
 
         //setUp fab button to add topics here.
@@ -129,5 +130,11 @@ public class FlashCardsHomeActivity extends AppCompatActivity implements LoaderM
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         flashCardsTopicsRecyclerViewCursorAdapter.swapCursor(null);
+    }
+
+    //Method to open all the flash cards with the topicName
+    @Override
+    public void onFlashCardTopicClicked(String topicName) {
+        Log.v(TAG,"Clicked topic with Name: "+topicName);
     }
 }
