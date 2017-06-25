@@ -1,7 +1,9 @@
 package com.example.srv_twry.studentcompanion;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.srv_twry.studentcompanion.POJOs.FlashCard;
@@ -14,6 +16,7 @@ public class ShowFlashCardDetailsActivity extends AppCompatActivity {
     private FlashCard mFlashCard;
     @BindView(R.id.tv_flash_card_detail_question) TextView detailQuestion;
     @BindView(R.id.tv_flash_card_detail_answer) TextView detailAnswer;
+    @BindView(R.id.fab_show_flash_card_details) FloatingActionButton shareThisCard;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,5 +29,12 @@ public class ShowFlashCardDetailsActivity extends AppCompatActivity {
 
         detailQuestion.setText(mFlashCard.getQuestion());
         detailAnswer.setText(mFlashCard.getAnswer());
+
+        shareThisCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: Set the share intent here
+            }
+        });
     }
 }

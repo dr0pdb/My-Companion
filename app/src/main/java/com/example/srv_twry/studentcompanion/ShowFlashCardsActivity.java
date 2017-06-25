@@ -74,7 +74,7 @@ public class ShowFlashCardsActivity extends AppCompatActivity implements LoaderM
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(ShowFlashCardsActivity.this);
                 alertDialog.setTitle("Confirm Delete...");
                 alertDialog.setMessage("Are you sure you want delete this card?");
-                alertDialog.setIcon(R.drawable.ic_delete_forever_black);
+                alertDialog.setIcon(R.drawable.ic_delete_black);
 
                 alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int which) {
