@@ -30,6 +30,7 @@ public class ShowFlashCardsActivity extends AppCompatActivity implements LoaderM
     private static int FLASH_CARDS_LOADER_ID = 400;
     public static final String INTENT_EXTRA_TOPIC_NAME = "intentExtraTopicName";
     private static final String TAG = ShowFlashCardsActivity.class.getSimpleName();
+    public static final String INTENT_EXTRA_FLASH_CARD = "intentExtraFlashCard";
 
     @BindView(R.id.rv_flash_cards) RecyclerView flashCardsRecyclerView;
     @BindView(R.id.fab_add_flash_cards) FloatingActionButton floatingActionButton;
@@ -126,6 +127,8 @@ public class ShowFlashCardsActivity extends AppCompatActivity implements LoaderM
     //TODO: Open the details activity to show the question and answer
     @Override
     public void onFlashCardClicked(FlashCard flashCard) {
-
+        Intent intent = new Intent(ShowFlashCardsActivity.this,ShowFlashCardDetailsActivity.class);
+        intent.putExtra(INTENT_EXTRA_FLASH_CARD,flashCard);
+        startActivity(intent);
     }
 }
