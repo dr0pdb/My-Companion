@@ -18,7 +18,7 @@ public class DatabaseContract {
     public static final String PATH_CONTESTS = "contests";
     public static final String PATH_SUBSCRIBED_CONTESTS = "subscribedContests";
     public static final String PATH_FLASH_CARDS_TOPICS = "flashCardTopics";
-
+    public static final String PATH_FLASH_CARDS = "flashCards";
 
     public static final class ContestEntry implements BaseColumns{
 
@@ -60,5 +60,17 @@ public class DatabaseContract {
         public static final String FLASH_CARDS_TOPIC_NAME = "flashCardsTopicName";
         public static final String FLASH_CARDS_TOPIC_PRIORITY = "flashCardsTopicPriority";
 
+    }
+
+    public static final class FlashCardsEntry implements BaseColumns{
+        public static final Uri CONTENT_URI_FLASH_CARDS  = BASE_CONTENT_URI.buildUpon().appendPath(PATH_FLASH_CARDS).build();
+
+        //Table name
+        public static final String TABLE_NAME_FLASH_CARDS = "flashCards";
+
+        //Table columns
+        public static final String FLASH_CARD_TOPIC_NAME = "flashCardTopic";
+        public static final String FLASH_CARD_QUESTION = "flashCardQuestion";
+        public static final String FLASH_CARD_ANSWER = "flashCardAnswer";
     }
 }

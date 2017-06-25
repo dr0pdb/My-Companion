@@ -7,6 +7,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -23,6 +24,8 @@ public class DatabaseContentProvider extends ContentProvider {
     private static final int SUBSCRIBED_CONTESTS_INDIVIDUAL = 201;
     private static final int FLASH_CARDS_TOPICS = 300;
     private static final int FLASH_CARDS_TOPICS_INDIVIDUAL = 301;
+    private static final int FLASH_CARDS = 400;
+    private static final int FLASH_CARDS_INDIVIDUAL = 401;
 
     private static final UriMatcher uriMatcher = buildUriMatcher();
 
@@ -34,6 +37,8 @@ public class DatabaseContentProvider extends ContentProvider {
         uriMatcher.addURI(DatabaseContract.AUTHORITY,DatabaseContract.PATH_SUBSCRIBED_CONTESTS +"/#",SUBSCRIBED_CONTESTS_INDIVIDUAL);
         uriMatcher.addURI(DatabaseContract.AUTHORITY,DatabaseContract.PATH_FLASH_CARDS_TOPICS,FLASH_CARDS_TOPICS);
         uriMatcher.addURI(DatabaseContract.AUTHORITY,DatabaseContract.PATH_FLASH_CARDS_TOPICS+"/#",FLASH_CARDS_TOPICS_INDIVIDUAL);
+        uriMatcher.addURI(DatabaseContract.AUTHORITY,DatabaseContract.PATH_FLASH_CARDS,FLASH_CARDS);
+        uriMatcher.addURI(DatabaseContract.AUTHORITY,DatabaseContract.PATH_FLASH_CARDS+"/#",FLASH_CARDS_INDIVIDUAL);
         return uriMatcher;
     }
 
@@ -64,6 +69,10 @@ public class DatabaseContentProvider extends ContentProvider {
 
             case FLASH_CARDS_TOPICS:
                 returnCursor = db.query(DatabaseContract.FlashCardsTopicsEntry.TABLE_NAME_FLASH_CARDS_TOPICS,projection,selection,selectionArgs,null,null,sortOrder);
+                break;
+
+            case FLASH_CARDS:
+                returnCursor = db.query(DatabaseContract.FlashCardsEntry.TABLE_NAME_FLASH_CARDS,projection,selection,selectionArgs,null,null,sortOrder);
                 break;
 
             default:
@@ -117,6 +126,15 @@ public class DatabaseContentProvider extends ContentProvider {
                 }
                 break;
 
+            case FLASH_CARDS:
+                id = db.insert(DatabaseContract.FlashCardsEntry.TABLE_NAME_FLASH_CARDS,null,values);
+                if (id>0){
+                    returnUri = ContentUris.withAppendedId(uri,id);
+                }else{
+                    throw new android.database.SQLException("Failed to insert contest row into " + uri);
+                }
+                break;
+
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
 
@@ -143,12 +161,21 @@ public class DatabaseContentProvider extends ContentProvider {
             case SUBSCRIBED_CONTESTS_INDIVIDUAL:
                 stringIds = uri.getPathSegments().get(1);
                 itemsDeleted = db.delete(DatabaseContract.SubscribedContestEntry.TABLE_NAME_SUBSCRIBED_CONTESTS,"_id=?", new String[]{stringIds});
-                Log.v("ContentProvider ","Deleted id="+stringIds + " from the database");
+                if (itemsDeleted >0){
+                    Log.v("ContentProvider ","Deleted id="+stringIds + " from the database");
+                }
+
                 break;
 
             case FLASH_CARDS_TOPICS_INDIVIDUAL:
                 stringIds = uri.getPathSegments().get(1);
                 itemsDeleted = db.delete(DatabaseContract.FlashCardsTopicsEntry.TABLE_NAME_FLASH_CARDS_TOPICS,"_id=?", new String[]{stringIds});
+                Log.v("ContentProvider ","Deleted id="+stringIds + " from the database");
+                break;
+
+            case FLASH_CARDS_INDIVIDUAL:
+                stringIds = uri.getPathSegments().get(1);
+                itemsDeleted = db.delete(DatabaseContract.FlashCardsEntry.TABLE_NAME_FLASH_CARDS,"_id=?", new String[]{stringIds});
                 Log.v("ContentProvider ","Deleted id="+stringIds + " from the database");
                 break;
 

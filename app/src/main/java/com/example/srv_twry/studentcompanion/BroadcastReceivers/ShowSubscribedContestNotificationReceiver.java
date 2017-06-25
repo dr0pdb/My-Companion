@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
@@ -43,6 +44,7 @@ public class ShowSubscribedContestNotificationReceiver extends BroadcastReceiver
         Intent startBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(contestUrl));
         PendingIntent pendingIntent = PendingIntent.getActivity(context,0,startBrowser,0);
 
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         //setting the notification builder
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
@@ -50,6 +52,8 @@ public class ShowSubscribedContestNotificationReceiver extends BroadcastReceiver
                         .setContentTitle(contestTitle)
                         .setContentText("Click to participate")
                         .setPriority(PRIORITY_MAX)
+                        .setSound(alarmSound)
+                        .setVibrate(new long[]{500L, 500L, 500L, 500L})
                         .setAutoCancel(true);
 
         mBuilder.setContentIntent(pendingIntent);

@@ -39,9 +39,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 DatabaseContract.FlashCardsTopicsEntry.FLASH_CARDS_TOPIC_NAME + " TEXT NOT NULL, " +
                 DatabaseContract.FlashCardsTopicsEntry.FLASH_CARDS_TOPIC_PRIORITY    + " INTEGER NOT NULL);";
 
+        final String CREATE_FLASH_CARDS_TABLE = "CREATE TABLE "  + DatabaseContract.FlashCardsEntry.TABLE_NAME_FLASH_CARDS + " (" +
+                DatabaseContract.FlashCardsEntry._ID                + " INTEGER PRIMARY KEY, " +
+                DatabaseContract.FlashCardsEntry.FLASH_CARD_TOPIC_NAME + " TEXT NOT NULL, " +
+                DatabaseContract.FlashCardsEntry.FLASH_CARD_QUESTION + " TEXT NOT NULL, " +
+                DatabaseContract.FlashCardsEntry.FLASH_CARD_ANSWER    + " TEXT NOT NULL);";
+
         db.execSQL(CREATE_CONTEST_TABLE);
         db.execSQL(CREATE_SUBSCRIBED_CONTEST_TABLE);
         db.execSQL(CREATE_FLASH_CARDS_TOPICS_TABLE);
+        db.execSQL(CREATE_FLASH_CARDS_TABLE);
     }
 
     @Override
@@ -49,6 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.ContestEntry.TABLE_NAME_CONTESTS);
         db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.SubscribedContestEntry.TABLE_NAME_SUBSCRIBED_CONTESTS);
         db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.FlashCardsTopicsEntry.TABLE_NAME_FLASH_CARDS_TOPICS);
+        db.execSQL("DROP TABLE IF EXISTS " + DatabaseContract.FlashCardsEntry.TABLE_NAME_FLASH_CARDS);
         onCreate(db);
     }
 }
