@@ -1,17 +1,23 @@
 package com.example.srv_twry.studentcompanion;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.srv_twry.studentcompanion.Adapters.FlashCardsRecyclerViewCursorAdapter;
 import com.example.srv_twry.studentcompanion.Database.DatabaseContract;
@@ -53,7 +59,48 @@ public class ShowFlashCardsActivity extends AppCompatActivity implements LoaderM
         flashCardsRecyclerViewCursorAdapter = new FlashCardsRecyclerViewCursorAdapter(ShowFlashCardsActivity.this,this);
         flashCardsRecyclerView.setAdapter(flashCardsRecyclerViewCursorAdapter);
 
-        //TODO: implement the swipe to delete and confirmation dialog.
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                final int id = (int)viewHolder.itemView.getTag();
+
+                //Show the alert dialog
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(ShowFlashCardsActivity.this);
+                alertDialog.setTitle("Confirm Delete...");
+                alertDialog.setMessage("Are you sure you want delete this card?");
+                alertDialog.setIcon(R.drawable.ic_delete_forever_black);
+
+                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int which) {
+                    String idString = Integer.toString(id);
+                    Uri deleteFlashCardIndividual = DatabaseContract.FlashCardsEntry.CONTENT_URI_FLASH_CARDS.buildUpon().appendPath(idString).build();
+                    int itemsDeleted = getContentResolver().delete(deleteFlashCardIndividual,null,null);
+
+                    if (itemsDeleted >0 ){
+                        Toast.makeText(ShowFlashCardsActivity.this,"Card deleted successfully",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(ShowFlashCardsActivity.this,"Cannot delete card !", Toast.LENGTH_SHORT).show();
+                    }
+                    }
+                });
+
+                alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                        getSupportLoaderManager().restartLoader(FLASH_CARDS_LOADER_ID, null, ShowFlashCardsActivity.this);
+                    }
+                });
+
+                alertDialog.show();
+
+            }
+        }).attachToRecyclerView(flashCardsRecyclerView);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override

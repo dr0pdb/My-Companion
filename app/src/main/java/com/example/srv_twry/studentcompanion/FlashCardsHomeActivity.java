@@ -93,7 +93,7 @@ public class FlashCardsHomeActivity extends AppCompatActivity implements LoaderM
                 //Show the alert dialog
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(FlashCardsHomeActivity.this);
                 alertDialog.setTitle("Confirm Delete...");
-                alertDialog.setMessage("Are you sure you want delete this?\n This can't be undone");
+                alertDialog.setMessage("Are you sure you want delete this?");
                 alertDialog.setIcon(R.drawable.ic_delete_forever_black);
 
                 alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
