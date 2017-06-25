@@ -24,6 +24,7 @@ public class DatabaseContentProvider extends ContentProvider {
     private static final int SUBSCRIBED_CONTESTS_INDIVIDUAL = 201;
     private static final int FLASH_CARDS_TOPICS = 300;
     private static final int FLASH_CARDS_TOPICS_INDIVIDUAL = 301;
+    private static final int FLASH_CARDS_TOPICS_INDIVIDUAL_BY_NAME =302;  //This will be used to delete all the cards associated with the topic when user deletes a topic
     private static final int FLASH_CARDS = 400;
     private static final int FLASH_CARDS_INDIVIDUAL = 401;
 
@@ -37,6 +38,7 @@ public class DatabaseContentProvider extends ContentProvider {
         uriMatcher.addURI(DatabaseContract.AUTHORITY,DatabaseContract.PATH_SUBSCRIBED_CONTESTS +"/#",SUBSCRIBED_CONTESTS_INDIVIDUAL);
         uriMatcher.addURI(DatabaseContract.AUTHORITY,DatabaseContract.PATH_FLASH_CARDS_TOPICS,FLASH_CARDS_TOPICS);
         uriMatcher.addURI(DatabaseContract.AUTHORITY,DatabaseContract.PATH_FLASH_CARDS_TOPICS+"/#",FLASH_CARDS_TOPICS_INDIVIDUAL);
+        uriMatcher.addURI(DatabaseContract.AUTHORITY,DatabaseContract.PATH_FLASH_CARDS_TOPICS+"/*",FLASH_CARDS_TOPICS_INDIVIDUAL_BY_NAME);
         uriMatcher.addURI(DatabaseContract.AUTHORITY,DatabaseContract.PATH_FLASH_CARDS,FLASH_CARDS);
         uriMatcher.addURI(DatabaseContract.AUTHORITY,DatabaseContract.PATH_FLASH_CARDS+"/#",FLASH_CARDS_INDIVIDUAL);
         return uriMatcher;
@@ -171,6 +173,14 @@ public class DatabaseContentProvider extends ContentProvider {
                 stringIds = uri.getPathSegments().get(1);
                 itemsDeleted = db.delete(DatabaseContract.FlashCardsTopicsEntry.TABLE_NAME_FLASH_CARDS_TOPICS,"_id=?", new String[]{stringIds});
                 Log.v("ContentProvider ","Deleted id="+stringIds + " from the database");
+                break;
+
+            case FLASH_CARDS_TOPICS_INDIVIDUAL_BY_NAME:
+                stringIds = uri.getPathSegments().get(1);
+                itemsDeleted = db.delete(DatabaseContract.FlashCardsEntry.TABLE_NAME_FLASH_CARDS,DatabaseContract.FlashCardsEntry.FLASH_CARD_TOPIC_NAME+ "=?",new String[]{stringIds});
+                if (itemsDeleted >0){
+                    Log.v("ContentProvider ","Deleted id="+stringIds + " from the database");
+                }
                 break;
 
             case FLASH_CARDS_INDIVIDUAL:
