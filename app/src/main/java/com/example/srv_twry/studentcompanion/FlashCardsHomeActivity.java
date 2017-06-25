@@ -23,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.example.srv_twry.studentcompanion.Database.DatabaseContract.FlashCardsTopicsEntry.FLASH_CARDS_TOPIC_PRIORITY;
+import static com.example.srv_twry.studentcompanion.ShowFlashCardsActivity.INTENT_EXTRA_TOPIC_NAME;
 
 /*
 * The home activity of the flash cards module. It will contain the list of flash card categories/topics added by the user
@@ -136,5 +137,8 @@ public class FlashCardsHomeActivity extends AppCompatActivity implements LoaderM
     @Override
     public void onFlashCardTopicClicked(String topicName) {
         Log.v(TAG,"Clicked topic with Name: "+topicName);
+        Intent intent = new Intent(FlashCardsHomeActivity.this,ShowFlashCardsActivity.class);
+        intent.putExtra(INTENT_EXTRA_TOPIC_NAME,topicName);
+        startActivity(intent);
     }
 }

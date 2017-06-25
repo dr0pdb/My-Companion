@@ -102,8 +102,12 @@
         <activity
             android:name=".AddFlashCardTopicActivity"
             android:parentActivityName=".FlashCardsHomeActivity" />
-        <activity android:name=".ShowFlashCardsActivity"
-            android:parentActivityName=".FlashCardsHomeActivity"></activity>
+        <activity
+            android:name=".ShowFlashCardsActivity"
+            android:parentActivityName=".FlashCardsHomeActivity"
+            android:launchMode="singleTop"/>
+        <activity android:name=".AddFlashCardActivity"
+            android:parentActivityName=".ShowFlashCardsActivity"></activity>
     </application>
 
 </manifest>

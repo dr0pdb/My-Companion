@@ -20,4 +20,8 @@
     <string name="add">Add</string>
     <string name="add_flash_card_topics">Add topics</string>
     <string name="importance">Importance</string>
+    <string name="enter_your_question">Enter your Question</string>
+    <string name="question">Question</string>
+    <string name="enter_your_answer">Enter your answer</string>
+    <string name="answer">Answer</string>
 </resources>
