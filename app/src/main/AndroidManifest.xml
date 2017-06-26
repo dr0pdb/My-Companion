@@ -109,8 +109,12 @@
         <activity
             android:name=".AddFlashCardActivity"
             android:parentActivityName=".ShowFlashCardsActivity" />
-        <activity android:name=".ShowFlashCardDetailsActivity"
-            android:parentActivityName=".ShowFlashCardsActivity"></activity>
+        <activity
+            android:name=".ShowFlashCardDetailsActivity"
+            android:parentActivityName=".ShowFlashCardsActivity" />
+        <activity android:name=".PDFCreatorHomeActivity"
+            android:parentActivityName=".HomeActivity"
+            android:launchMode="singleTop"></activity>
     </application>
 
 </manifest>

@@ -24,4 +24,6 @@
     <string name="question">Question</string>
     <string name="enter_your_answer">Enter your answer</string>
     <string name="answer">Answer</string>
+    <string name="pdf_creator">PDF Creator</string>
+    <string name="created_pdf">CreatedPDFs</string>
 </resources>

@@ -71,7 +71,7 @@ public class FetchContestsVolley {
             fakecontentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_TITLE,"Fake contest");
             fakecontentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_DESCRIPTION,"Fake contests");
             fakecontentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_URL,"https://www.hackerrank.com/contests/projecteuler/");
-            fakecontentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_START_TIME,"2017-06-25T04:51:00.000Z");
+            fakecontentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_START_TIME,"2017-06-26T02:45:00.000Z");
             fakecontentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_END_TIME,"2024-07-30T18:30:00.000Z");
             context.getContentResolver().insert(DatabaseContract.ContestEntry.CONTENT_URI_CONTESTS,fakecontentValues);
 

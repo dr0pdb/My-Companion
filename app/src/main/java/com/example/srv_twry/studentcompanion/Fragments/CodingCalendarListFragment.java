@@ -284,12 +284,17 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
 
         Date result;
         try {
-            TimeZone tz = TimeZone.getTimeZone("Asia/Calcutta");
-            Calendar cal = Calendar.getInstance(tz);
+            TimeZone tz = TimeZone.getTimeZone("UTC");
+            //TimeZone tz = TimeZone.getTimeZone("Asia/Calcutta");
+            //Calendar cal = Calendar.getInstance(tz);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            sdf.setCalendar(cal);
-            cal.setTime(sdf.parse(string));
-            result = cal.getTime();
+            //sdf.setCalendar(cal);
+            //cal.setTime(sdf.parse(string));
+            //result = cal.getTime();
+            sdf.setTimeZone(tz);
+            result = sdf.parse(string);
+            Log.v(TAG,string);
+            Log.v(TAG,result.toString());
         }catch (ParseException e){
             e.printStackTrace();
             return null;

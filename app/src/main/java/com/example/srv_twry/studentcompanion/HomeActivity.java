@@ -1,36 +1,26 @@
 package com.example.srv_twry.studentcompanion;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.app.ActivityManager;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
 
-import com.example.srv_twry.studentcompanion.Adapters.CodingCalendarSyncAdapter;
 import com.example.srv_twry.studentcompanion.Adapters.FeaturesRecyclerViewAdapter;
 import com.example.srv_twry.studentcompanion.POJOs.Feature;
-import com.example.srv_twry.studentcompanion.Services.CodingCalendarAuthenticatorService;
-import com.example.srv_twry.studentcompanion.Services.CodingCalendarSyncService;
 
 import java.util.ArrayList;
-
+//TODO: For all the intents starting another application check if that application or any other supported application is available
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, FeaturesRecyclerViewAdapter.FeaturesOnClickListener{
 
@@ -81,6 +71,7 @@ public class HomeActivity extends AppCompatActivity
 
         featureArrayList.add(new Feature(getResources().getString(R.string.coding_calendar),R.mipmap.ic_code));
         featureArrayList.add(new Feature(getResources().getString(R.string.flash_cards),R.mipmap.ic_flash_cards));
+        //featureArrayList.add(new Feature(getResources().getString(R.string.pdf_creator),R.mipmap.ic_launcher));
         return featureArrayList;
     }
 
