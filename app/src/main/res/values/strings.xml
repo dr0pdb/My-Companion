@@ -26,4 +26,5 @@
     <string name="answer">Answer</string>
     <string name="pdf_creator">PDF Creator</string>
     <string name="created_pdf">CreatedPDFs</string>
+    <string name="create_pdf">Create PDF</string>
 </resources>

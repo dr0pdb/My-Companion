@@ -1,9 +1,12 @@
 package com.example.srv_twry.studentcompanion;
 
+import android.content.Intent;
 import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 
 import com.example.srv_twry.studentcompanion.Adapters.PDFFilesAdapter;
@@ -17,6 +20,7 @@ import butterknife.ButterKnife;
 public class PDFCreatorHomeActivity extends AppCompatActivity {
 
     @BindView(R.id.pdf_list_view_files) ListView pdfFilesListView;
+    @BindView(R.id.fab_add_pdf_files) FloatingActionButton addPdfFab;
 
     PDFFilesAdapter pdfFilesAdapter;
     File pdfFolder;
@@ -45,6 +49,15 @@ public class PDFCreatorHomeActivity extends AppCompatActivity {
         pdfFilesListView.setAdapter(pdfFilesAdapter);
 
         loadFiles();
+
+        //setting the onClickListener
+        addPdfFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PDFCreatorHomeActivity.this,CreatePDFActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loadFiles() {

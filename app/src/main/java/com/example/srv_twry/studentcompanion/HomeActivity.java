@@ -71,7 +71,7 @@ public class HomeActivity extends AppCompatActivity
 
         featureArrayList.add(new Feature(getResources().getString(R.string.coding_calendar),R.mipmap.ic_code));
         featureArrayList.add(new Feature(getResources().getString(R.string.flash_cards),R.mipmap.ic_flash_cards));
-        //featureArrayList.add(new Feature(getResources().getString(R.string.pdf_creator),R.mipmap.ic_launcher));
+        featureArrayList.add(new Feature(getResources().getString(R.string.pdf_creator),R.mipmap.ic_launcher));
         return featureArrayList;
     }
 
@@ -133,7 +133,16 @@ public class HomeActivity extends AppCompatActivity
             startCodingCalendar();
         }else if (featureArrayList.get(position).getTitle().equals(getResources().getString(R.string.flash_cards))){
             startFlashCards();
+        }else if (featureArrayList.get(position).getTitle().equals(getResources().getString(R.string.pdf_creator))){
+            startPdfCreator();
         }
+
+    }
+
+    //Start pdf creator
+    private void startPdfCreator() {
+        Intent intent = new Intent(HomeActivity.this,PDFCreatorHomeActivity.class);
+        startActivity(intent);
     }
 
     //Start flashCardsHome

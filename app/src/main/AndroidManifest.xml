@@ -10,6 +10,14 @@
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -112,9 +120,12 @@
         <activity
             android:name=".ShowFlashCardDetailsActivity"
             android:parentActivityName=".ShowFlashCardsActivity" />
-        <activity android:name=".PDFCreatorHomeActivity"
-            android:parentActivityName=".HomeActivity"
-            android:launchMode="singleTop"></activity>
+        <activity
+            android:name=".PDFCreatorHomeActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".HomeActivity" />
+        <activity android:name=".CreatePDFActivity"
+            android:parentActivityName=".PDFCreatorHomeActivity"></activity>
     </application>
 
 </manifest>
