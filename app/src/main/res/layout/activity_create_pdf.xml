@@ -6,4 +6,28 @@
     android:layout_height="match_parent"
     tools:context="com.example.srv_twry.studentcompanion.CreatePDFActivity">
 
+    <Button
+        android:id="@+id/select_images"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_images"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <Button
+        android:id="@+id/create_pdf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_pdf_button_text"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/select_images"
+        android:layout_marginTop="16dp" />
+
 </android.support.constraint.ConstraintLayout>

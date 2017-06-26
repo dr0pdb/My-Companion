@@ -48,8 +48,6 @@ public class PDFCreatorHomeActivity extends AppCompatActivity {
         pdfFilesAdapter = new PDFFilesAdapter(this,filePaths);
         pdfFilesListView.setAdapter(pdfFilesAdapter);
 
-        loadFiles();
-
         //setting the onClickListener
         addPdfFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +70,6 @@ public class PDFCreatorHomeActivity extends AppCompatActivity {
                 if (!file.isDirectory() && file.getName().endsWith(".pdf")) {
                     filePaths.add(file.getPath());
                     Log.v("addingFile: ", file.getName());
-
                 }
             }
         }
