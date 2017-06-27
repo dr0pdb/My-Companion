@@ -46,6 +46,7 @@ public class FlashCardsHomeActivity extends AppCompatActivity implements LoaderM
     @BindView(R.id.fab_add_flash_cards_topics) FloatingActionButton addFlashCardsFab;
     @BindView(R.id.rv_flash_cards_topics) RecyclerView flashCardsRecyclerView;
     @BindView(R.id.pb_loading_flash_cards_topics) ProgressBar loadingFlashCardsTopics;
+    @BindView(R.id.message_show_flash_cards_home) TextView messageShowFlashCardTopics;
 
     private FlashCardsTopicsRecyclerViewCursorAdapter flashCardsTopicsRecyclerViewCursorAdapter;
 
@@ -121,6 +122,7 @@ public class FlashCardsHomeActivity extends AppCompatActivity implements LoaderM
         super.onResume();
 
         // re-queries for all tasks
+        messageShowFlashCardTopics.setVisibility(View.GONE);
         loadingFlashCardsTopics.setVisibility(View.VISIBLE);
         addFlashCardsFab.setVisibility(View.GONE);
         flashCardsRecyclerView.setVisibility(View.GONE);
@@ -165,6 +167,9 @@ public class FlashCardsHomeActivity extends AppCompatActivity implements LoaderM
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         Log.v(TAG,"Loading completed");
+        if (data.getCount() == 0){
+            messageShowFlashCardTopics.setVisibility(View.VISIBLE);
+        }
         flashCardsTopicsRecyclerViewCursorAdapter.swapCursor(data);
         loadingFlashCardsTopics.setVisibility(View.GONE);
         addFlashCardsFab.setVisibility(View.VISIBLE);

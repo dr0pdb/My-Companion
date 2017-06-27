@@ -40,6 +40,7 @@ public class ShowFlashCardsActivity extends AppCompatActivity implements LoaderM
 
     @BindView(R.id.rv_flash_cards) RecyclerView flashCardsRecyclerView;
     @BindView(R.id.fab_add_flash_cards) FloatingActionButton floatingActionButton;
+    @BindView(R.id.message_show_flash_cards)TextView messageShowFlashCards;
     FlashCardsRecyclerViewCursorAdapter flashCardsRecyclerViewCursorAdapter;
     String topicName;
 
@@ -84,6 +85,7 @@ public class ShowFlashCardsActivity extends AppCompatActivity implements LoaderM
 
                     if (itemsDeleted >0 ){
                         Toast.makeText(ShowFlashCardsActivity.this,"Card deleted successfully",Toast.LENGTH_SHORT).show();
+                        getSupportLoaderManager().restartLoader(FLASH_CARDS_LOADER_ID, null, ShowFlashCardsActivity.this);
                     }else{
                         Toast.makeText(ShowFlashCardsActivity.this,"Cannot delete card !", Toast.LENGTH_SHORT).show();
                     }
@@ -119,6 +121,7 @@ public class ShowFlashCardsActivity extends AppCompatActivity implements LoaderM
     @Override
     protected void onResume() {
         super.onResume();
+        messageShowFlashCards.setVisibility(View.GONE);
         getSupportLoaderManager().restartLoader(FLASH_CARDS_LOADER_ID, null, this);
     }
 
@@ -161,6 +164,9 @@ public class ShowFlashCardsActivity extends AppCompatActivity implements LoaderM
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if (data.getCount() == 0){
+            messageShowFlashCards.setVisibility(View.VISIBLE);
+        }
         flashCardsRecyclerViewCursorAdapter.swapCursor(data);
         Log.v("Flash card","loading completed for topic "+ topicName);
     }
@@ -170,8 +176,6 @@ public class ShowFlashCardsActivity extends AppCompatActivity implements LoaderM
         flashCardsRecyclerViewCursorAdapter.swapCursor(null);
     }
 
-
-    //TODO: Open the details activity to show the question and answer
     @Override
     public void onFlashCardClicked(FlashCard flashCard) {
         Intent intent = new Intent(ShowFlashCardsActivity.this,ShowFlashCardDetailsActivity.class);

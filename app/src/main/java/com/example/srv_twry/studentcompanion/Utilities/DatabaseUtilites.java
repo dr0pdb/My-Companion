@@ -41,7 +41,7 @@ public class DatabaseUtilites {
 
         return returningSpannableString;
     }
-    //TODO: set proper colors
+
     // Helper method to set the start time and date of the contest in intended order for the details fragment.
     public static SpannableString getStartTimeTextDetailsFragment(Date startTime) {
 
@@ -50,18 +50,18 @@ public class DatabaseUtilites {
 
         modifiedString = originalString.substring(0,3) +
                 "\n" + originalString.substring(4,10) +
-                "\n" + originalString.substring(11,16) + " IST";
+                "\n" + originalString.substring(11,16) + " Local";
 
         SpannableString returningSpannableString = new SpannableString(modifiedString);
         returningSpannableString.setSpan(new RelativeSizeSpan(1.50f), 0, 3,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        returningSpannableString.setSpan(new ForegroundColorSpan(Color.BLUE), 0, 3,
+        returningSpannableString.setSpan(new ForegroundColorSpan(Color.BLACK), 0, 3,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         returningSpannableString.setSpan(new RelativeSizeSpan(1.25f), 4, 10,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        returningSpannableString.setSpan(new ForegroundColorSpan(Color.RED), 4, 10,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        returningSpannableString.setSpan(new RelativeSizeSpan(1.0f), 11, 20,
+        //returningSpannableString.setSpan(new ForegroundColorSpan(Color.RED), 4, 10,
+        //        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        returningSpannableString.setSpan(new RelativeSizeSpan(1.0f), 11, 22,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         return returningSpannableString;

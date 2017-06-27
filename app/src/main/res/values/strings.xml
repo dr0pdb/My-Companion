@@ -30,6 +30,7 @@
     <string name="select_images">Select Images</string>
     <string name="create_pdf_button_text">Create PDF</string>
     <string name="title_pdf_options">PDF Options</string>
+    <string name="click_on_button_to_get_started">Click on the \'+\' button to get started</string>
 
     <array name="pdf_dialog_options">
         <item>Open File</item>

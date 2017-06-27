@@ -28,6 +28,7 @@ import com.example.srv_twry.studentcompanion.Utilities.DatabaseUtilites;
 import com.example.srv_twry.studentcompanion.Utilities.SubscribedContestUtilities;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -207,16 +208,16 @@ public class ContestDetailFragment extends Fragment {
             return;
         }
         contestDetailTitleView.setText(mContest.getTitle());
-        contestDetailTitleView.setPaintFlags(contestDetailTitleView.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
+        //contestDetailTitleView.setPaintFlags(contestDetailTitleView.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
         coverImage.setImageResource(DatabaseUtilites.getCoverImage(mContest.getUrl()));
         SpannableString contestDetailsStartTime = DatabaseUtilites.getStartTimeTextDetailsFragment(mContest.getStartTime());
         contestDetailStartTimeText.setText(contestDetailsStartTime);
-        String duration = "Approximately "+getContestDuration(mContest.getStartTime(),mContest.getEndTime())+" hours";
+        String duration = "Duration: Approximately "+getContestDuration(mContest.getStartTime(),mContest.getEndTime())+" hours";
         contestDetailDurationText.setText(duration);
         if (mContest.getDescription().equals("")){
-            contestDetailDescriptionText.setText("Coding Contest for Programming enthusiasts");
+            contestDetailDescriptionText.setText("Contest Description: Coding Contest for Programming enthusiasts");
         }else{
-            contestDetailDescriptionText.setText(mContest.getDescription());
+            contestDetailDescriptionText.setText("Contest Description: "+ mContest.getDescription());
         }
         contestDetailRegistrationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,13 +230,12 @@ public class ContestDetailFragment extends Fragment {
         });
     }
 
-    //TODO: Get the correct duration
     private long getContestDuration(Date start, Date end){
         long startTime = start.getTime();
         long endTime = end.getTime();
 
         long difference = endTime- startTime;
-        difference = difference / (60 * 60 * 1000) % 24;        // returning the difference in hours.
+        difference = TimeUnit.MILLISECONDS.toHours(difference);        // returning the difference in hours.
         return difference;
     }
 
