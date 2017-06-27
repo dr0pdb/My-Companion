@@ -16,6 +16,7 @@ import com.andexert.library.RippleView;
 import com.example.srv_twry.studentcompanion.R;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -29,10 +30,12 @@ public class PDFFilesAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<String> filePaths;
     private static LayoutInflater inflater;
+    private onPDFDeleted onpdfDeleted;
 
-    public PDFFilesAdapter(Context context , ArrayList<String> filePaths){
+    public PDFFilesAdapter(Context context , ArrayList<String> filePaths, onPDFDeleted onpdfDeleted){
         this.context = context;
         this.filePaths = filePaths;
+        this.onpdfDeleted = onpdfDeleted;
 
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -92,7 +95,7 @@ public class PDFFilesAdapter extends BaseAdapter {
                                         //delete the pdf file.
                                         boolean success = deletePDF(filePaths.get(position));
                                         if (success){
-                                            filePaths.remove(position);
+                                            onpdfDeleted.onPDFDeleted();
                                         }
                                         break;
 
@@ -100,8 +103,6 @@ public class PDFFilesAdapter extends BaseAdapter {
                             }
                         })
                         .show();
-                //notifyDataSetChanged();
-                // notifyDataSetInvalidated();
             }
         });
 
@@ -136,6 +137,11 @@ public class PDFFilesAdapter extends BaseAdapter {
             Toast.makeText(context,"No suitable application found !",Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    //An interface that will refresh the list view after the deletion of a pdf file
+    public interface onPDFDeleted{
+        void onPDFDeleted();
     }
 
     static class ViewHolder {

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PDFCreatorHomeActivity extends AppCompatActivity {
+public class PDFCreatorHomeActivity extends AppCompatActivity implements PDFFilesAdapter.onPDFDeleted {
 
     @BindView(R.id.pdf_list_view_files) ListView pdfFilesListView;
     @BindView(R.id.fab_add_pdf_files) FloatingActionButton addPdfFab;
@@ -45,7 +45,7 @@ public class PDFCreatorHomeActivity extends AppCompatActivity {
         //Initialize the list view with blank data while the files are being loaded
         filesInDirectory = pdfFolder.listFiles();
         filePaths = new ArrayList<>();
-        pdfFilesAdapter = new PDFFilesAdapter(this,filePaths);
+        pdfFilesAdapter = new PDFFilesAdapter(PDFCreatorHomeActivity.this,filePaths,this);
         pdfFilesListView.setAdapter(pdfFilesAdapter);
 
         //setting the onClickListener
@@ -75,7 +75,7 @@ public class PDFCreatorHomeActivity extends AppCompatActivity {
         }
 
         //Now that loading is finished , reset the adapter
-        pdfFilesAdapter = new PDFFilesAdapter(this,filePaths);
+        pdfFilesAdapter = new PDFFilesAdapter(PDFCreatorHomeActivity.this,filePaths,this);
         pdfFilesListView.setAdapter(pdfFilesAdapter);
     }
 
@@ -83,5 +83,11 @@ public class PDFCreatorHomeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         loadFiles();    //Refresh the layout
+    }
+
+
+    @Override
+    public void onPDFDeleted() {
+        loadFiles();
     }
 }
