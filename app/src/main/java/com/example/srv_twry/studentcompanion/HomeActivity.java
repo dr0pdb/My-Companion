@@ -64,14 +64,13 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
-    // TODO: Solve the icons issue.
     // Method to create features arrayList
     private ArrayList<Feature> fillWithData() {
         ArrayList<Feature> featureArrayList = new ArrayList<>();
 
-        featureArrayList.add(new Feature(getResources().getString(R.string.coding_calendar),R.mipmap.ic_code));
-        featureArrayList.add(new Feature(getResources().getString(R.string.flash_cards),R.mipmap.ic_flash_cards));
-        featureArrayList.add(new Feature(getResources().getString(R.string.pdf_creator),R.mipmap.ic_launcher));
+        featureArrayList.add(new Feature(getResources().getString(R.string.coding_calendar),R.drawable.coding_calendar_logo));
+        featureArrayList.add(new Feature(getResources().getString(R.string.flash_cards),R.drawable.flash_cards_logo));
+        featureArrayList.add(new Feature(getResources().getString(R.string.pdf_creator),R.drawable.pdf_creator_logo));
         return featureArrayList;
     }
 
@@ -85,28 +84,6 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -116,7 +93,9 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_coding_calendar) {
             startCodingCalendar();
         } else if (id == R.id.nav_flash_cards) {
-
+            startFlashCards();
+        }else if(id == R.id.nav_pdf_creator){
+            startPdfCreator();
         }else if (id == R.id.nav_share){
 
         }

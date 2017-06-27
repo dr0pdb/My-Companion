@@ -30,13 +30,13 @@ public class DatabaseUtilites {
         sb.append(startTimeString.substring(0,10));
         sb.append("\n");
         sb.append(startTimeString.substring(11,16));
-        sb.append(" IST");          //TODO: change it for the time of the users timezone
+        sb.append(" Local");
         modifiedString = sb.toString();
 
         SpannableString returningSpannableString = new SpannableString(modifiedString);
         returningSpannableString.setSpan(new RelativeSizeSpan(1.0f), 0, 10,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        returningSpannableString.setSpan(new RelativeSizeSpan(0.75f), 11, 20,
+        returningSpannableString.setSpan(new RelativeSizeSpan(0.75f), 11, 22,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         return returningSpannableString;

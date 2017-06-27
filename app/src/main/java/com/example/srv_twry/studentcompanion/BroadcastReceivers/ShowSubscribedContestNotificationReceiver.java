@@ -23,7 +23,7 @@ import static android.support.v4.app.NotificationCompat.PRIORITY_MAX;
  * Created by srv_twry on 21/6/17.
  * The broadcast receiver that will be triggered when the contest is about to start.
  */
-//TODO:// Set the alarm manager using wake lock and move all this code to a separate service
+
 public class ShowSubscribedContestNotificationReceiver extends BroadcastReceiver {
 
     private String contestTitle;
