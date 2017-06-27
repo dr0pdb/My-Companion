@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:padding="@dimen/widget_margin">
 
     <TextView
@@ -11,7 +12,8 @@
         android:gravity="center_horizontal"
         android:layout_margin="8dp"
         android:textStyle="bold"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:textColor="@color/white"/>
 
     <TextView
         android:id="@+id/contest_widget_upcoming_contests"
@@ -19,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:layout_below="@id/contest_widget_title"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal"
+        android:textColor="@color/white"/>
 
 </RelativeLayout>

@@ -4,9 +4,16 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.example.srv_twry.studentcompanion.Database.DatabaseContract;
+import com.example.srv_twry.studentcompanion.Utilities.DatabaseUtilites;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Implementation of App Widget functionality.
@@ -32,7 +39,12 @@ public class CodingCalendarUpcomingContestWidget extends AppWidgetProvider {
     }
 
     public static void generateStringForContests(Cursor cursor){
+
+        //Only show the 8 upcoming contests
         int numberContests = cursor.getCount();
+        if (numberContests >8 ){
+            numberContests = 8;
+        }
 
         int titleColumnIndex = cursor.getColumnIndex(DatabaseContract.ContestEntry.CONTEST_COLUMN_TITLE);
         int startTimeColumnIndex = cursor.getColumnIndex(DatabaseContract.ContestEntry.CONTEST_COLUMN_START_TIME);
@@ -43,7 +55,8 @@ public class CodingCalendarUpcomingContestWidget extends AppWidgetProvider {
             cursor.moveToPosition(i);
 
             String title = cursor.getString(titleColumnIndex);
-            String startTime = cursor.getString(startTimeColumnIndex);
+            String temp = cursor.getString(startTimeColumnIndex);
+            String startTime = getDateFromString(temp).toString();
 
             stringBuilder.append(i+1).append(". ").append(title).append(" on ").append(startTime).append("\n");
         }
@@ -59,6 +72,27 @@ public class CodingCalendarUpcomingContestWidget extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
+    }
+
+    //A helper method to convert the time in String to Java Date Class
+    public static Date getDateFromString(String string){
+
+        Date result;
+        try {
+            TimeZone tz = TimeZone.getTimeZone("UTC");
+            //TimeZone tz = TimeZone.getTimeZone("Asia/Calcutta");
+            //Calendar cal = Calendar.getInstance(tz);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            //sdf.setCalendar(cal);
+            //cal.setTime(sdf.parse(string));
+            //result = cal.getTime();
+            sdf.setTimeZone(tz);
+            result = sdf.parse(string);
+        }catch (ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+        return result;
     }
 
     @Override
