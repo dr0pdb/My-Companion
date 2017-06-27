@@ -1,15 +1,21 @@
 package com.example.srv_twry.studentcompanion.Adapters;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.example.srv_twry.studentcompanion.R;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -48,7 +54,7 @@ public class PDFFilesAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView != null) {
             holder = (ViewHolder) convertView.getTag();
@@ -64,9 +70,72 @@ public class PDFFilesAdapter extends BaseAdapter {
         String[] name = filePaths.get(position).split("/");
         holder.textView.setText(name[name.length -1]);
 
-        //TODO:set the onClickListener to the view
+        holder.mRipple.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MaterialDialog.Builder(context)
+                        .title(R.string.title_pdf_options)
+                        .items(R.array.pdf_dialog_options)
+                        .itemsIds(R.array.pdf_dialog_itemIds)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+
+                                switch (which) {
+                                    case 0:
+                                        //open pdf
+                                        openPDF(filePaths.get(position));
+                                        break;
+
+
+                                    case 1:
+                                        //delete the pdf file.
+                                        boolean success = deletePDF(filePaths.get(position));
+                                        if (success){
+                                            filePaths.remove(position);
+                                        }
+                                        break;
+
+                                }
+                            }
+                        })
+                        .show();
+                //notifyDataSetChanged();
+                // notifyDataSetInvalidated();
+            }
+        });
 
         return convertView;
+    }
+
+    //Helper method to delete the pdf file
+    private boolean deletePDF(String s) {
+        File file = new File(s);
+        if (file.exists()){
+            if (file.delete()){
+                Toast.makeText(context,"Successfully deleted selected file",Toast.LENGTH_SHORT).show();
+                return true;
+            }else{
+                Toast.makeText(context,"Cannot delete selected file",Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+        return false;
+    }
+
+    //Helper method to open the PDF file
+    private void openPDF(String s) {
+        File file = new File(s);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(file),"PDF viewer");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        try{
+            context.startActivity(intent);
+        }catch(ActivityNotFoundException e){
+            e.printStackTrace();
+            Toast.makeText(context,"No suitable application found !",Toast.LENGTH_LONG).show();
+        }
+
     }
 
     static class ViewHolder {

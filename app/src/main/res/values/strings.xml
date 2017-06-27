@@ -29,4 +29,15 @@
     <string name="create_pdf">Create PDF</string>
     <string name="select_images">Select Images</string>
     <string name="create_pdf_button_text">Create PDF</string>
+    <string name="title_pdf_options">PDF Options</string>
+
+    <array name="pdf_dialog_options">
+        <item>Open File</item>
+        <item>Delete File</item>
+    </array>
+
+    <array name="pdf_dialog_itemIds">
+        <item>open</item>
+        <item>delete</item>
+    </array>
 </resources>
