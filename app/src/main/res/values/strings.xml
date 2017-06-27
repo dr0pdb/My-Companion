@@ -31,6 +31,12 @@
     <string name="create_pdf_button_text">Create PDF</string>
     <string name="title_pdf_options">PDF Options</string>
     <string name="click_on_button_to_get_started">Click on the \'+\' button to get started</string>
+    <string name="click_on_button_to_create_pdf">Click on the \'+\' button to create pdf</string>
+    <string name="share_flash_card">Share Flash card ..</string>
+    <string name="share_contest">Share Contest ..</string>
+    <string name="app_playstore_link"></string>
+    <string name="share_this_app">Share this application ..</string>
+
 
     <array name="pdf_dialog_options">
         <item>Open File</item>

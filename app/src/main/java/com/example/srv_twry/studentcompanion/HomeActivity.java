@@ -20,7 +20,7 @@ import com.example.srv_twry.studentcompanion.Adapters.FeaturesRecyclerViewAdapte
 import com.example.srv_twry.studentcompanion.POJOs.Feature;
 
 import java.util.ArrayList;
-//TODO: For all the intents starting another application check if that application or any other supported application is available
+
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, FeaturesRecyclerViewAdapter.FeaturesOnClickListener{
 
@@ -40,8 +40,14 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                String sharingString = "Hey Checkout this cool app \n"+ getResources().getString(R.string.app_name) +
+                        " :) \n"+ "This is a perfect companion for any student. Get it at the google playstore here:- \n"+
+                        getResources().getString(R.string.app_playstore_link); //TODO: To put the playstore link after pushing the app on playstore here
+                shareIntent.putExtra(Intent.EXTRA_TEXT,sharingString);
+                shareIntent.setType("text/plain");
+                startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.share_this_app)));
+
             }
         });
 

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.srv_twry.studentcompanion.Adapters.PDFFilesAdapter;
 
@@ -21,6 +22,7 @@ public class PDFCreatorHomeActivity extends AppCompatActivity implements PDFFile
 
     @BindView(R.id.pdf_list_view_files) ListView pdfFilesListView;
     @BindView(R.id.fab_add_pdf_files) FloatingActionButton addPdfFab;
+    @BindView(R.id.message_pdf_creator_home) TextView messagePdfCreator;
 
     PDFFilesAdapter pdfFilesAdapter;
     File pdfFolder;
@@ -75,6 +77,9 @@ public class PDFCreatorHomeActivity extends AppCompatActivity implements PDFFile
         }
 
         //Now that loading is finished , reset the adapter
+        if (filePaths.size() == 0){
+            messagePdfCreator.setVisibility(View.VISIBLE);
+        }
         pdfFilesAdapter = new PDFFilesAdapter(PDFCreatorHomeActivity.this,filePaths,this);
         pdfFilesListView.setAdapter(pdfFilesAdapter);
     }
@@ -82,6 +87,7 @@ public class PDFCreatorHomeActivity extends AppCompatActivity implements PDFFile
     @Override
     protected void onResume() {
         super.onResume();
+        messagePdfCreator.setVisibility(View.GONE);
         loadFiles();    //Refresh the layout
     }
 

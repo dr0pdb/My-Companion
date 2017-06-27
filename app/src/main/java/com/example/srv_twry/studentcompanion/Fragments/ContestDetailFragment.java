@@ -137,7 +137,13 @@ public class ContestDetailFragment extends Fragment {
         shareFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: set the share intent here.
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                String sharingString = "Hey "+ mContest.getTitle()+ " is scheduled at "+ mContest.getStartTime().toString() + "\n"+
+                        "Lets compete together :) ";
+                shareIntent.putExtra(Intent.EXTRA_TEXT,sharingString);
+                shareIntent.setType("text/plain");
+                startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.share_contest)));
             }
         });
 

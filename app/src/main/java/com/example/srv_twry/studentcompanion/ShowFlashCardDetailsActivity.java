@@ -1,5 +1,6 @@
 package com.example.srv_twry.studentcompanion;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,7 +34,12 @@ public class ShowFlashCardDetailsActivity extends AppCompatActivity {
         shareThisCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Set the share intent here
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                String sharingString = "Hey checkout this one ! \n Question: "+mFlashCard.getQuestion()+" \n Answer: "+mFlashCard.getAnswer();
+                shareIntent.putExtra(Intent.EXTRA_TEXT,sharingString);
+                shareIntent.setType("text/plain");
+                startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.share_flash_card)));
             }
         });
     }

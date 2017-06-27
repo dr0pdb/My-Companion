@@ -11,6 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <TextView
+        android:id="@+id/message_pdf_creator_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:gravity="center"
+        android:textStyle="italic|bold"
+        android:textSize="20sp"
+        android:text="@string/click_on_button_to_create_pdf"
+        android:visibility="gone"/>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_pdf_files"
         android:layout_width="wrap_content"
