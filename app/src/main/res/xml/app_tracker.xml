@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- End current session if app sleeps for a period of time -->
+    <integer name="ga_sessionTimeout">300</integer>
+
+    <!-- Enable automatic Activity measurement -->
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <!--  The property id associated with this analytics tracker -->
+    <string name="ga_trackingId">UA-101756471-1</string>
+
+    <string name="ga_sampleFrequency">100.0</string>
+
+    <bool name="ga_reportUncaughtExceptions">true</bool>
+
+    <!--
+      See Project Structure -> Analytics -> Google Analytics -> Learn More
+      to learn more about configuring this file.
+    -->
+
+    <!-- The screen names for tracking the activities by google analytics
+    -->
+    <screenName name="com.example.srv_twry.studentcompanion.HomeActivity">Home Screen</screenName>
+    <screenName name="com.example.srv_twry.studentcompanion.CodingCalendarListActivity">Coding Calendar List </screenName>
+    <screenName name="com.example.srv_twry.studentcompanion.CodingCalendarContestDetailActivity">Coding Calendar Detail</screenName>
+    <screenName name="com.example.srv_twry.studentcompanion.AddFlashCardTopicActivity">Add Flash Card Topic Activity</screenName>
+    <screenName name="com.example.srv_twry.studentcompanion.AddFlashCardActivity">Add Flash Card Activity</screenName>
+    <screenName name="com.example.srv_twry.studentcompanion.PDFCreatorHomeActivity">PDF Creator Home Activity</screenName>
+    <screenName name="com.example.srv_twry.studentcompanion.CreatePDFActivity">Create PDF Activity</screenName>
+
+</resources>

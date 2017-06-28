@@ -21,6 +21,7 @@
         android:required="false" />
 
     <application
+        android:name=".GoogleAnalytics.MyApplication"
         android:allowBackup="true"
         android:enabled="true"
         android:icon="@mipmap/ic_launcher"
