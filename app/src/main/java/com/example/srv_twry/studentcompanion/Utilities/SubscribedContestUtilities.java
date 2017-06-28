@@ -25,7 +25,7 @@ public class SubscribedContestUtilities {
 
     public static final String CONTEST_TITLE = "contestTitle";
     public static final String CONTEST_URL = "contestUrl";
-    public static AlarmManager alarmManager;
+    private static AlarmManager alarmManager;
 
     public static int saveContestIntoSubscribedDatabase(Context context, Contest mContest) {
 

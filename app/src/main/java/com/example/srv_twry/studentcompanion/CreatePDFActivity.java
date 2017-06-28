@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -33,7 +32,6 @@ import com.nguyenhoanglam.imagepicker.model.Image;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
@@ -46,13 +44,16 @@ public class CreatePDFActivity extends AppCompatActivity implements LoaderManage
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE_RESULT = 1;
     private static final int CREATE_PDF_LOADER_ID = 23;
 
-    @BindView(R.id.select_images) Button selectImages;
-    @BindView(R.id.create_pdf) Button createPdf;
+    @BindView(R.id.select_images)
+    private final Button selectImages;
+    @BindView(R.id.create_pdf)
+    private final Button createPdf;
     @BindView(R.id.banner_ad_create_pdf)
+    private final
     AdView bannerAdView;
 
-    ArrayList<String> imageUri;
-    String filename;
+    private ArrayList<String> imageUri;
+    private String filename;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,12 +174,12 @@ public class CreatePDFActivity extends AppCompatActivity implements LoaderManage
         return new AsyncTaskLoader<Boolean>(CreatePDFActivity.this) {
 
             //Create the dialog to be shown while creating pdf
-            MaterialDialog.Builder builder = new MaterialDialog.Builder(CreatePDFActivity.this)
+            final MaterialDialog.Builder builder = new MaterialDialog.Builder(CreatePDFActivity.this)
                     .title("Please Wait")
                     .content("Creating PDF...")
                     .cancelable(false)
                     .progress(true, 0);
-            MaterialDialog progressDialog = builder.build();
+            final MaterialDialog progressDialog = builder.build();
 
             @Override
             protected void onStartLoading() {

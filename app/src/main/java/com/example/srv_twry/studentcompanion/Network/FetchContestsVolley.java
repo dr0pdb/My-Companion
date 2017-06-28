@@ -12,18 +12,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.srv_twry.studentcompanion.Database.DatabaseContract;
-import com.example.srv_twry.studentcompanion.POJOs.Contest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * Created by srv_twry on 19/6/17.
@@ -33,8 +25,8 @@ import java.util.TimeZone;
 public class FetchContestsVolley {
     private static RequestQueue requestQueue;
     private static final String HACKERRANK_API_URL = "https://www.hackerrank.com/calendar/feed.json";
-    private Context context;
-    private onLoadingFinishedListener onLoadingFinishedListener;
+    private final Context context;
+    private final onLoadingFinishedListener onLoadingFinishedListener;
 
     public FetchContestsVolley(Context context,onLoadingFinishedListener onLoadingFinishedListener){
         this.context=context;

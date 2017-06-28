@@ -4,7 +4,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
     <string name="coding_calendar">Coding Calendar</string>
     <string name="flash_cards">Flash Cards</string>
     <string name="share">Share</string>
@@ -13,7 +12,6 @@
     <string name="participate">Participate</string>
     <string name="contest_click_message">Click on a Contest for details</string>
     <string name="enter_topic_name">Enter topic name</string>
-    <string name="priority_flash_card_topic">Priority</string>
     <string name="high">High</string>
     <string name="medium">Medium</string>
     <string name="low">Low</string>
@@ -47,7 +45,6 @@
         <item>open</item>
         <item>delete</item>
     </array>
-    <string name="add_widget">Add widget</string>
     <string name="upcoming_contests">Upcoming Contests</string>
 
     <!-- Ad mob ad-unit !-->

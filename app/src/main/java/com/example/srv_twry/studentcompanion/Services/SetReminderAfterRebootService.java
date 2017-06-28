@@ -18,7 +18,7 @@ import com.example.srv_twry.studentcompanion.Utilities.SubscribedContestUtilitie
 
 public class SetReminderAfterRebootService extends IntentService {
 
-    Context mContext;
+    private final Context mContext;
 
     public SetReminderAfterRebootService(){
         super("SetReminderAfterRebootService");

@@ -24,8 +24,8 @@ import butterknife.ButterKnife;
 public class FlashCardsTopicsRecyclerViewCursorAdapter extends RecyclerView.Adapter<FlashCardsTopicsRecyclerViewCursorAdapter.ViewHolder>{
 
     private Cursor mCursor;
-    private Context mContext;
-    private FlashCardsTopicRecyclerViewOnClickListener flashCardsTopicRecyclerViewOnClickListener;
+    private final Context mContext;
+    private final FlashCardsTopicRecyclerViewOnClickListener flashCardsTopicRecyclerViewOnClickListener;
 
     public FlashCardsTopicsRecyclerViewCursorAdapter(Context context ,FlashCardsTopicRecyclerViewOnClickListener flashCardsTopicRecyclerViewOnClickListener){
         mContext = context;

@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * The SQlite database helper class for the database operations.
  */
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME= "StudentCompanion.db";
     private static final int VERSION = 1;

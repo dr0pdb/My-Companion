@@ -2,7 +2,6 @@ package com.example.srv_twry.studentcompanion.Adapters;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +22,8 @@ import butterknife.ButterKnife;
 public class FlashCardsRecyclerViewCursorAdapter extends RecyclerView.Adapter<FlashCardsRecyclerViewCursorAdapter.ViewHolder> {
 
     private Cursor mCursor;
-    private Context mContext;
-    private FlashCardsRecyclerViewCursorAdapterOnClickListener flashCardsRecyclerViewCursorAdapterOnClickListener;
+    private final Context mContext;
+    private final FlashCardsRecyclerViewCursorAdapterOnClickListener flashCardsRecyclerViewCursorAdapterOnClickListener;
 
     public FlashCardsRecyclerViewCursorAdapter(Context context,FlashCardsRecyclerViewCursorAdapterOnClickListener flashCardsRecyclerViewCursorAdapterOnClickListener){
         mContext = context;

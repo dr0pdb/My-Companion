@@ -20,14 +20,17 @@ import butterknife.ButterKnife;
 
 public class PDFCreatorHomeActivity extends AppCompatActivity implements PDFFilesAdapter.onPDFDeleted {
 
-    @BindView(R.id.pdf_list_view_files) ListView pdfFilesListView;
-    @BindView(R.id.fab_add_pdf_files) FloatingActionButton addPdfFab;
-    @BindView(R.id.message_pdf_creator_home) TextView messagePdfCreator;
+    @BindView(R.id.pdf_list_view_files)
+    private final ListView pdfFilesListView;
+    @BindView(R.id.fab_add_pdf_files)
+    private final FloatingActionButton addPdfFab;
+    @BindView(R.id.message_pdf_creator_home)
+    private final TextView messagePdfCreator;
 
-    PDFFilesAdapter pdfFilesAdapter;
-    File pdfFolder;
-    File[] filesInDirectory;
-    ArrayList<String> filePaths;
+    private PDFFilesAdapter pdfFilesAdapter;
+    private File pdfFolder;
+    private File[] filesInDirectory;
+    private ArrayList<String> filePaths;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -27,8 +27,8 @@ import butterknife.ButterKnife;
 
 public class ContestRecyclerViewAdapter extends RecyclerView.Adapter<ContestRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<Contest> contestArrayList;
-    private ContestRecyclerViewOnClickListener contestRecyclerViewOnClickListener;
+    private final ArrayList<Contest> contestArrayList;
+    private final ContestRecyclerViewOnClickListener contestRecyclerViewOnClickListener;
 
     public ContestRecyclerViewAdapter(ArrayList<Contest> contestArrayList , ContestRecyclerViewOnClickListener contestRecyclerViewOnClickListener){
         this.contestArrayList = contestArrayList;
@@ -61,7 +61,7 @@ public class ContestRecyclerViewAdapter extends RecyclerView.Adapter<ContestRecy
         @BindView(R.id.contest_view_holder_platform_image) ImageView contestPlatform;
         @BindView(R.id.tv_contest_platform_name) TextView contestTitle;
         @BindView(R.id.tv_contest_start_time) TextView contestStartTime;
-        boolean isLandscape;
+        final boolean isLandscape;
 
         public ViewHolder(View view){
             super(view);

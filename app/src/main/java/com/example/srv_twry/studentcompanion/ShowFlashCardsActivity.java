@@ -25,24 +25,25 @@ import com.example.srv_twry.studentcompanion.POJOs.FlashCard;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.example.srv_twry.studentcompanion.Database.DatabaseContract.FlashCardsTopicsEntry.FLASH_CARDS_TOPIC_PRIORITY;
 /*
 *  This activity shows the flash cards associated with a certain flash card topic.
 * */
 
 public class ShowFlashCardsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> , FlashCardsRecyclerViewCursorAdapter.FlashCardsRecyclerViewCursorAdapterOnClickListener{
 
-    private static int FLASH_CARDS_LOADER_ID = 400;
+    private static final int FLASH_CARDS_LOADER_ID = 400;
     public static final String INTENT_EXTRA_TOPIC_NAME = "intentExtraTopicName";
     private static final String TAG = ShowFlashCardsActivity.class.getSimpleName();
     public static final String INTENT_EXTRA_FLASH_CARD = "intentExtraFlashCard";
 
-    @BindView(R.id.rv_flash_cards) RecyclerView flashCardsRecyclerView;
-    @BindView(R.id.fab_add_flash_cards) FloatingActionButton floatingActionButton;
-    @BindView(R.id.message_show_flash_cards)TextView messageShowFlashCards;
-    FlashCardsRecyclerViewCursorAdapter flashCardsRecyclerViewCursorAdapter;
-    String topicName;
+    @BindView(R.id.rv_flash_cards)
+    private final RecyclerView flashCardsRecyclerView;
+    @BindView(R.id.fab_add_flash_cards)
+    private final FloatingActionButton floatingActionButton;
+    @BindView(R.id.message_show_flash_cards)
+    private final TextView messageShowFlashCards;
+    private FlashCardsRecyclerViewCursorAdapter flashCardsRecyclerViewCursorAdapter;
+    private String topicName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

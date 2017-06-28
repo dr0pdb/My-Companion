@@ -16,7 +16,6 @@ import com.andexert.library.RippleView;
 import com.example.srv_twry.studentcompanion.R;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -27,10 +26,10 @@ import butterknife.ButterKnife;
 
 public class PDFFilesAdapter extends BaseAdapter {
 
-    private Context context;
-    private ArrayList<String> filePaths;
+    private final Context context;
+    private final ArrayList<String> filePaths;
     private static LayoutInflater inflater;
-    private onPDFDeleted onpdfDeleted;
+    private final onPDFDeleted onpdfDeleted;
 
     public PDFFilesAdapter(Context context , ArrayList<String> filePaths, onPDFDeleted onpdfDeleted){
         this.context = context;

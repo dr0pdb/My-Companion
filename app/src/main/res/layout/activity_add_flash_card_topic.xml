@@ -47,7 +47,6 @@
             <Button
                 style="?android:attr/buttonBarButtonStyle"
                 android:textColor="@android:color/primary_text_light"
-                android:id="@+id/buttonP1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/materialRed"
@@ -58,7 +57,6 @@
             <Button
                 style="?android:attr/buttonBarButtonStyle"
                 android:textColor="@android:color/primary_text_light"
-                android:id="@+id/buttonP2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/materialOrange"
@@ -69,7 +67,6 @@
             <Button
                 style="?android:attr/buttonBarButtonStyle"
                 android:textColor="@android:color/primary_text_light"
-                android:id="@+id/buttonP3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/materialYellow"
@@ -117,8 +114,7 @@
 
     <!-- Add button -->
     <Button
-        android:id="@+id/addButton"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/add"

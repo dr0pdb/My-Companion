@@ -119,5 +119,6 @@
         android:layout_marginRight="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_share" />
+        app:srcCompat="@android:drawable/ic_menu_share"
+        tools:ignore="VectorDrawableCompat" />
 </android.support.constraint.ConstraintLayout>

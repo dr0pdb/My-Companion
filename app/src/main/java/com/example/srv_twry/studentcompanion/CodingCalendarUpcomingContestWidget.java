@@ -4,11 +4,9 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.example.srv_twry.studentcompanion.Database.DatabaseContract;
-import com.example.srv_twry.studentcompanion.Utilities.DatabaseUtilites;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,8 +20,8 @@ public class CodingCalendarUpcomingContestWidget extends AppWidgetProvider {
 
     private static String upcomingContests;
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                        int appWidgetId) {
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.coding_calendar_upcoming_contest_widget);
@@ -38,7 +36,7 @@ public class CodingCalendarUpcomingContestWidget extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    public static void generateStringForContests(Cursor cursor){
+    private static void generateStringForContests(Cursor cursor){
 
         //Only show the 8 upcoming contests
         int numberContests = cursor.getCount();
@@ -75,7 +73,7 @@ public class CodingCalendarUpcomingContestWidget extends AppWidgetProvider {
     }
 
     //A helper method to convert the time in String to Java Date Class
-    public static Date getDateFromString(String string){
+    private static Date getDateFromString(String string){
 
         Date result;
         try {

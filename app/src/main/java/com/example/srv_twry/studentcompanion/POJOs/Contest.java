@@ -12,11 +12,11 @@ import java.util.Date;
  */
 
 public class Contest implements Parcelable {
-    private String title;
-    private String description;
-    private String url;
-    private Date startTime;
-    private Date endTime;
+    private final String title;
+    private final String description;
+    private final String url;
+    private final Date startTime;
+    private final Date endTime;
 
     public Contest(String title,String description,String url,Date startTime,Date endTime){
         this.title=title;
@@ -61,7 +61,7 @@ public class Contest implements Parcelable {
         dest.writeLong(this.endTime != null ? this.endTime.getTime() : -1);
     }
 
-    protected Contest(Parcel in) {
+    private Contest(Parcel in) {
         this.title = in.readString();
         this.description = in.readString();
         this.url = in.readString();

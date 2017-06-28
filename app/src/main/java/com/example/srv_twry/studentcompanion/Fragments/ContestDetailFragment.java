@@ -2,7 +2,6 @@ package com.example.srv_twry.studentcompanion.Fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.srv_twry.studentcompanion.CodingCalendarContestDetailActivity;
-import com.example.srv_twry.studentcompanion.CodingCalendarListActivity;
 import com.example.srv_twry.studentcompanion.POJOs.Contest;
 import com.example.srv_twry.studentcompanion.R;
 import com.example.srv_twry.studentcompanion.Utilities.DatabaseUtilites;
@@ -50,23 +48,33 @@ public class ContestDetailFragment extends Fragment {
     private Boolean isSetForReminder;
     private int subscribedDatabaseId;
     private SharedPreferences sharedPreferences;
-    private boolean isTablet;
 
     public ContestDetailFragment() {
         // Required empty public constructor
     }
 
-    @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbarLayout;
-    @BindView(R.id.contest_cover) ImageView coverImage;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.tv_contest_details_title) TextView contestDetailTitleView;
-    @BindView(R.id.tv_contest_details_start_time) TextView contestDetailStartTimeText;
-    @BindView(R.id.tv_contest_detail_duration) TextView contestDetailDurationText;
-    @BindView(R.id.tv_contest_detail_description)TextView contestDetailDescriptionText;
-    @BindView(R.id.button_contest_detail_register) Button contestDetailRegistrationButton;
-    @BindView(R.id.contest_detail_share_fab) FloatingActionButton shareFloatingActionButton;
-    @BindView(R.id.contest_detail_set_reminder) FloatingActionButton setReminderFloatingActionButton;
-    @BindView(R.id.banner_ad_contest_detail) AdView bannerAdView;
+    @BindView(R.id.collapsing_toolbar)
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.contest_cover)
+    private ImageView coverImage;
+    @BindView(R.id.toolbar)
+    private Toolbar toolbar;
+    @BindView(R.id.tv_contest_details_title)
+    private TextView contestDetailTitleView;
+    @BindView(R.id.tv_contest_details_start_time)
+    private TextView contestDetailStartTimeText;
+    @BindView(R.id.tv_contest_detail_duration)
+    private TextView contestDetailDurationText;
+    @BindView(R.id.tv_contest_detail_description)
+    private TextView contestDetailDescriptionText;
+    @BindView(R.id.button_contest_detail_register)
+    private Button contestDetailRegistrationButton;
+    @BindView(R.id.contest_detail_share_fab)
+    private FloatingActionButton shareFloatingActionButton;
+    @BindView(R.id.contest_detail_set_reminder)
+    private FloatingActionButton setReminderFloatingActionButton;
+    @BindView(R.id.banner_ad_contest_detail)
+    private AdView bannerAdView;
 
     //For a new instance of the Fragment.
     public static ContestDetailFragment newInstance(Contest contest) {
@@ -103,6 +111,7 @@ public class ContestDetailFragment extends Fragment {
 
         // Initialize and set the data.
         ButterKnife.bind(this,view);
+        boolean isTablet;
         if (getActivity().getResources().getBoolean(R.bool.is_tablet)){
             isTablet = true;
             toolbar.setVisibility(View.GONE);

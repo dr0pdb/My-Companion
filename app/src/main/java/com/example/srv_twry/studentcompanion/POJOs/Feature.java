@@ -6,8 +6,8 @@ package com.example.srv_twry.studentcompanion.POJOs;
  */
 
 public class Feature {
-    private String title;
-    private int imageResourceId;
+    private final String title;
+    private final int imageResourceId;
 
     public Feature(String title,int imageResourceId){
         this.title= title;

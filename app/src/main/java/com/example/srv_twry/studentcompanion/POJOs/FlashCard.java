@@ -9,9 +9,9 @@ import android.os.Parcelable;
  */
 
 public class FlashCard implements Parcelable {
-    private String topicName;
-    private String question;
-    private String answer;
+    private final String topicName;
+    private final String question;
+    private final String answer;
 
     public FlashCard(String topicName,String question,String answer){
         this.topicName= topicName;
@@ -43,7 +43,7 @@ public class FlashCard implements Parcelable {
         dest.writeString(this.answer);
     }
 
-    protected FlashCard(Parcel in) {
+    private FlashCard(Parcel in) {
         this.topicName = in.readString();
         this.question = in.readString();
         this.answer = in.readString();

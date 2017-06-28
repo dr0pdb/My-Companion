@@ -3,10 +3,8 @@ package com.example.srv_twry.studentcompanion.Utilities;
 import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
-import android.util.Log;
 
 import com.example.srv_twry.studentcompanion.R;
 
@@ -26,12 +24,11 @@ public class DatabaseUtilites {
         String startTimeString = startTime.toString();
         String modifiedString;
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(startTimeString.substring(0,10));
-        sb.append("\n");
-        sb.append(startTimeString.substring(11,16));
-        sb.append(" Local");
-        modifiedString = sb.toString();
+        String sb = startTimeString.substring(0, 10) +
+                "\n" +
+                startTimeString.substring(11, 16) +
+                " Local";
+        modifiedString = sb;
 
         SpannableString returningSpannableString = new SpannableString(modifiedString);
         returningSpannableString.setSpan(new RelativeSizeSpan(1.0f), 0, 10,

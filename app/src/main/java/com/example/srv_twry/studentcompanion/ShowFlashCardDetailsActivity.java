@@ -17,10 +17,14 @@ import butterknife.ButterKnife;
 public class ShowFlashCardDetailsActivity extends AppCompatActivity {
 
     private FlashCard mFlashCard;
-    @BindView(R.id.tv_flash_card_detail_question) TextView detailQuestion;
-    @BindView(R.id.tv_flash_card_detail_answer) TextView detailAnswer;
-    @BindView(R.id.fab_show_flash_card_details) FloatingActionButton shareThisCard;
-    @BindView(R.id.banner_ad_flash_cards_details) AdView bannerAdView;
+    @BindView(R.id.tv_flash_card_detail_question)
+    private final TextView detailQuestion;
+    @BindView(R.id.tv_flash_card_detail_answer)
+    private final TextView detailAnswer;
+    @BindView(R.id.fab_show_flash_card_details)
+    private final FloatingActionButton shareThisCard;
+    @BindView(R.id.banner_ad_flash_cards_details)
+    private final AdView bannerAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

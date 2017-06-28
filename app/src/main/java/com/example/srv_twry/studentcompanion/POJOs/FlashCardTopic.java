@@ -11,8 +11,8 @@ import android.os.Parcelable;
 
 public class FlashCardTopic implements Parcelable {
 
-    private String name;
-    private int priority;           //priority will range from 1-3 with 1 being highest. Topics will be sorted by priority.
+    private final String name;
+    private final int priority;           //priority will range from 1-3 with 1 being highest. Topics will be sorted by priority.
 
     public FlashCardTopic(String name,int priority){
         this.name = name;
@@ -38,7 +38,7 @@ public class FlashCardTopic implements Parcelable {
         dest.writeInt(this.priority);
     }
 
-    protected FlashCardTopic(Parcel in) {
+    private FlashCardTopic(Parcel in) {
         this.name = in.readString();
         this.priority = in.readInt();
     }

@@ -22,8 +22,8 @@ import butterknife.ButterKnife;
 
 public class FeaturesRecyclerViewAdapter extends RecyclerView.Adapter<FeaturesRecyclerViewAdapter.ViewHolder>  {
 
-    private ArrayList<Feature> featureArrayList;
-    private FeaturesOnClickListener featuresOnClickListener;
+    private final ArrayList<Feature> featureArrayList;
+    private final FeaturesOnClickListener featuresOnClickListener;
 
     public FeaturesRecyclerViewAdapter(ArrayList<Feature> featureArrayList,FeaturesOnClickListener featuresOnClickListener){
         this.featureArrayList = featureArrayList;

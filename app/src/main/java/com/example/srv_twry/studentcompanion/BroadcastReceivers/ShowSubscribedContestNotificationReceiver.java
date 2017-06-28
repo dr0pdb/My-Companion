@@ -11,9 +11,7 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.example.srv_twry.studentcompanion.R;
 import com.example.srv_twry.studentcompanion.Utilities.DatabaseUtilites;
 import com.example.srv_twry.studentcompanion.Utilities.SubscribedContestUtilities;
 
@@ -26,17 +24,14 @@ import static android.support.v4.app.NotificationCompat.PRIORITY_MAX;
 
 public class ShowSubscribedContestNotificationReceiver extends BroadcastReceiver {
 
-    private String contestTitle;
-    private String contestUrl;
-
     @Override
     public void onReceive(Context context, Intent intent) {
 
         Log.v("Show notF receiver","RECEIVED BROADCAST");
 
         //Use Notification builder to show notifications.
-        contestTitle = intent.getStringExtra(SubscribedContestUtilities.CONTEST_TITLE);
-        contestUrl = intent.getStringExtra(SubscribedContestUtilities.CONTEST_URL);
+        String contestTitle = intent.getStringExtra(SubscribedContestUtilities.CONTEST_TITLE);
+        String contestUrl = intent.getStringExtra(SubscribedContestUtilities.CONTEST_URL);
 
         int imageResourceForContest = DatabaseUtilites.getCoverImage(contestUrl);
 
@@ -63,7 +58,7 @@ public class ShowSubscribedContestNotificationReceiver extends BroadcastReceiver
 
         // Delete the contest from the database here.
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        int databaseId = sharedPreferences.getInt(contestTitle+" subsDbId",-1);
+        int databaseId = sharedPreferences.getInt(contestTitle +" subsDbId",-1);
         Log.v("Show Notifications",""+ databaseId);
         int deleted= SubscribedContestUtilities.removeContestFromSubscribedDatabase(context,databaseId);
         if (deleted >0){
@@ -71,7 +66,7 @@ public class ShowSubscribedContestNotificationReceiver extends BroadcastReceiver
             //databaseId = -1;
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.remove(contestTitle);
-            editor.remove(contestTitle+" subsDbId");
+            editor.remove(contestTitle +" subsDbId");
             Log.v("Show Notifications","DELETED SHARED PREFERENCES");
             //editor.putBoolean(contestTitle,isSetForReminder);
             //editor.putInt(contestTitle+" subsDbId",databaseId);

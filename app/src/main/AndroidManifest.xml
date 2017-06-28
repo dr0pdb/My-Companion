@@ -58,7 +58,7 @@
         <provider
             android:name=".Database.DatabaseContentProvider"
             android:authorities="@string/authority"
-            android:exported="true"
+            android:exported="false"
             android:syncable="true"
             tools:ignore="InnerclassSeparator" />
 
@@ -90,6 +90,7 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/coding_calendar_sync_adapter" />
         </service>
+        <service android:name=".Services.SetReminderAfterRebootService" />
 
         <receiver
             android:name=".BroadcastReceivers.ShowSubscribedContestNotificationReceiver"

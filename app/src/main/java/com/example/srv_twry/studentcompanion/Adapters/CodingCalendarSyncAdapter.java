@@ -27,7 +27,7 @@ public class CodingCalendarSyncAdapter extends AbstractThreadedSyncAdapter imple
         Log.v(TAG,"Initialised Coding calendar Sync adapter");
     }
 
-    public CodingCalendarSyncAdapter(
+    private CodingCalendarSyncAdapter(
             Context context,
             boolean autoInitialize,
             boolean allowParallelSyncs) {

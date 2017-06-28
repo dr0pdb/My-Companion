@@ -3,7 +3,6 @@ package com.example.srv_twry.studentcompanion;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
@@ -13,7 +12,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
@@ -43,10 +41,14 @@ public class FlashCardsHomeActivity extends AppCompatActivity implements LoaderM
     private static final String TAG = FlashCardsHomeActivity.class.getSimpleName();
     private static final int TOPICS_LOADER_ID = 300;
 
-    @BindView(R.id.fab_add_flash_cards_topics) FloatingActionButton addFlashCardsFab;
-    @BindView(R.id.rv_flash_cards_topics) RecyclerView flashCardsRecyclerView;
-    @BindView(R.id.pb_loading_flash_cards_topics) ProgressBar loadingFlashCardsTopics;
-    @BindView(R.id.message_show_flash_cards_home) TextView messageShowFlashCardTopics;
+    @BindView(R.id.fab_add_flash_cards_topics)
+    private final FloatingActionButton addFlashCardsFab;
+    @BindView(R.id.rv_flash_cards_topics)
+    private final RecyclerView flashCardsRecyclerView;
+    @BindView(R.id.pb_loading_flash_cards_topics)
+    private final ProgressBar loadingFlashCardsTopics;
+    @BindView(R.id.message_show_flash_cards_home)
+    private final TextView messageShowFlashCardTopics;
 
     private FlashCardsTopicsRecyclerViewCursorAdapter flashCardsTopicsRecyclerViewCursorAdapter;
 
@@ -191,7 +193,7 @@ public class FlashCardsHomeActivity extends AppCompatActivity implements LoaderM
     }
 
     //Helper method to delete the selected topic and all the flash cards associated with it.
-    public void deleteTopicFromDatabase(int tag,String topicName){
+    private void deleteTopicFromDatabase(int tag, String topicName){
         String tagString = Integer.toString(tag);
         Uri deleteTopic = DatabaseContract.FlashCardsTopicsEntry.CONTENT_URI_FLASH_CARDS_TOPICS.buildUpon().appendPath(tagString).build();
         int resultOne=getContentResolver().delete(deleteTopic,null,null);

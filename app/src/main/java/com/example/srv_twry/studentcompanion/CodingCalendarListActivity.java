@@ -2,25 +2,20 @@ package com.example.srv_twry.studentcompanion;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.app.ActivityManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.srv_twry.studentcompanion.Fragments.CodingCalendarListFragment;
 import com.example.srv_twry.studentcompanion.Fragments.ContestDetailFragment;
 import com.example.srv_twry.studentcompanion.POJOs.Contest;
-import com.example.srv_twry.studentcompanion.Services.CodingCalendarAuthenticatorService;
-import com.example.srv_twry.studentcompanion.Services.CodingCalendarSyncService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,22 +29,23 @@ public class CodingCalendarListActivity extends AppCompatActivity implements Cod
     public static final String INTENT_EXTRA_TAG = "Contest";
 
     // The authority for the sync adapter's content provider
-    public static final String AUTHORITY = "com.example.srv_twry.studentcompanion";
+    private static final String AUTHORITY = "com.example.srv_twry.studentcompanion";
     // An account type, in the form of a domain name
-    public static final String ACCOUNT_TYPE = "example.com";
+    private static final String ACCOUNT_TYPE = "example.com";
     // The account name
-    public static final String ACCOUNT = "dummyaccount";
+    private static final String ACCOUNT = "dummyaccount";
 
     // Sync interval constants
-    public static final long SECONDS_PER_MINUTE = 60L;
-    public static final long SYNC_INTERVAL_IN_MINUTES = 60L;
-    public static final long SYNC_INTERVAL =
+    private static final long SECONDS_PER_MINUTE = 60L;
+    private static final long SYNC_INTERVAL_IN_MINUTES = 60L;
+    private static final long SYNC_INTERVAL =
             SYNC_INTERVAL_IN_MINUTES *
                     SECONDS_PER_MINUTE;
 
     // Instance fields
-    Account mAccount;
+    private Account mAccount;
     @Nullable @BindView(R.id.tv_click_contest_message)
+    private final
     TextView clickContestMessage;
 
     @Override

@@ -1,19 +1,16 @@
 package com.example.srv_twry.studentcompanion.Fragments;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,7 +27,6 @@ import com.example.srv_twry.studentcompanion.R;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -49,15 +45,17 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
 
     private static final String TAG = CodingCalendarListFragment.class.getSimpleName();
     private static final String RECYCLERVIEW_POSITION = "recyclerView position";
-    Parcelable recyclerViewState;
+    private Parcelable recyclerViewState;
 
     private OnFragmentInteractionListener mListener;
     private ArrayList<Contest> contestArrayList = new ArrayList<>();
     @BindView(R.id.pb_loading_contests)
+    private
     ProgressBar loadingContestsProgressBar;
     @BindView(R.id.rv_contest_list)
+    private
     RecyclerView contestRecyclerView;
-    GridLayoutManager gridLayoutManager;
+    private GridLayoutManager gridLayoutManager;
 
     private static final int CONTEST_LOADER_ID = 100;
 
@@ -73,11 +71,6 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
      */
     public static CodingCalendarListFragment newInstance() {
         return new CodingCalendarListFragment();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -120,7 +113,7 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
     }
 
     // To pass the activity with the Contest clicked.
-    public void passContestToActivity(Contest clickedContest) {
+    private void passContestToActivity(Contest clickedContest) {
         if (mListener != null) {
             mListener.onListFragmentInteraction(clickedContest);
         }
@@ -141,12 +134,6 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        //startLoadingData();
     }
 
     //This is used to save the position of the recycler view after rotation.
@@ -184,7 +171,7 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
     public interface OnFragmentInteractionListener {
         void onListFragmentInteraction(Contest clickedContest);
     }
-    public boolean isOnline() {
+    private boolean isOnline() {
         ConnectivityManager cm =
                 (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
@@ -278,7 +265,7 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
     }
 
     //A helper method to convert the time in String to Java Date Class
-    public Date getDateFromString(String string){
+    private Date getDateFromString(String string){
 
         Date result;
         try {

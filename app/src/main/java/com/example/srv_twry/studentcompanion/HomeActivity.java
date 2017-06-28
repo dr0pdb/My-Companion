@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -24,9 +22,7 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, FeaturesRecyclerViewAdapter.FeaturesOnClickListener{
 
-    private static final String TAG = HomeActivity.class.getSimpleName();
-
-    ArrayList<Feature> featureArrayList;
+    private ArrayList<Feature> featureArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +99,13 @@ public class HomeActivity extends AppCompatActivity
         }else if(id == R.id.nav_pdf_creator){
             startPdfCreator();
         }else if (id == R.id.nav_share){
-
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            String sharingString = "Hey Checkout this cool app \n"+ getResources().getString(R.string.app_name) +
+                    " :) \n"+ "This is a perfect companion for any student. Get it at the google playstore here:- \n"+
+                    getResources().getString(R.string.app_playstore_link); //TODO: To put the playstore link after pushing the app on playstore here
+            shareIntent.putExtra(Intent.EXTRA_TEXT,sharingString);
+            shareIntent.setType("text/plain");
+            startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.share_this_app)));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
