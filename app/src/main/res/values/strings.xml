@@ -49,4 +49,7 @@
     </array>
     <string name="add_widget">Add widget</string>
     <string name="upcoming_contests">Upcoming Contests</string>
+
+    <!-- Ad mob ad-unit !-->
+    <string name="banner_advertisement">ca-app-pub-3145580598583485/1101862058</string>
 </resources>

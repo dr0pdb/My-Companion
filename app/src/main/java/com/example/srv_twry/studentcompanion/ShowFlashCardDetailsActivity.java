@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.srv_twry.studentcompanion.POJOs.FlashCard;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,6 +20,7 @@ public class ShowFlashCardDetailsActivity extends AppCompatActivity {
     @BindView(R.id.tv_flash_card_detail_question) TextView detailQuestion;
     @BindView(R.id.tv_flash_card_detail_answer) TextView detailAnswer;
     @BindView(R.id.fab_show_flash_card_details) FloatingActionButton shareThisCard;
+    @BindView(R.id.banner_ad_flash_cards_details) AdView bannerAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,5 +45,9 @@ public class ShowFlashCardDetailsActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.share_flash_card)));
             }
         });
+
+        //Setting up the ad-mob //TODO:Delete this addTestDevice call before publishing the application on play store
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("CB4DABCAB7B703B70BE3FFEED853BABD").build();
+        bannerAdView.loadAd(adRequest);
     }
 }

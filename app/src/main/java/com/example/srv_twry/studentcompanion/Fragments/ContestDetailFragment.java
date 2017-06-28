@@ -26,6 +26,8 @@ import com.example.srv_twry.studentcompanion.POJOs.Contest;
 import com.example.srv_twry.studentcompanion.R;
 import com.example.srv_twry.studentcompanion.Utilities.DatabaseUtilites;
 import com.example.srv_twry.studentcompanion.Utilities.SubscribedContestUtilities;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -64,6 +66,7 @@ public class ContestDetailFragment extends Fragment {
     @BindView(R.id.button_contest_detail_register) Button contestDetailRegistrationButton;
     @BindView(R.id.contest_detail_share_fab) FloatingActionButton shareFloatingActionButton;
     @BindView(R.id.contest_detail_set_reminder) FloatingActionButton setReminderFloatingActionButton;
+    @BindView(R.id.banner_ad_contest_detail) AdView bannerAdView;
 
     //For a new instance of the Fragment.
     public static ContestDetailFragment newInstance(Contest contest) {
@@ -179,6 +182,10 @@ public class ContestDetailFragment extends Fragment {
 
         //Setting the data to the views.
         setDataToViews();
+
+        //Setting up the ad-mob //TODO:Delete this addTestDevice call before publishing the application on play store
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("CB4DABCAB7B703B70BE3FFEED853BABD").build();
+        bannerAdView.loadAd(adRequest);
         return view;
     }
 

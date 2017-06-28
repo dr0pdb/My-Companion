@@ -138,6 +138,12 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/coding_calendar_upcoming_contest_widget_info" />
         </receiver>
+
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
+
     </application>
 
 </manifest>

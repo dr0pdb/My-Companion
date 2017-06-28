@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
+    android:layout_margin="4dp"
     tools:context="com.example.srv_twry.studentcompanion.ShowFlashCardDetailsActivity">
 
     <ScrollView
@@ -91,6 +91,18 @@
                 android:layout_marginRight="2dp"
                 android:layout_marginStart="2dp"
                 android:background="@color/md_divider_black"/>
+
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/banner_ad_flash_cards_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                ads:adSize="BANNER"
+                android:layout_marginLeft="2dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="8dp"
+                ads:adUnitId="@string/banner_advertisement"
+                android:layout_gravity="bottom|center_horizontal"/>
 
         </LinearLayout>
 

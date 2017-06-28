@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,6 +21,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
@@ -45,6 +48,8 @@ public class CreatePDFActivity extends AppCompatActivity implements LoaderManage
 
     @BindView(R.id.select_images) Button selectImages;
     @BindView(R.id.create_pdf) Button createPdf;
+    @BindView(R.id.banner_ad_create_pdf)
+    AdView bannerAdView;
 
     ArrayList<String> imageUri;
     String filename;
@@ -74,6 +79,9 @@ public class CreatePDFActivity extends AppCompatActivity implements LoaderManage
             }
         });
 
+        //Setting up the ad-mob //TODO:Delete this addTestDevice call before publishing the application on play store
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("CB4DABCAB7B703B70BE3FFEED853BABD").build();
+        bannerAdView.loadAd(adRequest);
     }
 
     private void createPdfFromImage() {
