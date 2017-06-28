@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -127,9 +128,12 @@ public class PDFFilesAdapter extends BaseAdapter {
     private void openPDF(String s) {
         File file = new File(s);
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(file),"PDF viewer");
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        Uri fileUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
+        intent.setDataAndType(fileUri,"PDF viewer");
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
         try{
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             context.startActivity(intent);
         }catch(ActivityNotFoundException e){
             e.printStackTrace();
