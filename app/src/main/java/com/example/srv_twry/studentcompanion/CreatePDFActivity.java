@@ -45,11 +45,10 @@ public class CreatePDFActivity extends AppCompatActivity implements LoaderManage
     private static final int CREATE_PDF_LOADER_ID = 23;
 
     @BindView(R.id.select_images)
-    private final Button selectImages;
+    Button selectImages;
     @BindView(R.id.create_pdf)
-    private final Button createPdf;
+    Button createPdf;
     @BindView(R.id.banner_ad_create_pdf)
-    private final
     AdView bannerAdView;
 
     private ArrayList<String> imageUri;

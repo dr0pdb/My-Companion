@@ -37,11 +37,11 @@ public class ShowFlashCardsActivity extends AppCompatActivity implements LoaderM
     public static final String INTENT_EXTRA_FLASH_CARD = "intentExtraFlashCard";
 
     @BindView(R.id.rv_flash_cards)
-    private final RecyclerView flashCardsRecyclerView;
+    RecyclerView flashCardsRecyclerView;
     @BindView(R.id.fab_add_flash_cards)
-    private final FloatingActionButton floatingActionButton;
+    FloatingActionButton floatingActionButton;
     @BindView(R.id.message_show_flash_cards)
-    private final TextView messageShowFlashCards;
+    TextView messageShowFlashCards;
     private FlashCardsRecyclerViewCursorAdapter flashCardsRecyclerViewCursorAdapter;
     private String topicName;
 

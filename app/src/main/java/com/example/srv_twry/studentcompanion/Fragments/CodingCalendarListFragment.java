@@ -50,10 +50,8 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
     private OnFragmentInteractionListener mListener;
     private ArrayList<Contest> contestArrayList = new ArrayList<>();
     @BindView(R.id.pb_loading_contests)
-    private
     ProgressBar loadingContestsProgressBar;
     @BindView(R.id.rv_contest_list)
-    private
     RecyclerView contestRecyclerView;
     private GridLayoutManager gridLayoutManager;
 

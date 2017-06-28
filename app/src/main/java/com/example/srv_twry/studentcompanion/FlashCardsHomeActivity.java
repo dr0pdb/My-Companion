@@ -42,13 +42,13 @@ public class FlashCardsHomeActivity extends AppCompatActivity implements LoaderM
     private static final int TOPICS_LOADER_ID = 300;
 
     @BindView(R.id.fab_add_flash_cards_topics)
-    private final FloatingActionButton addFlashCardsFab;
+    FloatingActionButton addFlashCardsFab;
     @BindView(R.id.rv_flash_cards_topics)
-    private final RecyclerView flashCardsRecyclerView;
+    RecyclerView flashCardsRecyclerView;
     @BindView(R.id.pb_loading_flash_cards_topics)
-    private final ProgressBar loadingFlashCardsTopics;
+    ProgressBar loadingFlashCardsTopics;
     @BindView(R.id.message_show_flash_cards_home)
-    private final TextView messageShowFlashCardTopics;
+    TextView messageShowFlashCardTopics;
 
     private FlashCardsTopicsRecyclerViewCursorAdapter flashCardsTopicsRecyclerViewCursorAdapter;
 

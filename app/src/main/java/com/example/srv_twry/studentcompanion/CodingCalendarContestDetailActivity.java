@@ -27,6 +27,7 @@ public class CodingCalendarContestDetailActivity extends AppCompatActivity {
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
+
         if (Build.VERSION.SDK_INT < 16)//before Jelly Bean Versions
         {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -40,6 +41,7 @@ public class CodingCalendarContestDetailActivity extends AppCompatActivity {
             decorView.setSystemUiVisibility(ui);
 
         }
+
         setContentView(R.layout.activity_coding_calendar_contest_detail);
         mContest = getIntent().getParcelableExtra(INTENT_EXTRA_TAG);
 

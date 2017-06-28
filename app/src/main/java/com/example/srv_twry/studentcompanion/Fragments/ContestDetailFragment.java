@@ -54,27 +54,27 @@ public class ContestDetailFragment extends Fragment {
     }
 
     @BindView(R.id.collapsing_toolbar)
-    private CollapsingToolbarLayout collapsingToolbarLayout;
+    CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.contest_cover)
-    private ImageView coverImage;
+    ImageView coverImage;
     @BindView(R.id.toolbar)
-    private Toolbar toolbar;
+    Toolbar toolbar;
     @BindView(R.id.tv_contest_details_title)
-    private TextView contestDetailTitleView;
+    TextView contestDetailTitleView;
     @BindView(R.id.tv_contest_details_start_time)
-    private TextView contestDetailStartTimeText;
+    TextView contestDetailStartTimeText;
     @BindView(R.id.tv_contest_detail_duration)
-    private TextView contestDetailDurationText;
+    TextView contestDetailDurationText;
     @BindView(R.id.tv_contest_detail_description)
-    private TextView contestDetailDescriptionText;
+    TextView contestDetailDescriptionText;
     @BindView(R.id.button_contest_detail_register)
-    private Button contestDetailRegistrationButton;
+    Button contestDetailRegistrationButton;
     @BindView(R.id.contest_detail_share_fab)
-    private FloatingActionButton shareFloatingActionButton;
+    FloatingActionButton shareFloatingActionButton;
     @BindView(R.id.contest_detail_set_reminder)
-    private FloatingActionButton setReminderFloatingActionButton;
+    FloatingActionButton setReminderFloatingActionButton;
     @BindView(R.id.banner_ad_contest_detail)
-    private AdView bannerAdView;
+    AdView bannerAdView;
 
     //For a new instance of the Fragment.
     public static ContestDetailFragment newInstance(Contest contest) {

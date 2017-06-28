@@ -18,13 +18,13 @@ public class ShowFlashCardDetailsActivity extends AppCompatActivity {
 
     private FlashCard mFlashCard;
     @BindView(R.id.tv_flash_card_detail_question)
-    private final TextView detailQuestion;
+    TextView detailQuestion;
     @BindView(R.id.tv_flash_card_detail_answer)
-    private final TextView detailAnswer;
+    TextView detailAnswer;
     @BindView(R.id.fab_show_flash_card_details)
-    private final FloatingActionButton shareThisCard;
+    FloatingActionButton shareThisCard;
     @BindView(R.id.banner_ad_flash_cards_details)
-    private final AdView bannerAdView;
+    AdView bannerAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

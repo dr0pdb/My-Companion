@@ -45,7 +45,6 @@ public class CodingCalendarListActivity extends AppCompatActivity implements Cod
     // Instance fields
     private Account mAccount;
     @Nullable @BindView(R.id.tv_click_contest_message)
-    private final
     TextView clickContestMessage;
 
     @Override

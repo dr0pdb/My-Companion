@@ -21,11 +21,11 @@ import butterknife.ButterKnife;
 public class PDFCreatorHomeActivity extends AppCompatActivity implements PDFFilesAdapter.onPDFDeleted {
 
     @BindView(R.id.pdf_list_view_files)
-    private final ListView pdfFilesListView;
+    ListView pdfFilesListView;
     @BindView(R.id.fab_add_pdf_files)
-    private final FloatingActionButton addPdfFab;
+    FloatingActionButton addPdfFab;
     @BindView(R.id.message_pdf_creator_home)
-    private final TextView messagePdfCreator;
+    TextView messagePdfCreator;
 
     private PDFFilesAdapter pdfFilesAdapter;
     private File pdfFolder;
