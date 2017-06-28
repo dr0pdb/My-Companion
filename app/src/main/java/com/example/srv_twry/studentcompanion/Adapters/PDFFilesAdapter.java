@@ -128,13 +128,16 @@ public class PDFFilesAdapter extends BaseAdapter {
     private void openPDF(String s) {
         File file = new File(s);
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri fileUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
-        intent.setDataAndType(fileUri,"PDF viewer");
-        //intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        //Uri fileUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
+        //intent.setDataAndType(fileUri,"PDF viewer");
+        intent.setDataAndType(Uri.fromFile(file), "application/pdf");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+        Intent chooser = Intent.createChooser(intent, "Open File");
 
         try{
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            context.startActivity(intent);
+            //intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            context.startActivity(chooser);
         }catch(ActivityNotFoundException e){
             e.printStackTrace();
             Toast.makeText(context,"No suitable application found !",Toast.LENGTH_LONG).show();
