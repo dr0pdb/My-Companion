@@ -74,26 +74,26 @@ public class ShowFlashCardsActivity extends AppCompatActivity implements LoaderM
 
                 //Show the alert dialog
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(ShowFlashCardsActivity.this);
-                alertDialog.setTitle("Confirm Delete...");
-                alertDialog.setMessage("Are you sure you want delete this card?");
+                alertDialog.setTitle(R.string.confirm_delete);
+                alertDialog.setMessage(R.string.are_you_sure_you_want_to_delete_this_card);
                 alertDialog.setIcon(R.drawable.ic_delete_black);
 
-                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int which) {
                     String idString = Integer.toString(id);
                     Uri deleteFlashCardIndividual = DatabaseContract.FlashCardsEntry.CONTENT_URI_FLASH_CARDS.buildUpon().appendPath(idString).build();
                     int itemsDeleted = getContentResolver().delete(deleteFlashCardIndividual,null,null);
 
                     if (itemsDeleted >0 ){
-                        Toast.makeText(ShowFlashCardsActivity.this,"Card deleted successfully",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ShowFlashCardsActivity.this, R.string.card_deleted_successfully,Toast.LENGTH_SHORT).show();
                         getSupportLoaderManager().restartLoader(FLASH_CARDS_LOADER_ID, null, ShowFlashCardsActivity.this);
                     }else{
-                        Toast.makeText(ShowFlashCardsActivity.this,"Cannot delete card !", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ShowFlashCardsActivity.this, R.string.cannot_delete_card, Toast.LENGTH_SHORT).show();
                     }
                     }
                 });
 
-                alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                alertDialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
                         getSupportLoaderManager().restartLoader(FLASH_CARDS_LOADER_ID, null, ShowFlashCardsActivity.this);

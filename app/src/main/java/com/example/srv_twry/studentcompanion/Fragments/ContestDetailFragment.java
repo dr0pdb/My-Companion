@@ -178,11 +178,11 @@ public class ContestDetailFragment extends Fragment {
                             isSetForReminder = true;
                             setReminderFloatingActionButton.setImageResource(R.drawable.ic_remove_reminder);
                         }else{
-                            Toast toast = Toast.makeText(getContext(),"Cannot add reminder",Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(getContext(), R.string.cannot_add_reminder,Toast.LENGTH_SHORT);
                             toast.show();
                         }
                     }else{
-                        Toast toast = Toast.makeText(getContext(),"Contest is already running",Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(getContext(), R.string.contest_is_already_running,Toast.LENGTH_SHORT);
                         toast.show();
                     }
                 }
@@ -219,7 +219,7 @@ public class ContestDetailFragment extends Fragment {
             subscribedDatabaseId = -1;
             setReminderFloatingActionButton.setImageResource(R.drawable.ic_set_reminder);
         }else{
-            Toast toast = Toast.makeText(getContext(),"Cannot remove reminder",Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getContext(), R.string.cannot_remove_reminder,Toast.LENGTH_SHORT);
             toast.show();
         }
     }
@@ -234,12 +234,12 @@ public class ContestDetailFragment extends Fragment {
         coverImage.setImageResource(DatabaseUtilites.getCoverImage(mContest.getUrl()));
         SpannableString contestDetailsStartTime = DatabaseUtilites.getStartTimeTextDetailsFragment(mContest.getStartTime());
         contestDetailStartTimeText.setText(contestDetailsStartTime);
-        String duration = "Duration: Approximately "+getContestDuration(mContest.getStartTime(),mContest.getEndTime())+" hours";
+        String duration = getString(R.string.duration_approximately)+getContestDuration(mContest.getStartTime(),mContest.getEndTime())+getString(R.string.hours);
         contestDetailDurationText.setText(duration);
         if (mContest.getDescription().equals("")){
-            contestDetailDescriptionText.setText("Contest Description: Coding Contest for Programming enthusiasts");
+            contestDetailDescriptionText.setText(R.string.contest_description_coding_contest_for_programming_enthusiasts);
         }else{
-            contestDetailDescriptionText.setText("Contest Description: "+ mContest.getDescription());
+            contestDetailDescriptionText.setText(getString(R.string.contest_description)+ mContest.getDescription());
         }
         contestDetailRegistrationButton.setOnClickListener(new View.OnClickListener() {
             @Override

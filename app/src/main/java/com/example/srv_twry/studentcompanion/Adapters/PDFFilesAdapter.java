@@ -114,10 +114,10 @@ public class PDFFilesAdapter extends BaseAdapter {
         File file = new File(s);
         if (file.exists()){
             if (file.delete()){
-                Toast.makeText(context,"Successfully deleted selected file",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.successfully_deleted_selected_files,Toast.LENGTH_SHORT).show();
                 return true;
             }else{
-                Toast.makeText(context,"Cannot delete selected file",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.cannot_delete_selected_file,Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
@@ -140,7 +140,7 @@ public class PDFFilesAdapter extends BaseAdapter {
             context.startActivity(chooser);
         }catch(ActivityNotFoundException e){
             e.printStackTrace();
-            Toast.makeText(context,"No suitable application found !",Toast.LENGTH_LONG).show();
+            Toast.makeText(context, R.string.no_suitable_application_found,Toast.LENGTH_LONG).show();
         }
 
     }

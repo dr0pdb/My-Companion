@@ -12,6 +12,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.srv_twry.studentcompanion.Database.DatabaseContract;
+import com.example.srv_twry.studentcompanion.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,7 +45,7 @@ public class FetchContestsVolley {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Check your internet connection !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.check_your_internet_connection, Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(jsonObjectRequest);

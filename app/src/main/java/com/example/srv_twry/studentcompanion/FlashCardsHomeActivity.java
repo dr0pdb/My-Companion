@@ -95,17 +95,17 @@ public class FlashCardsHomeActivity extends AppCompatActivity implements LoaderM
 
                 //Show the alert dialog
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(FlashCardsHomeActivity.this);
-                alertDialog.setTitle("Confirm Delete...");
-                alertDialog.setMessage("Are you sure you want delete this?");
+                alertDialog.setTitle(R.string.confirm_delete_alert_dialog);
+                alertDialog.setMessage(R.string.are_you_sure_you_want_to_delete_this);
                 alertDialog.setIcon(R.drawable.ic_delete_forever_black);
 
-                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                alertDialog.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int which) {
                         deleteTopicFromDatabase(id,topicName);
                     }
                 });
 
-                alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                alertDialog.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         getSupportLoaderManager().restartLoader(TOPICS_LOADER_ID, null, FlashCardsHomeActivity.this);
                         dialog.cancel();
@@ -202,16 +202,16 @@ public class FlashCardsHomeActivity extends AppCompatActivity implements LoaderM
         int resultTwo = getContentResolver().delete(deleteTopicsCards,null,null);
 
         if (resultOne >0){
-            Toast.makeText(this,"Topic successfully deleted",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.topic_successfully_deleted,Toast.LENGTH_SHORT).show();
             loadingFlashCardsTopics.setVisibility(View.VISIBLE);
             addFlashCardsFab.setVisibility(View.GONE);
             flashCardsRecyclerView.setVisibility(View.GONE);
             getSupportLoaderManager().restartLoader(TOPICS_LOADER_ID, null, this);
         }else{
             if (resultTwo <0){
-                Log.v(TAG,"error in deleting cards");
+                Log.v(TAG,getString(R.string.error_in_deleting_cards));
             }
-            Toast.makeText(this,"Unable to delete topic",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.unable_to_delete_topic,Toast.LENGTH_SHORT).show();
         }
     }
 }

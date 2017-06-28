@@ -43,7 +43,7 @@ public class ShowFlashCardDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent shareIntent = new Intent();
                 shareIntent.setAction(Intent.ACTION_SEND);
-                String sharingString = "Hey checkout this one ! \n Question: "+mFlashCard.getQuestion()+" \n Answer: "+mFlashCard.getAnswer();
+                String sharingString = getString(R.string.hey_checkout_this_one)+mFlashCard.getQuestion()+getString(R.string.line_break_answer)+mFlashCard.getAnswer();
                 shareIntent.putExtra(Intent.EXTRA_TEXT,sharingString);
                 shareIntent.setType("text/plain");
                 startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.share_flash_card)));

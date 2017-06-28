@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.srv_twry.studentcompanion.BroadcastReceivers.ShowSubscribedContestNotificationReceiver;
 import com.example.srv_twry.studentcompanion.Database.DatabaseContract;
 import com.example.srv_twry.studentcompanion.POJOs.Contest;
+import com.example.srv_twry.studentcompanion.R;
 
 import static android.content.Context.ALARM_SERVICE;
 
@@ -38,7 +39,7 @@ public class SubscribedContestUtilities {
 
         if (uri !=null){
             Log.v("Subscribe Contest","successfully added "+ mContest.getTitle());
-            Toast toast = Toast.makeText(context,"Reminder set successfully",Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(context, R.string.reminder_set_successfully,Toast.LENGTH_SHORT);
             toast.show();
         }
         return Integer.parseInt(uri.getPathSegments().get(1));

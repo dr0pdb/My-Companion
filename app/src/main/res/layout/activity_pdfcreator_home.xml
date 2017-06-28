@@ -31,5 +31,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:src="@drawable/ic_add_black"
+        android:contentDescription="@string/fab_to_create_a_new_pdf_file"
         android:layout_gravity="bottom|end"/>
 </android.support.design.widget.CoordinatorLayout>

@@ -185,6 +185,7 @@
         android:layout_margin="@dimen/activity_horizontal_margin"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|end"
+        android:contentDescription="@string/fab_to_share_a_contest"
         app:srcCompat="@android:drawable/ic_menu_share"
         tools:ignore="VectorDrawableCompat" />
 
@@ -194,6 +195,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
         app:layout_anchor="@id/appbar"
+        android:contentDescription="@string/fab_to_set_or_remove_reminder_for_a_contest"
         app:layout_anchorGravity="bottom|start"/>
 
 </android.support.design.widget.CoordinatorLayout>

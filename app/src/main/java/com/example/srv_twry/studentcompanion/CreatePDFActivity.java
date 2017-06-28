@@ -86,16 +86,16 @@ public class CreatePDFActivity extends AppCompatActivity implements LoaderManage
 
     private void createPdfFromImage() {
         if (imageUri.size() <= 0){
-            Toast.makeText(CreatePDFActivity.this,"Select Images First!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreatePDFActivity.this, R.string.select_images_first,Toast.LENGTH_SHORT).show();
         }else{
             new MaterialDialog.Builder(CreatePDFActivity.this)
-                    .title("Creating PDF")
-                    .content("Enter file name")
-                    .input("Example : Name", null, new MaterialDialog.InputCallback() {
+                    .title(R.string.creating_pdf)
+                    .content(R.string.enter_file_name)
+                    .input(getString(R.string.example_name), null, new MaterialDialog.InputCallback() {
                         @Override
                         public void onInput(MaterialDialog dialog, CharSequence input) {
                             if (input == null) {
-                                Toast.makeText(CreatePDFActivity.this, "Name cannot be blank", Toast.LENGTH_LONG).show();
+                                Toast.makeText(CreatePDFActivity.this, R.string.name_cannot_be_blank, Toast.LENGTH_LONG).show();
                             } else {
                                 filename = input.toString();
 
@@ -135,7 +135,7 @@ public class CreatePDFActivity extends AppCompatActivity implements LoaderManage
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openImageSelector();
                 } else {
-                    Toast.makeText(CreatePDFActivity.this, "Cannot create pdf without Permissions!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CreatePDFActivity.this, R.string.cannot_create_pdf_without_permissions, Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -145,11 +145,11 @@ public class CreatePDFActivity extends AppCompatActivity implements LoaderManage
     private void openImageSelector() {
         ImagePicker.create(this)
                 .folderMode(true) // folder mode (false by default)
-                .folderTitle("Folder") // folder selection title
-                .imageTitle("Tap to select") // image selection title
+                .folderTitle(getString(R.string.folder)) // folder selection title
+                .imageTitle(getString(R.string.tap_to_select)) // image selection title
                 .multi() // multi mode (default mode)
                 .showCamera(true) // show camera or not (true by default)
-                .imageDirectory("Camera") // directory name for captured image  ("Camera" folder by default)
+                .imageDirectory(getString(R.string.camera)) // directory name for captured image  ("Camera" folder by default)
                 .start(REQUEST_CODE_PICKER); // start image picker activity with request code
     }
 
@@ -160,9 +160,9 @@ public class CreatePDFActivity extends AppCompatActivity implements LoaderManage
             ArrayList<Image> images = data.getParcelableArrayListExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES);
             for (Image image: images){
                 imageUri.add(image.getPath());
-                Log.v("Adding images",image.getName());
+                Log.v(getString(R.string.adding_images),image.getName());
             }
-            Toast.makeText(this,"Images added !",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.images_added,Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -174,8 +174,8 @@ public class CreatePDFActivity extends AppCompatActivity implements LoaderManage
 
             //Create the dialog to be shown while creating pdf
             final MaterialDialog.Builder builder = new MaterialDialog.Builder(CreatePDFActivity.this)
-                    .title("Please Wait")
-                    .content("Creating PDF...")
+                    .title(R.string.please_wait)
+                    .content(R.string.creating_pdf_double_dot)
                     .cancelable(false)
                     .progress(true, 0);
             final MaterialDialog progressDialog = builder.build();

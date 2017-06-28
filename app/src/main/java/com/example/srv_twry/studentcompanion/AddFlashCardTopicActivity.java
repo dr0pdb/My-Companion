@@ -37,10 +37,10 @@ public class AddFlashCardTopicActivity extends AppCompatActivity {
         //We don't want empty topics in the database hence this check
         String input = ((EditText) findViewById(R.id.editTextTaskDescription)).getText().toString();
         if (input.length() == 0) {
-            Toast.makeText(getBaseContext(),"Please enter the topic name !",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), R.string.please_enter_the_topic_name,Toast.LENGTH_SHORT).show();
             return;
         }else if (input.length() >35){
-            Toast.makeText(getBaseContext(),"Topic shouldn't have more than 35 characters !",Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), R.string.topic_should_not_have_more_than_35_characters,Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -54,9 +54,9 @@ public class AddFlashCardTopicActivity extends AppCompatActivity {
 
 
         if(uri != null) {
-            Toast.makeText(getBaseContext(),"Created the topic successfully",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), R.string.created_the_topic_successfully,Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(getBaseContext(),"Unable to create the topic",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), R.string.unable_to_create_the_topic,Toast.LENGTH_SHORT).show();
         }
 
         //Returning to the FlashCardsHomeActivity

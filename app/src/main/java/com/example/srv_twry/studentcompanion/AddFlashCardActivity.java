@@ -35,7 +35,7 @@ public class AddFlashCardActivity extends AppCompatActivity {
         String inputQuestion = ((EditText) findViewById(R.id.editText_flash_card_question)).getText().toString();
         String inputAnswer = ((EditText) findViewById(R.id.editText_flash_card_answer)).getText().toString();
         if (inputQuestion.length() == 0 || inputAnswer.length() == 0) {
-            Toast.makeText(getBaseContext(),"Both the fields are mandatory !",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), R.string.both_the_fields_are_mandatory,Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -49,9 +49,9 @@ public class AddFlashCardActivity extends AppCompatActivity {
 
 
         if(uri != null) {
-            Toast.makeText(getBaseContext(),"Created the flash card successfully",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), R.string.created_the_flash_card_successfully,Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(getBaseContext(),"Unable to create the card",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), R.string.unable_to_create_the_card,Toast.LENGTH_SHORT).show();
         }
 
         //Returning to the FlashCardsHomeActivity
