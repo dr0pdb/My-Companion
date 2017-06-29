@@ -1,15 +1,17 @@
 
 <div style="text-align: center; "> <h1> My Companion </h1> </div>
-####Old Name - Student Companion
+
+#### Old Name - Student Companion  
+
 
 ![App Web Image](https://raw.githubusercontent.com/srv-twry/My-Companion/development/ImagesAndScreenshots/StudentCompanion.png)
 
 "My Companion" is an all in one Android application which is meant to cater the needs of an Undergraduate student. It is for the Student community by the Student community.  
 
-##HomeScreen  
+## HomeScreen
 ![HomeScreen](https://raw.githubusercontent.com/srv-twry/My-Companion/development/ImagesAndScreenshots/HomeScreen.png)
 
-##Features
+## Features
 This project will be continuously improved and new features will be added to make it bigger and better. So far the application has the following modules:    
 
 + Coding Calendar
@@ -27,8 +29,7 @@ This project will be continuously improved and new features will be added to mak
     1. Select a set of images and change it into a PDF document.
     2. Organise and open the pdf from the application itself.  
 
-##Screens
-
+## Screens
 + Coding Calendar
     1. Home Screen  
               ![Home Screen](https://raw.githubusercontent.com/srv-twry/My-Companion/development/ImagesAndScreenshots/CodingCalendarHome.png) 
