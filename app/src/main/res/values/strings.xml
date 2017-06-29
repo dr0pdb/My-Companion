@@ -83,8 +83,8 @@
     <string name="cannot_add_reminder">Cannot add reminder</string>
     <string name="contest_is_already_running">Contest is already running</string>
     <string name="cannot_remove_reminder">Cannot remove reminder</string>
-    <string name="duration_approximately">Duration: Approximately</string>
-    <string name="hours">hours</string>
+    <string name="duration_approximately">Duration: Approximately </string>
+    <string name="hours"> hours</string>
     <string name="contest_description_coding_contest_for_programming_enthusiasts">Contest Description: Coding Contest for Programming enthusiasts</string>
     <string name="contest_description">Contest Description:</string>
     <string name="check_your_internet_connection">Check your internet connection !</string>

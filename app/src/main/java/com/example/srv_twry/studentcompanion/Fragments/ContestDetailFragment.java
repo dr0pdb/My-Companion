@@ -234,7 +234,7 @@ public class ContestDetailFragment extends Fragment {
         coverImage.setImageResource(DatabaseUtilites.getCoverImage(mContest.getUrl()));
         SpannableString contestDetailsStartTime = DatabaseUtilites.getStartTimeTextDetailsFragment(mContest.getStartTime());
         contestDetailStartTimeText.setText(contestDetailsStartTime);
-        String duration = getString(R.string.duration_approximately)+getContestDuration(mContest.getStartTime(),mContest.getEndTime())+getString(R.string.hours);
+        String duration = getString(R.string.duration_approximately)+" "+getContestDuration(mContest.getStartTime(),mContest.getEndTime())+" "+getString(R.string.hours);
         contestDetailDurationText.setText(duration);
         if (mContest.getDescription().equals("")){
             contestDetailDescriptionText.setText(R.string.contest_description_coding_contest_for_programming_enthusiasts);
