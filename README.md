@@ -3,6 +3,7 @@
 
 #### Old Name - Student Companion  
 
+[![CircleCI](https://circleci.com/gh/srv-twry/My-Companion.svg?style=svg)](https://circleci.com/gh/srv-twry/My-Companion)
 
 ![App Web Image](https://raw.githubusercontent.com/srv-twry/My-Companion/development/ImagesAndScreenshots/StudentCompanion.png)
 
