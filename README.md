@@ -74,7 +74,7 @@ The repository contains three branches:
  4. Master: The main branch that has the most stable version of the application.    
  
 ## Contributing
-Feel free to fork this project, commit changes and respond through pull requests. Make changes to the "development" and "development2" branches depending on the changes that you want to make and then submit pull request to the above two brances only.
+Feel free to fork this project, commit changes and respond through pull requests. Make changes to the "development" and "development2" branches depending on the changes that you want to make and then submit pull request to the above two branches only.
 
 This project is actively maintained by [srv-twry](https://github.com/srv-twry/My-Companion). For any queries , feel free to contact at srv.twry@gmail.com
 
