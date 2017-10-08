@@ -31,6 +31,9 @@ android {
             maven { url "https://jitpack.io" }
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
