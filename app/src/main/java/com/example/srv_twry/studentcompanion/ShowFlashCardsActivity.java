@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.DragAndDropPermissions;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,11 +69,16 @@ public class ShowFlashCardsActivity extends AppCompatActivity implements LoaderM
                 return false;
             }
 
+
+
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 final int id = (int)viewHolder.itemView.getTag();
 
-                //Show the alert dialog
+                FlashCard.getFlashCardFromID(ShowFlashCardsActivity.this,id).deleteFromDB(ShowFlashCardsActivity.this, false);
+
+
+                /*//Show the alert dialog
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(ShowFlashCardsActivity.this);
                 alertDialog.setTitle(R.string.confirm_delete);
                 alertDialog.setMessage(R.string.are_you_sure_you_want_to_delete_this_card);
@@ -100,7 +106,7 @@ public class ShowFlashCardsActivity extends AppCompatActivity implements LoaderM
                     }
                 });
 
-                alertDialog.show();
+                alertDialog.show();*/
 
             }
         }).attachToRecyclerView(flashCardsRecyclerView);
