@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -53,5 +55,23 @@ public class ShowFlashCardDetailsActivity extends AppCompatActivity {
         //Setting up the ad-mob //TODO:Delete this addTestDevice call before publishing the application on play store
         AdRequest adRequest = new AdRequest.Builder().addTestDevice("CB4DABCAB7B703B70BE3FFEED853BABD").build();
         bannerAdView.loadAd(adRequest);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.flash_card_details_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case (R.id.flashcard_delete):
+                FlashCard.getFlashCardFromID(this,mFlashCard.getContentID()).deleteFromDB(this,true);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
