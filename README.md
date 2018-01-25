@@ -69,10 +69,9 @@ The repository contains three branches:
  1. Release: The last stable release version of the application.
             NOTE: The app is yet to be released on the playstore.
 
- 2. Development: All the improvements in the existing features will go here.
- 
- 3. Development2: Addition of new features will be done through this branch.           
- 4. Master: The main branch that has the most stable version of the application.    
+ 2. Development: All the development will go here. If you want to open a PR, make sure it is on this branch.
+           
+ 3. Master: The main branch that has the most stable version of the application.    
  
 ## Contributing
 Feel free to fork this project, commit changes and respond through pull requests. Make changes to the "development" and "development2" branches depending on the changes that you want to make and then submit pull request to the above two branches only.
