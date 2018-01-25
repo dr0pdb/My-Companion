@@ -50,14 +50,12 @@ public class FetchContestsRetrofit {
         api.getFeed().enqueue(new Callback<ModelsPOJO>() {
             @Override
             public void onResponse(@NonNull Call<ModelsPOJO> call, @NonNull Response<ModelsPOJO> response) {
-
                 addToDatabase(response.body().getModels());
                 onLoadingFinishedListener.onLoadingFinished();
             }
 
             @Override
             public void onFailure(@NonNull Call<ModelsPOJO> call, @NonNull Throwable t) {
-
                 Toast.makeText(context, R.string.check_your_internet_connection, Toast.LENGTH_SHORT).show();
             }
         });
@@ -82,17 +80,17 @@ public class FetchContestsRetrofit {
             //delete the code above this line after testing or comment it.
 
             //The hackerrank API sorts contests in reverse order so reversing the array
-            for(int i=response.size()-1; i>=0; i--){
+            for(int i = response.size() - 1; i >= 0; i--){
 
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_TITLE, response.get(i).getTitle());
-                contentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_DESCRIPTION,response.get(i).getDescription());
-                contentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_URL,response.get(i).getUrl());
-                contentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_START_TIME,response.get(i).getStart());
-                contentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_END_TIME,response.get(i).getEnd());
+                contentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_DESCRIPTION, response.get(i).getDescription());
+                contentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_URL, response.get(i).getUrl());
+                contentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_START_TIME, response.get(i).getStart());
+                contentValues.put(DatabaseContract.ContestEntry.CONTEST_COLUMN_END_TIME, response.get(i).getEnd());
 
                 //Adding the data to the database.
-                context.getContentResolver().insert(DatabaseContract.ContestEntry.CONTENT_URI_CONTESTS,contentValues);
+                context.getContentResolver().insert(DatabaseContract.ContestEntry.CONTENT_URI_CONTESTS, contentValues);
             }
     }
 

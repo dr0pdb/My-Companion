@@ -1,7 +1,6 @@
 package com.example.srv_twry.studentcompanion.Network.NetworkPOJOs;
 
 public class FeedPOJO {
-
     private String title;
     private String description;
     private String start;

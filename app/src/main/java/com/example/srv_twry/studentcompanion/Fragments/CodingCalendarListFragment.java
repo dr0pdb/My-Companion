@@ -96,8 +96,8 @@ public class CodingCalendarListFragment extends Fragment implements ContestRecyc
 
         //If the device is online then get the updated data from the server otherwise use the cached data from the database.
         if (isOnline()){
-            FetchContestsRetrofit fetchContestsVolley = new FetchContestsRetrofit(getContext(),this);
-            fetchContestsVolley.fetchContest();
+            FetchContestsRetrofit fetchContestsRetrofit = new FetchContestsRetrofit(getContext(),this);
+            fetchContestsRetrofit.fetchContest();
         }else{
             getDataFromDatabase();
         }
